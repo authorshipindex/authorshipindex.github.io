@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The standard &middot; The Authorship Index</title>
+<meta name="description" content="The Authorship Index standard, version 2026: what the index is, how to choose a number, and what may never change about it.">
+<link rel="canonical" href="https://authorshipindex.org/standard">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#F4F4F3" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#101215" media="(prefers-color-scheme:dark)">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" type="application/json" href="/scale.json" title="The scale, machine-readable">
+<style>
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+:root{
+  --ground:#F4F4F3; --surface:#FFFFFF;
+  --ink:#15171A; --ink-2:#585D64; --ink-3:#868C94;
+  --rule:#DDDDDA; --accent:#0A6E8F;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
+  --numeral:Verdana,Tahoma,"DejaVu Sans",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#101215; --surface:#181B1F; --ink:#E8E9E7; --ink-2:#9DA3AA;
+    --ink-3:#6D747C; --rule:#282C31; --accent:#4FB4D8;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101215; --surface:#181B1F; --ink:#E8E9E7; --ink-2:#9DA3AA;
+  --ink-3:#6D747C; --rule:#282C31; --accent:#4FB4D8;
+}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.page{max-width:34rem;margin:0 auto;padding:1.5rem 1.25rem 4rem;
+  display:flex;flex-direction:column;gap:1.5rem}
+.crumb{font-family:var(--mono);font-size:.6875rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-3);text-decoration:none}
+.crumb:hover{color:var(--accent)}
+.head{display:flex;flex-direction:column;gap:.75rem}
+.tok{font-family:var(--numeral);font-weight:700;font-size:1.75rem;
+  line-height:1;color:var(--ink);white-space:nowrap;align-self:flex-start;
+  border-bottom:3px solid var(--accent);padding-bottom:.3rem}
+h1{margin:0;font-size:1.5rem;line-height:1.25;font-weight:600;
+  letter-spacing:-.01em;text-wrap:balance}
+.say{margin:0;padding:1rem 1.15rem;background:var(--surface);
+  border-left:3px solid var(--accent);border-radius:0 4px 4px 0;
+  font-size:1.0625rem;line-height:1.55;color:var(--ink)}
+.say b{display:block;font-size:.6875rem;font-family:var(--mono);
+  font-weight:400;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:.4rem}
+.detail{display:flex;flex-direction:column;gap:.9rem}
+.detail p{margin:0;color:var(--ink-2)}
+.detail code{font-family:var(--mono);font-size:.9em;color:var(--ink)}
+.more{margin:0;padding-top:1.25rem;border-top:1px solid var(--rule)}
+.more a{color:var(--accent);text-decoration:none;font-weight:600}
+.more a:hover{text-decoration:underline}
+.note{margin:0;font-size:.8125rem;line-height:1.55;color:var(--ink-3)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.doc h2{margin:2.5rem 0 .35rem;font-size:1.0625rem;font-weight:650;
+  letter-spacing:-.01em;line-height:1.3}
+.doc h2:first-child{margin-top:0}
+.doc p{margin:.7rem 0 0;color:var(--ink-2)}
+.doc dl{margin:0;display:flex;flex-direction:column;gap:1rem}
+.doc dt{font-weight:650;color:var(--ink)}
+.doc dd{margin:.15rem 0 0;color:var(--ink-2)}
+.doc code{font-family:var(--mono);font-size:.9em;color:var(--ink)}
+.lede{margin:0;font-size:1.0625rem;color:var(--ink);line-height:1.55}
+.sitenav{display:flex;flex-wrap:wrap;gap:.15rem .9rem;font-size:.875rem;
+  padding-bottom:1.1rem;border-bottom:1px solid var(--rule)}
+.sitenav a{color:var(--ink-2);text-decoration:none}
+.sitenav a:hover{color:var(--accent)}
+.sitenav a.home{font-weight:650;color:var(--ink)}
+.levels{display:flex;flex-wrap:wrap;gap:.4rem .85rem;font-size:.875rem;
+  padding-top:1.1rem;border-top:1px solid var(--rule)}
+.levels a{color:var(--accent);text-decoration:none;white-space:nowrap;
+  font-family:var(--numeral);font-size:.8125rem}
+.levels a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<main class="page">
+<nav class="sitenav"><a class="home" href="/">The Authorship Index</a><span style="color:var(--ink)">The standard</span><a href="/glossary">Glossary</a><a href="/rulings">Rulings</a><a href="/licence">Licence</a><a href="/contact">Contact</a><a href="/history">History</a></nav>
+  <h1>The standard</h1>
+  <p class="lede">The Authorship Index, version 2026, set out in the order it is written.</p>
+  <div class="doc">
+<h2>What the Authorship Index is</h2>
+<p>The Authorship Index is a voluntary, self-declared index describing <strong>how much of a written work came from a human being.</strong> It is one digit, 0 to 9. <strong>0 is entirely human. 9 is no human at all.</strong> Everything real sits between.</p>
+<p>It is not a quality judgement, not a moral position, and not a compliance regime. The Authorship Index measures one thing: <strong>where the words came from.</strong></p>
+<p><strong>Intelligence is not the test.</strong> Nothing turns on whether the system is intelligent, and the standard never asks. A template that assembles a match report from a data feed, a model that writes a novel, and whatever follows both are the same to the index: text that a person did not write. Automated journalism produced weather and sports reports long before language models existed, and those words had no human author either.</p>
+<h2>Where this came from</h2>
+<p>No government wrote this. No regulator, no trade body, no standards organisation, no committee. There is no authority above it and none behind it.</p>
+<p>It began with an author who used artificial intelligence to write, wanted a precise way to say so, and found that no such language existed — only one phrase, <em>AI-assisted</em>, covering everything from a spellcheck to a machine writing the lot. The problem was practical before it was general.</p>
+<p>It was then written the way it describes: by a person and a machine together, and declared accordingly at <strong>[AI 6]</strong>. A standard about authorship that concealed its own would not deserve reading.</p>
+<p>Nothing compels its use and nobody enforces it. Its only authority is whether it proves useful, and it will last exactly as long as that holds. A standard written from inside a practice is a different thing from one written about it.</p>
+<p><strong>This is not a legal requirement and satisfies none.</strong> The Authorship Index is not a certification. It carries no approval, confers no compliance, and has no official status in any jurisdiction. Where a law requires a disclosure about artificial intelligence, this index does not discharge that obligation and is no substitute for it. Statutory regimes ask their own questions, in their own terms, with their own penalties. Marking a work here answers none of them.</p>
+<h2>Scope</h2>
+<p>The index may be used for any written content intended for an audience — it is not applied to anything, it is available for anything. Published and editorial writing; business and professional documents; academic and educational material; legal, regulatory and public documents; performed, broadcast and interactive scripts; and personal and professional writing such as CVs, references and eulogies. <strong>The test: if it is written, and somebody other than the writer is meant to read it, it is in scope.</strong></p>
+<p>The index covers the written content of the work itself. Cover art and separately produced marketing material sit outside it. A script is a written work; an audiobook narrated by artificial intelligence from a human-written script is marked on the script.</p>
+<h2>Who may require a declaration</h2>
+<p><strong>This standard requires nothing of anyone.</strong> It defines a vocabulary and makes it free to use. It does not tell any industry, platform, employer or publisher what to do, and it has no means of doing so.</p>
+<p>Anyone may require declarations within their own domain — a publisher of its authors, a journal of its submissions, a university of its applicants, an employer of its candidates. That is their policy decision, taken for their reasons. The obligation comes from them, not from this standard, which neither authorises nor objects.</p>
+<p><strong>The number is always the declarer’s own statement.</strong> Nobody may declare on another person’s behalf without their knowledge. A required declaration is still a personal claim, and its honesty rests with the person making it — not with whoever asked.</p>
+<p>This standard takes no view on whether any such requirement is appropriate. That is not its business.</p>
+<h2>The index</h2>
+<h2>9 cannot be self-declared</h2>
+<p>Every level from 0 to 8 has a human who knows the truth. At 9 there is nobody to ask — a person filling in a declaration <em>is</em> human involvement.</p>
+<p>9 is therefore declared by the deploying system or platform, not by an author. Where no human author exists to declare, the declaration can only come from whoever deployed the system.</p>
+<h2>Whole numbers only</h2>
+<p>The index takes whole numbers. There is no <code>[AI 5/6]</code>, no half, no range.</p>
+<p>Where the level is genuinely uncertain, the rule is the one that applies everywhere else: <strong>when in doubt, go higher.</strong></p>
+<h2>Choosing your index</h2>
+<p><strong>You choose your own number.</strong> Nothing computes it for you, and no tool’s answer overrides yours. A declaration is a statement a person makes and stands behind — a number produced by a form is one its declarer can disown.</p>
+<p>One question does most of the work: <strong>who produced the prose that is actually in the finished text?</strong> Answer that, then narrow within the band.</p>
+<p><strong>When in doubt, go higher.</strong> Self-declaration has a known bias and it runs one way — people underestimate how much artificial intelligence touched their work, because assistance is easy to forget and authorship is not. Declaring low is the only failure mode this standard has.</p>
+<h2>Spelling and grammar are not artificial intelligence involvement</h2>
+<p>Spellcheckers, grammar checkers and style checkers <strong>do not count at any level.</strong> An author who uses them declares 0 and is telling the truth.</p>
+<p>This is not a concession. They have been part of writing since long before generative artificial intelligence, they correct what the author already wrote, and they put no words in anyone’s mouth. A standard under which every writer alive is a 1 would be describing nothing.</p>
+<p>Two questions cover the whole scale. <strong>Did the tool have to understand the work?</strong> No, 0 — yes, at least 1. A spellchecker would behave identically on a shopping list; a tool that catches a timeline contradiction in chapter nine has read your work. <strong>Did it write any of the words that survived?</strong> If yes, at least 4.</p>
+<h2>To the declarer’s knowledge</h2>
+<p>A declaration covers what the declarer knows. An author who knows their editor used artificial intelligence to restructure a chapter must declare it; an author who cannot know is not lying by declaring 0. Standards that demand omniscience get ignored.</p>
+<h2>Prefer not to say</h2>
+<p>Anyone who has deliberately chosen not to state a level may print <strong>X</strong>. It is a statement, not a gap, and it requires a positive act — nobody is ever assigned one.</p>
+<p><strong>The Authorship Index keeps no register of works.</strong> No database of who declared what, and therefore no database of who didn’t. An index capable of producing a list of undeclared books would become exactly the weapon it exists to disarm. An unmarked book is simply unmarked.</p>
+<h2>Who is responsible for the mark</h2>
+<p>Whoever publishes the work. For a self-published author that is the author; where an organisation publishes the work it is that organisation — and the author’s name is on the cover regardless, which is why marking a work without asking its author gambles with somebody else’s reputation.</p>
+<p>An author who disagrees with a mark on their own work can say so publicly, in their own words. There is no register to appeal to and no arbitrator to petition.</p>
+<h2>Disagreement</h2>
+<p>The Authorship Index hosts no opinion about any mark, because it holds no records to attach opinion to. Readers who doubt a mark do what readers have always done: talk about it, wherever that kind of work is already discussed.</p>
+<p>The standard operates no dispute queue, no arbitration, no agreement score and no moderation, and it never will. This standard exists partly because authors were one-starred for using artificial intelligence. It must never become the mechanism.</p>
+<h2>Editions and versions</h2>
+<p>Every edition carries its own mark. A translation is a new work for these purposes — a human-written original put through machine translation produces an artificial intelligence-drafted edition, whatever the original was.</p>
+<p>A work whose parts have different origins — an anthology, a journal issue, a report written in sections — is several works bound together. Each part may carry its own mark, and a mark on the whole takes the highest.</p>
+<p>A mark is fixed at the moment of printing, because print is fixed at the moment of printing. There is nothing to correct and nowhere to correct it.</p>
+<h2>Notation and addresses</h2>
+<p><code>[AI 4]</code> — everywhere. Printed on a cover, typed in a byline, entered in a metadata field, written in an email. There is no second form and no separate machine-readable variant, because the mark types on any keyboard and survives plain text. Prefer not to say is <code>[AI X]</code>.</p>
+<p><strong>Eleven addresses, and that is all.</strong> <code>authorshipindex.org/0</code> through <code>/9</code>, plus <code>/x</code>. Every mark ever printed resolves to one of eleven pages, and those pages are the whole of this standard’s infrastructure. No accounts, no registration, no database, no lookup of any kind.</p>
+<p>This is what the standard is: <strong>a vocabulary, not a registry.</strong> Nobody registers their use of the word <em>kilogram</em>. The term is defined, the definition is public, and usage is free and unaudited.</p>
+<p>If a register is ever genuinely wanted it can be added later without invalidating a single mark already in print. That is the test every future change must pass.</p>
+<p><strong>The logo is not a declaration.</strong> The standard’s own logo is <code>[AI n]</code> with the <em>n</em> in italic — the typographic convention for a variable. It shows the shape of the notation rather than any work’s value. A declaration is never italic, so the site’s branding can never be mistaken for a claim about something.</p>
+<h2>What the site knows about you</h2>
+<p><strong>These pages set no cookies, store nothing in your browser, and contact no other server.</strong> No analytics, no scripts from elsewhere, no fonts, no images, no tracking pixels, no embedded anything. Each page is a single file that arrives complete. There is nothing to accept and nothing to refuse, which is why you are not asked.</p>
+<p><strong>Nothing is counted.</strong> If that ever changes, this section will say so before it does.</p>
+<p>What no page can promise: a request has to come from somewhere, so whoever hosts these pages receives the address it came from, as every web server does. That is how the internet works and no page can opt out of it on your behalf. The standard itself keeps none of it and has no register to attach it to.</p>
+<p>The honest statement is <em>this page collects nothing</em>, not <em>nobody sees anything</em>. A standard about accurate declarations should not overstate its own.</p>
+<p>A reader looking up what a number means should not pay for the answer with their identity.</p>
+<h2>Versioning</h2>
+<p>Standard versions are years — <strong>2026</strong> — not 1.0 or 2.0, which would collide with level numbers.</p>
+<p>A declaration never needs checking against the edition it was made under. The levels do not move, so a 4 declared in any year means what a 4 means here.</p>
+<p>What may change: exemptions, boundary guidance, the helper, governance. <strong>What may never change: the ten levels, their numbers and their meanings.</strong> No change may invalidate a mark already in print — a database can be migrated, a hundred thousand printed covers cannot.</p>
+<h2>What the Authorship Index does not measure</h2>
+<p>Quality, merit, or craft. Commercial or literary value. Whether the use of artificial intelligence was ethical. Compliance with any platform’s terms. The declarer’s integrity.</p>
+<p>It measures one thing: where the words came from.</p>
+<h2>Limits</h2>
+<p>The Authorship Index is only as reliable as the honesty of those who declare it. It cannot force a declaration, verify one independently, or reach inside a closed system to establish provenance.</p>
+<p>At 0 through 8 there is always a human who knows the truth. At 9 there may be nobody to ask. Society has assumed good-faith self-declaration before — ratings agencies before 2008, food labelling before the adulteration scandals, carbon reporting before greenwashing became a profession. The assumption held until it didn’t.</p>
+<p><strong>What a mark in the text can and cannot show.</strong> Statutory regimes have begun requiring machine-readable marking of generated content, and providers have begun embedding such marks in text as it is written. Those marks prove <em>processing</em>, not <em>authorship</em> — they can show a machine was involved, never how much of the finished work is its, whether a person rewrote it, or whose idea it was. A 5 and an 8 may both carry traces, and no detector can tell them apart. The index measures exactly what a mark in the text cannot.</p>
+<p>This standard does not depend on any of it. Marking is uneven between providers, can be removed deliberately, and does not survive being rewritten — which is what happens at the levels where it would matter most. A declaration remains a person’s word, and that is the only thing the index has ever rested on.</p>
+<p>There is an inversion already visible in this: an autonomous system that honestly declares 9 is being more transparent than a human who publishes at 7 and declares 1. At that point the machine is the more honest party.</p>
+<p>The Authorship Index shines a light. It cannot make anyone stand in it. The standard exists because transparency is worth pursuing even where it cannot be enforced — not because every bad actor will comply, but because every good actor now has a language, and every absence of that language now means something.</p>
+<h2>Governance</h2>
+<p>These pages are published at authorshipindex.org. Four commitments bind the standard regardless of who operates them.</p>
+<p><strong>One.</strong> The licence to use the mark and the index is free, permanent and non-discriminatory. <strong>Two.</strong> The eleven pages are readable by anyone, at no cost, without an account. <strong>Three.</strong> No platform is privileged — no retailer, discovery tool or discussion venue is favoured as a route for declaring, resolving or disputing a mark. <strong>Four.</strong> The ten levels are never renumbered.</p>
+<p>There is deliberately very little to govern. The standard owns eleven pages, a mark and a definition, and holds nothing about anybody’s work. Most of the ways a body like this goes wrong require a database first.</p>
+  </div>
+  <div class="levels"><a href="/0">[AI&nbsp;0]</a><a href="/1">[AI&nbsp;1]</a><a href="/2">[AI&nbsp;2]</a><a href="/3">[AI&nbsp;3]</a><a href="/4">[AI&nbsp;4]</a><a href="/5">[AI&nbsp;5]</a><a href="/6">[AI&nbsp;6]</a><a href="/7">[AI&nbsp;7]</a><a href="/8">[AI&nbsp;8]</a><a href="/9">[AI&nbsp;9]</a><a href="/x">[AI&nbsp;X]</a></div>
+</main>
+</body>
+</html>

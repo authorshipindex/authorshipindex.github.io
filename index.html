@@ -298,12 +298,12 @@
 
 <nav>
   <div class="nav-in">
-    <a class="brand" href="#/">
+    <a class="brand" href="/">
       <span class="wordmark">[AI&#8201;<i>n</i>]</span>
       <span class="bname">The Authorship Index</span>
     </a>
     <div class="nav-links">
-      <a href="#/" data-nav="home">Home</a>
+      <a href="/" data-nav="home">Home</a>
       <a href="#/mark" data-nav="mark">Artwork</a>
       <a href="#/helper" data-nav="helper">Not sure?</a>
     </div>
@@ -323,7 +323,19 @@
 
     <section>
       <h2 class="eyebrow">The index</h2>
-      <ul class="scale" id="home-scale"></ul>
+      <ul class="scale" id="home-scale">
+        <li><a href="/0"><span class="lnum">[AI 0]</span><span class="lname">Entirely human</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/1"><span class="lnum">[AI 1]</span><span class="lname">Checked by artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/2"><span class="lnum">[AI 2]</span><span class="lname">Discussed with artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/3"><span class="lnum">[AI 3]</span><span class="lname">Planned by artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/4"><span class="lnum">[AI 4]</span><span class="lname">Part-written by artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/5"><span class="lnum">[AI 5]</span><span class="lname">Drafted by artificial intelligence, rewritten by the author</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/6"><span class="lnum">[AI 6]</span><span class="lname">Written by artificial intelligence, shaped by the author</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/7"><span class="lnum">[AI 7]</span><span class="lname">Written by artificial intelligence to a human brief</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/8"><span class="lnum">[AI 8]</span><span class="lname">Written by artificial intelligence, published by a human</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/9"><span class="lnum">[AI 9]</span><span class="lname">Autonomous — no human involved</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/x"><span class="lnum">[AI X]</span><span class="lname">Prefer not to say</span><span class="lgo" aria-hidden="true"></span></a></li>
+      </ul>
       <p class="notice">Tap any number to read what it means.</p>
     </section>
 
@@ -424,7 +436,7 @@
         <h3>This is not a legal requirement and satisfies none</h3>
         <p class="body">The Authorship Index is not a certification. It carries no approval, confers no compliance, and has no official status in any jurisdiction. <strong>Where a law requires a disclosure about artificial intelligence, this index does not discharge that obligation and is no substitute for it.</strong> A declaration made here is one thing only: a statement its declarer chose to make.</p>
       </div>
-      <p style="margin:1.1rem 0 0"><a class="action" href="#/history">How it was worked out →</a></p>
+      <p style="margin:1.1rem 0 0"><a class="action" href="/history">How it was worked out →</a></p>
     </section>
 
     <section>
@@ -672,23 +684,23 @@
   </main>
 
   <nav class="footlinks" aria-label="More pages">
-    <a href="#/standard">The standard in brief</a>
-    <a href="#/glossary">Glossary</a>
-    <a href="#/history">History</a>
-    <a href="#/rulings">Tools</a>
-    <a href="#/contact">Contact</a>
-    <a href="#/licence">Licence</a>
+    <a href="/standard">The standard in brief</a>
+    <a href="/glossary">Glossary</a>
+    <a href="/history">History</a>
+    <a href="/rulings">Tools</a>
+    <a href="/contact">Contact</a>
+    <a href="/licence">Licence</a>
   </nav>
 
   <div class="selfdecl">
-    <a class="sd-decl" href="#/6">
+    <a class="sd-decl" href="/6">
       <span class="sd-tok">[AI&nbsp;6]</span>
       <span class="sd-cap">Written by artificial intelligence, shaped by the author</span>
     </a>
     <p class="sd-note">The idea, the decisions and the editing are the author's. The sentences are largely the machine's. A standard that would not declare itself would not be worth much.</p>
   </div>
 
-  <p class="colophon">The Authorship Index&nbsp;<span class="sep">|</span> Standard version 2026&nbsp;<span class="sep">|</span> authorshipindex.org</p>
+  <p class="colophon">The Authorship Index&nbsp;<span class="sep">|</span> Standard version 2026&nbsp;<span class="sep">|</span> authorshipindex.org<span class="sep">|</span> <a href="/scale.json" style="color:inherit">the scale, as JSON</a></p>
 </div>
 
 <script>
@@ -1056,7 +1068,7 @@
     LEVELS.forEach(function(o, j){
       var li = el('li');
       if (j === currentIndex) li.className = 'here';
-      var a = el('a'); a.href = '#/' + slug(o);
+      var a = el('a'); a.href = '/' + slug(o);
       // The token, not the bare digit — it is what a reader will actually meet.
       var num = el('span','lnum', '[AI ' + o.n + ']');
       var nm  = el('span','lname', o.name);
@@ -1603,6 +1615,22 @@
   byId('helper-restart').addEventListener('click', function(){
     hState.q1 = null; hState.q2 = null; renderHelper(); window.scrollTo(0,0);
   });
+  /* Every internal link is a real path, so a fetcher that cannot run scripts
+     can still follow it. For a reader already here, intercept and route in
+     place - the destination is the same content either way. */
+  var INAPP = /^\/([0-9]|x|standard|glossary|rulings|licence|contact|history)$/;
+  document.addEventListener('click', function(e){
+    if (e.defaultPrevented || e.button !== 0 ||
+        e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target && e.target.closest ? e.target.closest('a') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (!INAPP.test(href)) return;
+    e.preventDefault();
+    if (location.hash === '#' + href) { route(); window.scrollTo(0,0); }
+    else location.hash = '#' + href;
+  });
+
   window.addEventListener('hashchange', function(){ route(); window.scrollTo(0,0); });
   route();
 })();
