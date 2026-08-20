@@ -1,0 +1,1599 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Authorship Index</title>
+<meta name="description" content="One digit, 0 to 9, saying how much of a written work came from a person. A voluntary standard for books, reports, scripts, and anything else written for an audience.">
+<link rel="canonical" href="https://authorshipindex.org/">
+<meta name="theme-color" content="#F4F4F3" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#101215" media="(prefers-color-scheme:dark)">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root{
+    --ground:#F4F4F3; --surface:#FFFFFF;
+    --ink:#15171A; --ink-2:#585D64; --ink-3:#868C94;
+    --rule:#DDDDDA; --rule-2:#EAEAE7;
+    --accent:#0A6E8F; --accent-wash:rgba(10,110,143,.085);
+    --board:#FFFFFF; --board-ink:#101215; --board-rule:#B4B4AF;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Iowan Old Style","Palatino Linotype","Times New Roman",serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#101215; --surface:#181B1F; --ink:#E8E9E7; --ink-2:#9DA3AA; --ink-3:#6D747C;
+      --rule:#282C31; --rule-2:#1E2226; --accent:#4FB4D8; --accent-wash:rgba(79,180,216,.11);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#101215; --surface:#181B1F; --ink:#E8E9E7; --ink-2:#9DA3AA; --ink-3:#6D747C;
+    --rule:#282C31; --rule-2:#1E2226; --accent:#4FB4D8; --accent-wash:rgba(79,180,216,.11);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .page{max-width:38rem;margin:0 auto;padding:0 1.25rem 4.5rem}
+
+  /* ---------- nav ---------- */
+  nav{border-bottom:1px solid var(--rule);background:var(--ground);
+    position:sticky;top:0;z-index:10}
+  .nav-in{max-width:38rem;margin:0 auto;padding:.7rem 1.25rem;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:.6rem 1rem;flex-wrap:wrap}
+  /* Mark and name always travel together, so the token teaches itself. */
+  .brand{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--ink)}
+  /* The italic n marks a placeholder — a real declaration is never italic. */
+  .wordmark{display:inline-block;background:var(--ink);color:var(--ground);
+    font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;
+    font-size:.9375rem;font-weight:800;letter-spacing:-.01em;
+    padding:.3rem .55rem .34rem;border-radius:2px;line-height:1}
+  .wordmark i{font-style:italic;padding-right:.04em}
+  .bname{font-size:.9375rem;font-weight:700;letter-spacing:-.014em;white-space:nowrap}
+  .nav-links{display:flex;gap:.9rem}
+  .nav-links a{font-size:.8125rem;color:var(--ink-2);text-decoration:none;
+    padding:.45rem 0;font-weight:600}
+  .nav-links a[aria-current="page"]{color:var(--accent);box-shadow:inset 0 -2px 0 var(--accent)}
+
+  /* ---------- shared type ---------- */
+  h1.big{font-size:clamp(1.875rem,8vw,2.75rem);line-height:1.08;letter-spacing:-.028em;
+    font-weight:800;margin:0;text-wrap:balance}
+  .lede{font-family:var(--serif);font-size:clamp(1.125rem,3.6vw,1.3125rem);line-height:1.55;
+    color:var(--ink-2);margin:1.1rem 0 0}
+  /* The name identifies; the question explains. Both belong above the fold. */
+  .question{font-family:var(--serif);font-size:clamp(1.375rem,4.6vw,1.875rem);line-height:1.3;
+    letter-spacing:-.012em;color:var(--ink);margin:1.1rem 0 0;text-wrap:balance}
+  .qlabel{display:block;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+  section{padding:2rem 0;border-bottom:1px solid var(--rule)}
+  section:last-of-type{border-bottom:0}
+  h2.eyebrow{font-family:var(--mono);font-size:.6875rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-3);font-weight:400;margin:0 0 .9rem}
+  h3{font-size:1.0625rem;font-weight:700;margin:0 0 .5rem;letter-spacing:-.008em}
+  .prose{font-family:var(--serif);font-size:1.125rem;line-height:1.62;margin:0}
+  .prose + .prose{margin-top:1rem}
+  p.body{margin:0;font-size:1rem;color:var(--ink-2)}
+  p.body + p.body{margin-top:.85rem}
+  .aside{font-family:var(--serif);font-size:1.0625rem;line-height:1.6;margin:1.25rem 0 0;
+    padding:1rem 1.15rem;background:var(--accent-wash);border-left:2px solid var(--accent);
+    border-radius:0 3px 3px 0}
+  code{font-family:var(--mono);font-size:.8125em;background:var(--accent-wash);
+    padding:.15em .4em;border-radius:2px;word-break:break-all}
+  a.action{color:var(--accent);text-decoration:none;font-weight:700;font-size:.9375rem;
+    display:inline-block;padding:.4rem 0;border-bottom:1px solid currentColor;align-self:flex-start}
+  a.action:hover{border-bottom-width:2px}
+  .stack{display:flex;flex-direction:column;gap:1.5rem}
+  .fblock{display:flex;flex-direction:column;gap:.4rem;align-items:flex-start}
+  ul.nots{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.55rem}
+  ul.nots li{font-size:1rem;color:var(--ink-2);padding-left:1.4rem;position:relative}
+  ul.nots li::before{content:"—";position:absolute;left:0;color:var(--ink-3)}
+
+  /* ---------- level hero ---------- */
+  header.hero{padding:2.5rem 0 1.75rem;border-bottom:1px solid var(--rule)}
+  .brandline{font-family:var(--mono);font-size:.6875rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-3);margin:0 0 1.25rem}
+  .brandline b{color:var(--ink-2);font-weight:400}
+  /* The whole token, set uniformly — the mark has no internal hierarchy and
+     neither should this. Sized so the token spans the measure, not the digit. */
+  .numeral{font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;
+    font-size:clamp(2.25rem,21vw,6rem);line-height:.95;font-weight:700;
+    letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin:0;display:block;white-space:nowrap}
+  .plainname{font-size:clamp(1.5rem,7vw,2.125rem);line-height:1.12;font-weight:700;
+    letter-spacing:-.02em;margin:1.25rem 0 0;text-wrap:balance}
+
+  /* ---------- scale list ---------- */
+  .scale{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule-2)}
+  .scale li{border-bottom:1px solid var(--rule-2)}
+  .scale a{display:grid;grid-template-columns:max-content 1fr auto;gap:.55rem;align-items:baseline;
+    padding:.8rem .5rem .8rem .25rem;text-decoration:none;color:inherit;min-height:2.75rem}
+  .scale a:hover .lname{text-decoration:underline}
+  /* Affordance only — a CSS chevron so it stays crisp at any size and needs no font. */
+  .scale .lgo{width:.44rem;height:.44rem;align-self:center;margin-right:.3rem;
+    border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);
+    transform:rotate(-45deg);transition:transform .12s ease, border-color .12s ease}
+  .scale a:hover .lgo{border-color:var(--accent);transform:rotate(-45deg) translate(2px,2px)}
+  .scale li.here .lgo{border-color:var(--accent)}
+  .scale .lnum{font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;
+    font-size:.9375rem;font-weight:700;line-height:1.35;letter-spacing:-.01em;
+    font-variant-numeric:tabular-nums;color:var(--ink-3);white-space:nowrap}
+  .scale .lname{font-size:1rem;color:var(--ink-2);line-height:1.35}
+  .scale li.here{background:var(--accent-wash);box-shadow:inset 3px 0 0 var(--accent)}
+  .scale li.here .lnum{color:var(--accent)}
+  .scale li.here .lname{color:var(--ink);font-weight:700}
+
+  /* ---------- number picker ---------- */
+  .picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(3rem,1fr));gap:.4rem}
+  .picker button{font-family:var(--sans);font-size:1.25rem;font-weight:800;
+    min-height:3.25rem;background:var(--surface);color:var(--ink);
+    border:1px solid var(--rule);border-radius:3px;cursor:pointer;font-variant-numeric:tabular-nums}
+  .picker button:hover{border-color:var(--accent)}
+  .picker button[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+  :root[data-theme="dark"] .picker button[aria-pressed="true"],
+  .picker button[aria-pressed="true"]{color:#fff}
+
+  /* ---------- artwork board ---------- */
+  .board{background:var(--board);border:1px solid var(--rule);border-radius:3px;
+    padding:1.75rem 1rem;display:flex;align-items:center;justify-content:center;overflow-x:auto}
+  .board svg{display:block;height:auto;max-width:100%}
+  .variants{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+    border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+  .variant{background:var(--surface);padding:1.15rem 1.15rem 1.25rem;
+    display:flex;flex-direction:column;gap:.85rem}
+  .variant .vhead{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+  .variant .vname{font-size:.9375rem;font-weight:700}
+  .variant .vsize{font-family:var(--mono);font-size:.6875rem;color:var(--ink-3);letter-spacing:.05em;
+    white-space:nowrap}
+  .variant .vart{background:var(--board);border-radius:2px;padding:1.1rem .75rem;
+    display:flex;align-items:center;justify-content:center;min-height:5.5rem;overflow-x:auto}
+  .variant p{margin:0;font-size:.875rem;color:var(--ink-2)}
+  /* Reference lists fold away; arguments never do. Native details, so it works
+     with no script and answers to the keyboard. */
+  .more{margin:1.1rem 0 0;border-top:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2)}
+  .more + .more{margin-top:0;border-top:0}
+  .more > summary{cursor:pointer;list-style:none;padding:.85rem .25rem;
+    display:flex;align-items:center;gap:.6rem;
+    font-size:.9375rem;font-weight:600;color:var(--ink-2)}
+  .more > summary::-webkit-details-marker{display:none}
+  .more > summary::before{content:"";flex:0 0 auto;width:.44rem;height:.44rem;
+    border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);
+    transform:rotate(-45deg);margin-left:.15rem;
+    transition:transform .15s ease, border-color .15s ease}
+  .more[open] > summary::before{transform:rotate(45deg)}
+  .more > summary:hover{color:var(--ink)}
+  .more > summary:hover::before{border-color:var(--accent)}
+  .more[open] > summary{color:var(--ink)}
+  .more > *:last-child{padding-bottom:1.4rem}
+  /* Section-level fold: the section title is itself the control. */
+  .more.sect{border:0;margin:0}
+  .more.sect > summary{padding:.2rem .25rem .85rem;font-size:1.0625rem;font-weight:700;
+    color:var(--ink);letter-spacing:-.008em}
+  .more.sect > summary::before{border-color:var(--ink-3);margin-right:.1rem}
+  .more.sect > summary:hover::before{border-color:var(--accent)}
+  .more.sect > *:last-child{padding-bottom:0}
+  .doc .more.sect{border-bottom:1px solid var(--rule-2)}
+  .doc .more.sect > summary{padding:.9rem .25rem}
+  .doc .more.sect[open] > summary{padding-bottom:.5rem}
+  .doc .more.sect > *:last-child{padding-bottom:1.1rem}
+  .openall{display:flex;justify-content:flex-end;margin:0 0 .5rem}
+
+  .urltoggle{display:flex;gap:.7rem;align-items:flex-start;margin:0 0 1rem;
+    padding:.85rem 1rem;background:var(--surface);border:1px solid var(--rule);
+    border-radius:3px;cursor:pointer}
+  .urltoggle input{margin:.25rem 0 0;accent-color:var(--accent);flex:0 0 auto}
+  .urltoggle span{font-size:.875rem;color:var(--ink-2);line-height:1.5}
+  .urltoggle strong{color:var(--ink)}
+
+  .acts{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+  .copy{font-family:var(--sans);font-size:.8125rem;font-weight:700;color:var(--accent);
+    background:transparent;border:1px solid var(--accent);border-radius:3px;
+    padding:.5rem .8rem;cursor:pointer;min-height:2.5rem}
+  .copy:hover{background:var(--accent-wash)}
+  .copy.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .copy.primary:hover{filter:brightness(1.08)}
+  .copy.quiet{color:var(--ink-2);border-color:var(--rule)}
+  .copy.quiet:hover{background:transparent;border-color:var(--ink-3);color:var(--ink)}
+  .svgsrc{width:100%;min-height:7rem;margin-top:.5rem;font-family:var(--mono);
+    font-size:.6875rem;line-height:1.5;padding:.6rem .7rem;border:1px solid var(--rule);
+    border-radius:3px;background:var(--ground);color:var(--ink-2);resize:vertical}
+
+  /* ---------- helper ---------- */
+  .q{padding:1.25rem 0;border-bottom:1px solid var(--rule-2)}
+  .q legend{font-size:1.0625rem;font-weight:700;padding:0;margin:0 0 .2rem;line-height:1.3}
+  .q .qhint{font-family:var(--mono);font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-3);margin:0 0 .75rem}
+  fieldset{border:0;margin:0;padding:0}
+  .opts{display:flex;flex-direction:column;gap:.3rem}
+  .opts label{display:flex;align-items:flex-start;gap:.65rem;padding:.6rem .7rem;
+    border:1px solid var(--rule);border-radius:3px;cursor:pointer;background:var(--surface);
+    font-size:.9375rem;min-height:2.75rem}
+  .opts label:hover{border-color:var(--accent)}
+  .opts input{margin:.28rem 0 0;accent-color:var(--accent);flex:0 0 auto}
+  .opts .ot{display:flex;flex-direction:column;gap:.05rem}
+  .opts .ot b{font-weight:700}
+  .opts .ot span{font-size:.9375rem;color:var(--ink);line-height:1.45}
+  .opts label:has(input:checked){border-color:var(--accent);background:var(--accent-wash)}
+  .q .qnote{font-size:.8125rem;color:var(--ink-2);margin:0 0 .75rem;font-style:italic}
+  .helper-acts{display:flex;flex-wrap:wrap;gap:.85rem;align-items:center;margin-top:1.25rem}
+  .result{background:var(--surface);border:1px solid var(--rule);border-radius:4px;
+    padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:.75rem;align-items:flex-start}
+  .result .rnum{font-size:4.5rem;line-height:.82;font-weight:800;letter-spacing:-.05em;color:var(--accent)}
+  .result .rname{font-size:1.25rem;font-weight:700;line-height:1.2}
+  .result p{margin:0;font-size:.9375rem;color:var(--ink-2)}
+
+  /* ---------- standard doc ---------- */
+  .doc h3{margin-top:1.75rem}
+  .doc h3:first-child{margin-top:0}
+  .doc p{margin:0 0 .85rem;font-size:1rem;color:var(--ink-2)}
+  .doc p strong{color:var(--ink)}
+  .tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;margin:0 0 1rem}
+  table{border-collapse:collapse;width:100%;min-width:22rem;background:var(--surface)}
+  th,td{text-align:left;padding:.6rem .8rem;border-bottom:1px solid var(--rule-2);
+    font-size:.875rem;vertical-align:top}
+  th{font-family:var(--mono);font-size:.625rem;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--ink-3);font-weight:400;background:var(--ground)}
+  tr:last-child td{border-bottom:0}
+  td:first-child{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  blockquote.say{margin:1.15rem 0 1.15rem;padding:1.15rem 1.25rem;
+    background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+    border-radius:0 3px 3px 0;font-family:var(--serif);font-size:1.1875rem;line-height:1.5;
+    color:var(--ink)}
+
+  /* ---------- definition list ---------- */
+  .terms{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+    border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:0 0 1.25rem}
+  .terms div{background:var(--surface);padding:.9rem 1.1rem;display:flex;flex-direction:column;gap:.2rem}
+  .terms dt{font-weight:700;font-size:.9375rem;margin:0}
+  .terms dd{margin:0;font-size:.9375rem;color:var(--ink-2);line-height:1.5}
+
+  /* Show the I problem rather than describing it. */
+  .ifade{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+    border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:1.1rem 0}
+  .ifade > div{background:var(--board);padding:.85rem 1rem;display:flex;
+    align-items:baseline;gap:1rem;flex-wrap:wrap}
+  .isample{font-size:1.75rem;font-weight:700;color:var(--board-ink);letter-spacing:.01em}
+  .isample.serif{font-family:Georgia,"Times New Roman",serif}
+  .isample.crossbar{font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif}
+  .isample.bare{font-family:Helvetica,Arial,"Liberation Sans",sans-serif}
+  .ilbl{font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase}
+  .ilbl.ok{color:var(--accent)}
+  .ilbl.no{color:#9A3412}
+
+  .footlinks{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;margin-top:3rem;
+    padding-top:1.35rem;border-top:1px solid var(--rule)}
+  .footlinks a{font-size:.8125rem;font-weight:600;color:var(--ink-2);text-decoration:none;padding:.3rem 0}
+  .footlinks a:hover{color:var(--accent)}
+
+  /* The site declares itself in the form it recommends for anything digital:
+     the token and its caption, linked. No artwork — that is for print. */
+  .selfdecl{display:flex;flex-direction:column;gap:.6rem;
+    border-top:1px solid var(--rule);padding-top:1.5rem;margin-top:2.5rem}
+  .sd-decl{display:inline-flex;align-items:baseline;gap:.55rem;flex-wrap:wrap;
+    text-decoration:none;align-self:flex-start}
+  .sd-tok{font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;font-size:.9375rem;
+    font-weight:700;color:var(--ink);white-space:nowrap;
+    border-bottom:2px solid var(--accent);padding-bottom:1px}
+  .sd-cap{font-size:.9375rem;color:var(--ink-2);line-height:1.4}
+  .sd-decl:hover .sd-tok{color:var(--accent)}
+  .sd-decl:hover .sd-cap{color:var(--ink)}
+  .sd-note{margin:0;font-size:.8125rem;color:var(--ink-3);line-height:1.55;max-width:60ch}
+
+  .colophon{font-family:var(--mono);font-size:.6875rem;line-height:1.9;color:var(--ink-3);
+    letter-spacing:.03em;border-top:1px solid var(--rule);padding-top:1.25rem;margin-top:1.5rem}
+  /* nbsp before each pipe keeps it attached when the line wraps on a phone */
+  .colophon .sep{opacity:.45;padding:0 .12rem}
+  .notice{font-family:var(--mono);font-size:.6875rem;line-height:1.6;color:var(--ink-3);
+    letter-spacing:.04em;margin:1rem 0 0}
+  [hidden]{display:none !important}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="#/">
+      <span class="wordmark">[AI&#8201;<i>n</i>]</span>
+      <span class="bname">The Authorship Index</span>
+    </a>
+    <div class="nav-links">
+      <a href="#/" data-nav="home">Home</a>
+      <a href="#/mark" data-nav="mark">Artwork</a>
+      <a href="#/helper" data-nav="helper">Not sure?</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ============================ HOME ============================ -->
+  <main id="v-home" hidden>
+    <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
+      <h1 class="big">The Authorship Index</h1>
+      <p class="question"><span class="qlabel">The question</span>How much of that text did a person actually write?</p>
+      <p class="lede">One digit answers it — on a novel, a corporate report, a screenplay, a policy paper, anything written for an audience. Zero means no artificial intelligence at all. Nine means no person at all. Everything real sits somewhere between.</p>
+      <p class="notice">Written <code>[AI 6]</code>, <code>[AI 0]</code>, <code>[AI 9]</code>. The letters are the Authorship Index, the digit is the level. Six keystrokes: no artwork, no font, no image file. The square brackets are the editor's mark for material that didn't come from the author.</p>
+    </header>
+
+    <section>
+      <h2 class="eyebrow">The index</h2>
+      <ul class="scale" id="home-scale"></ul>
+      <p class="notice">Tap any number to read what it means.</p>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">Why it exists</h2>
+      <p class="prose">Novelists have been given one-star reviews for using artificial intelligence, often by people who never read the book. Firms are asked whether a report was machine-written and have no consistent way to answer. Studios, journals, agencies and government departments are all being asked the same question in different words.</p>
+      <p class="prose">The Authorship Index is a shared vocabulary for a question everyone is already asking badly. A reader who won't go above a 4 and a reader who seeks out the 8s because they find them thrilling are served by exactly the same number.</p>
+      <p class="aside">The index describes where the words came from. It says nothing about whether the work is any good, and nothing about whether using artificial intelligence was the right call.</p>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">What it applies to</h2>
+      <p class="body">Anything written for an audience. The index was not built for books and then stretched — it covers the written word wherever it appears, and a book is one case among many.</p>
+      <details class="more">
+        <summary>The full range, group by group</summary>
+      <div class="stack" style="margin-top:1.25rem">
+        <div class="fblock">
+          <h3>Published and editorial</h3>
+          <p class="body">Novels, non-fiction, short fiction, poetry, journalism, essays, reviews, newsletters, blogs.</p>
+        </div>
+        <div class="fblock">
+          <h3>Business and professional</h3>
+          <p class="body">Reports, white papers, proposals, tenders, brochures, annual reports, investor updates, press releases, internal policy.</p>
+        </div>
+        <div class="fblock">
+          <h3>Academic and educational</h3>
+          <p class="body">Papers, theses, dissertations, textbooks, course material, lesson plans, grant applications, peer reviews.</p>
+        </div>
+        <div class="fblock">
+          <h3>Legal, regulatory and public</h3>
+          <p class="body">Contracts, filings, submissions, patent applications, policy documents, official guidance, consultation responses.</p>
+        </div>
+        <div class="fblock">
+          <h3>Performed, broadcast and interactive</h3>
+          <p class="body">Screenplays, stage plays, radio drama, podcast and video scripts, game narrative and dialogue, song lyrics, speeches, sermons.</p>
+        </div>
+        <div class="fblock">
+          <h3>Personal and professional</h3>
+          <p class="body">CVs, cover letters, personal statements, references, obituaries, eulogies, speeches for occasions.</p>
+        </div>
+      </div>
+      </details>
+      <p class="aside">The test: if it is written, and somebody other than the writer is meant to read it, it is in scope.</p>
+      <details class="more">
+        <summary>Who may ask you for one</summary>
+      <div class="stack" style="margin-top:1.25rem">
+        <div class="fblock">
+          <h3>Nobody has to use it</h3>
+          <p class="body">This standard requires nothing of anyone. It defines a vocabulary and makes it free to use — it does not tell any industry, platform, employer or publisher what to do, and has no means of doing so.</p>
+        </div>
+        <div class="fblock">
+          <h3>Anyone may ask for it</h3>
+          <p class="body">A publisher may ask it of its authors, a journal of its submissions, a university of its applicants, an employer of its candidates. That is their decision, taken for their reasons. The obligation comes from them, not from here.</p>
+        </div>
+        <div class="fblock">
+          <h3>The number stays yours</h3>
+          <p class="body">However the request arises, the declaration is the declarer's own statement, and nobody may declare on another person's behalf without their knowledge. A required declaration is still a personal claim, and its honesty rests with the person making it.</p>
+        </div>
+      </div>
+      <p class="aside">This standard takes no view on whether any such requirement is appropriate. That is not its business.</p>
+      </details>
+      <p class="body" style="margin-top:1.25rem">For anything performed or filmed, the index rates <strong>the script</strong>. An audiobook narrated by artificial intelligence from a human-written script is marked on the script it was read from. The written word is what the index measures, whatever form it finally reaches an audience in.</p>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">How it works</h2>
+      <div class="stack">
+        <div class="fblock">
+          <h3>You choose your own number</h3>
+          <p class="body">Nothing computes it for you. A declaration is a statement you make and stand behind, and a number produced by a form is one you can disown.</p>
+        </div>
+        <div class="fblock">
+          <h3>There is nothing to sign up for</h3>
+          <p class="body">This site holds no record of any work. No accounts, no database, no register of who declared what — and therefore no list of who didn't. Print the mark and it works.</p>
+        </div>
+        <div class="fblock">
+          <h3>Spellcheckers don't count</h3>
+          <p class="body">Not at any level. They correct what you already wrote and put no words in your mouth. Checking your spelling has never been authorship.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">Where this came from</h2>
+      <p class="prose">No government wrote this. No regulator, no trade body, no standards organisation, no committee. There is no authority above it and none behind it.</p>
+      <p class="prose">It began with an author who used artificial intelligence to write, wanted a precise way to say so, and found that no such language existed — only one phrase, <em>AI-assisted</em>, covering everything from a spellcheck to a machine writing the lot.</p>
+      <p class="prose">It was then written the way it describes: by a person and a machine together, and declared accordingly at 6. A standard about authorship that concealed its own would not deserve reading.</p>
+      <p class="aside">Nothing compels its use and nobody enforces it. Its only authority is whether it proves useful, and it will last exactly as long as that holds.</p>
+      <div class="fblock" style="margin-top:1.75rem">
+        <h3>This is not a legal requirement and satisfies none</h3>
+        <p class="body">The Authorship Index is not a certification. It carries no approval, confers no compliance, and has no official status in any jurisdiction. <strong>Where a law requires a disclosure about artificial intelligence, this index does not discharge that obligation and is no substitute for it.</strong> A declaration made here is one thing only: a statement its declarer chose to make.</p>
+      </div>
+      <p style="margin:1.1rem 0 0"><a class="action" href="#/history">How it was worked out →</a></p>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">Mark your own work</h2>
+      <p class="body">Choose your number, take the artwork, and put it where your work already names its author. It costs nothing and always will — there's no account to create, no form to send, and nobody whose permission you need.</p>
+      <p style="margin:1rem 0 0"><a class="action" href="#/mark">Get the mark →</a></p>
+    </section>
+  </main>
+
+  <!-- ============================ LEVEL ============================ -->
+  <main id="v-level" hidden>
+    <header class="hero">
+      <span class="numeral" id="numeral">[AI 4]</span>
+      <h1 class="plainname" id="plainname">Part-written by artificial intelligence</h1>
+    </header>
+
+    <section>
+      <h2 class="eyebrow">What this means</h2>
+      <div id="meaning"></div>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">What it doesn't tell you</h2>
+      <ul class="nots">
+        <li>Whether the work is any good.</li>
+        <li>Whether the author was right to use artificial intelligence, or wrong to.</li>
+        <li>Anything about the author's honesty beyond the fact that they declared.</li>
+      </ul>
+      <p class="aside">The index describes where the words came from. Nothing else. A reader who won't go above a 4 and a reader who seeks out the 8s because they find them thrilling are both served by the same number.</p>
+    </section>
+
+    <section id="saying-it">
+      <h2 class="eyebrow">Saying it out loud</h2>
+      <p class="body" id="say-intro"></p>
+      <blockquote class="say" id="say-line"></blockquote>
+      <p class="body">Put <code>authorshipindex.org</code> beside the number and you never have to explain it again — anyone who wants the detail can go and read it.</p>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">The full index</h2>
+      <ul class="scale" id="level-scale"></ul>
+    </section>
+
+    <section>
+      <div class="stack">
+        <div class="fblock">
+          <h3>Marking your own work</h3>
+          <p class="body">Choose your number and print the mark. Nothing to sign up for and no permission to seek — this site holds no record of any work, including yours.</p>
+          <a class="action" href="#/mark" id="level-tomark">Get the mark →</a>
+        </div>
+        <div class="fblock">
+          <h3>Not sure which number?</h3>
+          <p class="body">Two questions will suggest one. The answers stay in your browser and are never recorded.</p>
+          <a class="action" href="#/helper">Answer two questions →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ MARK ============================ -->
+  <main id="v-mark" hidden>
+    <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
+      <h1 class="big">Artwork</h1>
+      <p class="lede">Choose your number and take the files. It costs nothing, the right to use them can never be withdrawn, and there is nobody you need to ask. For anything digital you need no artwork at all — six keystrokes and a link will do.</p>
+      <p class="notice">This mark is not a certification and has no legal effect. Where a law requires a disclosure about artificial intelligence, printing this does not discharge that obligation.</p>
+    </header>
+
+    <section>
+      <h2 class="eyebrow">1 · Your number</h2>
+      <div class="picker" id="mark-picker" role="group" aria-label="Choose your index"></div>
+      <p class="notice" id="mark-chosen">[AI 4] — part-written by artificial intelligence.</p>
+      <p style="margin:.9rem 0 0"><a class="action" href="#/helper">Not sure? Answer two questions →</a></p>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">2 · The artwork</h2>
+      <div class="variants">
+        <div class="variant">
+          <div class="vhead">
+            <span class="vname">At print size</span>
+            <span class="vsize">59 × 22 mm</span>
+          </div>
+          <div class="vart" id="mark-board"></div>
+        </div>
+      </div>
+      <p class="notice">Shown at print size. The full mark is 59 × 22 mm — the token block and the code sit at the same height, like an EAN block. The code is live: scan it.</p>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">3 · Variants</h2>
+      <label class="urltoggle">
+        <input type="checkbox" id="mark-url" checked>
+        <span><strong>Include the caption</strong> — the level in plain English, with the address beneath it. On paper a bare token is a dead end: nobody knows what a 4 means yet, and search engines strip the brackets, so it cannot even be looked up. Turn it off only where space genuinely will not take it.</span>
+      </label>
+      <div class="variants" id="mark-variants"></div>
+    </section>
+
+    <section>
+      <details class="more sect">
+      <summary>Where the mark goes</summary>
+      <p class="body">Print needs artwork. Everything else needs two characters and a link.</p>
+      <div class="stack" style="margin-top:1.1rem">
+        <div class="fblock">
+          <h3>Books</h3>
+          <p class="body">Back cover beside the barcode, plus the copyright page. Add <code>[AI 4]</code> to your metadata — that's where cataloguers and retail feeds look.</p>
+        </div>
+        <div class="fblock">
+          <h3>Reports, papers and brochures</h3>
+          <p class="body">Title page or colophon, wherever the document already states its author and date.</p>
+        </div>
+        <div class="fblock">
+          <h3>Scripts and screenplays</h3>
+          <p class="body">Title page, beside the draft date. The index rates the script, not the performance.</p>
+        </div>
+        <div class="fblock">
+          <h3>Websites, articles and anything digital</h3>
+          <p class="body">No artwork needed. Write <code>[AI 4]</code> in the footer or byline and link it to <code>authorshipindex.org/4</code>. That's the whole implementation — the text is the mark.</p>
+        </div>
+        <div class="fblock">
+          <h3>Video and audio</h3>
+          <p class="body">In the description, marking the script. Say so explicitly: <em>"Script: [AI 4]."</em></p>
+        </div>
+      </div>
+          </details>
+    </section>
+
+    <section>
+      <details class="more sect">
+      <summary>The code</summary>
+      <p class="body">The code in the artwork above is real and scannable. It encodes one address and nothing else:</p>
+      <p class="body" style="margin-top:.6rem"><code>https://authorshipindex.org/4</code></p>
+      <p class="body" style="margin-top:.85rem">No identifier, no parameters, no tracking. Version 3, 29 × 29 modules, error correction Q — which tolerates about 30% damage, so it survives a scuffed cover.</p>
+      <div class="stack" style="margin-top:1.25rem">
+        <div class="fblock">
+          <h3>Eleven codes, forever</h3>
+          <p class="body">Nothing about your work is encoded, because nothing about your work is held anywhere. There are only ever eleven codes in the entire system — <code>/0</code> through <code>/9</code> and <code>/x</code> — and they never change. Take the one matching your number and reuse it.</p>
+        </div>
+        <div class="fblock">
+          <h3>Test it in print, not on screen</h3>
+          <p class="body">Print it at the size you intend to use, on the stock you intend to use, and scan it with an ordinary phone in ordinary light. Matte and uncoated papers absorb ink and thicken modules; a code that scans perfectly on a screen can fail on paper. <strong>18 mm is the sensible floor.</strong></p>
+        </div>
+        <div class="fblock">
+          <h3>Keep the quiet zone</h3>
+          <p class="body">The blank margin around the code is part of it — four modules on every side, already built into the artwork. Cropping it, or letting cover art run up against the edge, is the most common reason a printed code stops working.</p>
+        </div>
+      </div>
+          </details>
+    </section>
+
+    <section>
+      <details class="more sect">
+      <summary>Host the file yourself</summary>
+      <p class="body">Download it and put it on your own server. This site deliberately does not offer an image address to link to, and the reason is worth knowing before you go looking for one.</p>
+      <div class="stack" style="margin-top:1.1rem">
+        <div class="fblock">
+          <h3>It would make every page that used it call us</h3>
+          <p class="body">A linked image is a request to whoever hosts it. Every visitor to every page carrying the mark would be reaching this site, and its host would see them. That is a stream of readers we have promised not to gather, created on other people's pages without their readers knowing.</p>
+        </div>
+        <div class="fblock">
+          <h3>And it would make your page depend on ours</h3>
+          <p class="body">If this site were slow, moved, or went dark, the mark would vanish from your work. A file you hold cannot be taken away, changed underneath you, or switched off.</p>
+        </div>
+        <div class="fblock">
+          <h3>For anything digital you need no image at all</h3>
+          <p class="body">Write <code>[AI 4]</code> in the byline or footer and link the text to <code>authorshipindex.org/4</code>. Six keystrokes, no file to host, nothing to break. The artwork exists for print, where text alone will not do.</p>
+        </div>
+      </div>
+          </details>
+    </section>
+
+    <section>
+      <details class="more sect">
+      <summary>Print rules</summary>
+      <div class="stack">
+        <div class="fblock">
+          <h3>Advice: watch the capital I</h3>
+          <p class="body">In many sans-serif faces the capital I is a bare vertical stroke, near-identical to a figure 1 — so <code>[AI 4]</code> can read as <code>[A1 4]</code>. <em>A1</em> is a common idiom for first-rate, and this index grades nothing, so that is the one misreading worth designing against.</p>
+          <p class="body">We advise a face whose capital I is unmistakable. Most serif faces carry crossbars top and bottom by construction; some sans faces add them deliberately. Set it and look at it small.</p>
+          <div class="ifade">
+            <div><span class="isample serif">[AI 4]</span><span class="ilbl ok">Serif — crossbars, unmistakable</span></div>
+            <div><span class="isample crossbar">[AI 4]</span><span class="ilbl ok">Sans with crossbars — also fine</span></div>
+            <div><span class="isample bare">[AI 4]</span><span class="ilbl no">Bare stroke — reads as A1</span></div>
+          </div>
+          <p class="body">This is advice, not a rule. The standard rules on what the mark means and advises on how it is set.</p>
+        </div>
+        <div class="fblock">
+          <h3>Do</h3>
+          <p class="body">Keep clear space on all four sides equal to the height of the digit. Print in a single ink — black on white, or the cover's own ink on its own ground. Set it in the cover's own typeface if you prefer — the number is the mark, not the font.</p>
+        </div>
+        <div class="fblock">
+          <h3>Never</h3>
+          <p class="body">Never colour-code the scale green to red — the moment the mark carries a verdict, the standard has broken its own promise. Never add "only", "just", or "certified human" beside the number. The digit is the whole statement.</p>
+        </div>
+        <div class="fblock">
+          <h3>Also worth doing</h3>
+          <p class="body">Put the number on the copyright page and in your work's metadata as <code>[AI 4]</code>. That's where librarians, cataloguers and retail feeds will look, and it costs nothing.</p>
+        </div>
+      </div>
+      <p class="aside">Say how, not just what. The digit alone carries little credibility — a sentence in your acknowledgements explaining how artificial intelligence was involved carries a great deal. That note is yours, lives wherever you put it, and this standard can never lose it.</p>
+          </details>
+    </section>
+  </main>
+
+  <!-- ============================ HELPER ============================ -->
+  <main id="v-helper" hidden>
+    <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
+      <h1 class="big">Not sure which number?</h1>
+      <p class="lede">Two questions. Answer them the way you'd tell a friend what you did.</p>
+      <p class="notice">Answers stay in this browser. Nothing is sent anywhere, stored, or recorded against you or your work.</p>
+    </header>
+
+    <section id="helper-questions"></section>
+
+    <section id="helper-result" hidden>
+      <h2 class="eyebrow">Suggestion</h2>
+      <div class="result">
+        <span class="rnum" id="helper-num">—</span>
+        <span class="rname" id="helper-name"></span>
+        <p id="helper-note"></p>
+      </div>
+      <p class="aside">This is advice, not a verdict. Take it, ignore it, or declare something else — nothing about using this tool is recorded, and no page will ever show a suggested number beside the one you chose.</p>
+      <div class="helper-acts">
+        <a class="action" href="#/mark" id="helper-tomark">Take this number to the mark →</a>
+        <button type="button" class="copy" id="helper-restart">Start again</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ STANDARD ============================ -->
+  <main id="v-standard" hidden>
+    <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
+      <h1 class="big">The standard in brief</h1>
+      <p class="lede">The Authorship Index, version 2026. This page carries the substance in the order the standard sets it out. The full text — including the mark specification, the helper, and the definitions — is published in the standard’s public repository, which is the version to cite.</p>
+    </header>
+    <section class="doc" id="standard-body"></section>
+  </main>
+
+  <!-- ============================ DOC PAGES ============================ -->
+  <main id="v-doc" hidden>
+    <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
+      <h1 class="big" id="doc-title"></h1>
+      <p class="lede" id="doc-lede"></p>
+    </header>
+    <section class="doc" id="doc-body"></section>
+  </main>
+
+  <nav class="footlinks" aria-label="More pages">
+    <a href="#/standard">The standard in brief</a>
+    <a href="#/glossary">Glossary</a>
+    <a href="#/history">History</a>
+    <a href="#/rulings">Tools</a>
+    <a href="#/contact">Contact</a>
+    <a href="#/licence">Licence</a>
+  </nav>
+
+  <div class="selfdecl">
+    <a class="sd-decl" href="#/6">
+      <span class="sd-tok">[AI&nbsp;6]</span>
+      <span class="sd-cap">Written by artificial intelligence, shaped by the author</span>
+    </a>
+    <p class="sd-note">The idea, the decisions and the editing are the author's. The sentences are largely the machine's. A standard that would not declare itself would not be worth much.</p>
+  </div>
+
+  <p class="colophon">The Authorship Index&nbsp;<span class="sep">|</span> Standard version 2026&nbsp;<span class="sep">|</span> authorshipindex.org</p>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ------------------------------ data ------------------------------ */
+  var LEVELS = [
+    {n:0, name:"Entirely human", say:"No. No artificial intelligence at any stage of this — not planning it, not writing it, not checking it.", p:[
+      "Nobody used an artificial intelligence tool on this work — not to plan it, not to write it, not to check it. The author wrote it, and every error in it is theirs.",
+      "Spellcheckers and grammar checkers don’t count towards the index and never have. Checking your spelling is not authorship."]},
+    {n:1, name:"Checked by artificial intelligence", say:"Yes, I did. 1. I wrote every word, then had artificial intelligence check the facts and the continuity.", p:[
+      "Every word here is the author’s. Before publishing, they asked an artificial intelligence to check the substance — the facts, the continuity, whether the argument holds — and then fixed what it found themselves.",
+      "Nothing the artificial intelligence produced is in the text. An author declaring 1 is telling you they were thorough."]},
+    {n:2, name:"Discussed with artificial intelligence", say:"Yes, I did. 2. I talked it through with artificial intelligence while I worked. Every word is mine.", p:[
+      "The author wrote every word. Somewhere along the way they talked the work through with an artificial intelligence — testing an idea, working out a problem, asking whether a chapter landed — and that conversation shaped what stayed and what went.",
+      "No artificial intelligence writing is in the text. The thinking had a second party in the room."]},
+    {n:3, name:"Planned by artificial intelligence", say:"Yes, I did. 3. Artificial intelligence helped me plan the shape of it. I wrote all of it myself.", p:[
+      "The prose is entirely the author’s. The shape of it isn’t. An artificial intelligence produced the outline, the structure, or in some cases the original idea, and the author then wrote the whole thing themselves.",
+      "Every sentence you read was written by a person."]},
+    {n:4, name:"Part-written by artificial intelligence", say:"Yes, I did. 4. Some artificial intelligence phrasing is in there. The substance and the voice are mine.", p:[
+      "The author wrote this. In places they asked an artificial intelligence for a phrase, a sentence, or a way through a difficult paragraph — and some of that wording is still on the page.",
+      "The substance, the argument and the voice are the author’s. This is probably the most common honest declaration in writing today."]},
+    {n:5, name:"Drafted by artificial intelligence, rewritten by the author", say:"Yes, I did. 5. Artificial intelligence drafted it and I rewrote it. What you are reading is in my words.", p:[
+      "An artificial intelligence produced the first draft. The author then rewrote it — reworking the phrasing, the rhythm and the voice until the sentences were theirs.",
+      "What you are reading passed through a human hand line by line. The words started somewhere else and arrived here changed."]},
+    {n:6, name:"Written by artificial intelligence, shaped by the author", say:"Yes, I did. 6. Artificial intelligence wrote the prose. The story, the decisions and the editing are mine.", p:[
+      "The idea was the author’s, and so was the editorial work — what to keep, what to cut, where it ends. But the sentences are largely the artificial intelligence’s.",
+      "The author directed a machine writer rather than writing it themselves. The judgement is human; the prose is not."]},
+    {n:7, name:"Written by artificial intelligence to a human brief", say:"Yes, I did. 7. I briefed it, artificial intelligence wrote it, and I read and approved the result.", p:[
+      "A person wrote the brief — what this should be, who it is for, how it should sound. An artificial intelligence wrote and revised everything from there.",
+      "A human read the result and approved it before it was published. Their contribution was the instruction and the sign-off."]},
+    {n:8, name:"Written by artificial intelligence, published by a human", say:"Yes, I did. 8. Artificial intelligence wrote it. I decided it was worth publishing and put my name on it.", p:[
+      "The idea, the structure and every word came from an artificial intelligence. A person’s contribution was the decision to publish it.",
+      "That decision is real — somebody chose to put this into the world and their name is on it — but they did not write it and did not think of it."]},
+    {n:9, name:"Autonomous — no human involved", say:"No person wrote this, and no person is claiming to have.", p:[
+      "No person conceived this, wrote it, read it, or approved it. An artificial intelligence system produced and published it on its own.",
+      "The only human involvement was building or deploying the system that did it, possibly long before this existed. A 9 cannot be declared by an author, because a person filling in a declaration is a person being involved."]},
+    {n:"X", name:"Prefer not to say", say:"I’d prefer not to say.", p:[
+      "Forms have offered this option for as long as there have been forms. Left-handed, right-handed, prefer not to say. It has never needed a reason and it does not need one here.",
+      "X means whoever published this considered the question and chose not to answer it. It has to be marked deliberately — nobody is ever assigned an X, and it is never what you get for saying nothing at all.",
+      "The standard takes no view on it, and holds no record of who has chosen it."]}
+  ];
+
+  // One question decides the band, because the band is decided by where the
+  // words came from. The follow-up only asks what still matters.
+  var HELP_Q1 = {
+    hint:"The words",
+    q:"Who wrote the sentences that ended up in the finished work?",
+    opts:[
+      {t:"I wrote every one of them myself.", go:"none"},
+      {t:"I wrote it. Here and there I used artificial intelligence for a phrase or a sentence I was stuck on.", level:4},
+      {t:"Artificial intelligence wrote a draft, and I rewrote it in my own words.", level:5},
+      {t:"Artificial intelligence wrote it, and what it wrote is broadly what's on the page.", go:"ai"}
+    ]
+  };
+  var HELP_NONE = {
+    hint:"Everything else",
+    q:"So artificial intelligence wrote none of it. What did it do?",
+    note:"If more than one applies, pick the biggest thing it did.",
+    opts:[
+      {t:"Nothing at all. It was never involved.", level:0},
+      {t:"Checked it — the facts, the continuity, whether the argument held up.", level:1},
+      {t:"Talked it through with me while I was working on it.", level:2},
+      {t:"Came up with the plan, the structure, or the idea itself.", level:3}
+    ]
+  };
+  var HELP_AI = {
+    hint:"Everything else",
+    q:"So artificial intelligence wrote the words. How much of the rest was yours?",
+    opts:[
+      {t:"My idea, and I did the editing, cutting and shaping myself.", level:6},
+      {t:"My idea and my brief. Artificial intelligence wrote and revised it, and I approved the result.", level:7},
+      {t:"The idea came from artificial intelligence too. I decided it was worth publishing.", level:8}
+    ]
+  };
+
+  var STANDARD = [
+    {h:"What the Authorship Index is", p:[
+      "The Authorship Index is a voluntary, self-declared index describing <strong>how much of a written work came from a human being.</strong> It is one digit, 0 to 9. <strong>0 is entirely human. 9 is no human at all.</strong> Everything real sits between.",
+      "It is not a quality judgement, not a moral position, and not a compliance regime. The Authorship Index measures one thing: <strong>where the words came from.</strong>",
+      "<strong>Intelligence is not the test.</strong> Nothing turns on whether the system is intelligent, and the standard never asks. A template that assembles a match report from a data feed, a model that writes a novel, and whatever follows both are the same to the index: text that a person did not write. Automated journalism produced weather and sports reports long before language models existed, and those words had no human author either."]},
+    {h:"Where this came from", p:[
+      "No government wrote this. No regulator, no trade body, no standards organisation, no committee. There is no authority above it and none behind it.",
+      "It began with an author who used artificial intelligence to write, wanted a precise way to say so, and found that no such language existed — only one phrase, <em>AI-assisted</em>, covering everything from a spellcheck to a machine writing the lot. The problem was practical before it was general.",
+      "It was then written the way it describes: by a person and a machine together, and declared accordingly at <strong>[AI 6]</strong>. A standard about authorship that concealed its own would not deserve reading.",
+      "Nothing compels its use and nobody enforces it. Its only authority is whether it proves useful, and it will last exactly as long as that holds. A standard written from inside a practice is a different thing from one written about it.",
+      "<strong>This is not a legal requirement and satisfies none.</strong> The Authorship Index is not a certification. It carries no approval, confers no compliance, and has no official status in any jurisdiction. Where a law requires a disclosure about artificial intelligence, this index does not discharge that obligation and is no substitute for it. Statutory regimes ask their own questions, in their own terms, with their own penalties. Marking a work here answers none of them."]},
+    {h:"Scope", p:[
+      "The index may be used for any written content intended for an audience — it is not applied to anything, it is available for anything. Published and editorial writing; business and professional documents; academic and educational material; legal, regulatory and public documents; performed, broadcast and interactive scripts; and personal and professional writing such as CVs, references and eulogies. <strong>The test: if it is written, and somebody other than the writer is meant to read it, it is in scope.</strong>",
+      "The index covers the written content of the work itself. Cover art and separately produced marketing material sit outside it. A script is a written work; an audiobook narrated by artificial intelligence from a human-written script is marked on the script."]},
+    {h:"Who may require a declaration", p:[
+      "<strong>This standard requires nothing of anyone.</strong> It defines a vocabulary and makes it free to use. It does not tell any industry, platform, employer or publisher what to do, and it has no means of doing so.",
+      "Anyone may require declarations within their own domain — a publisher of its authors, a journal of its submissions, a university of its applicants, an employer of its candidates. That is their policy decision, taken for their reasons. The obligation comes from them, not from this standard, which neither authorises nor objects.",
+      "<strong>The number is always the declarer’s own statement.</strong> Nobody may declare on another person’s behalf without their knowledge. A required declaration is still a personal claim, and its honesty rests with the person making it — not with whoever asked.",
+      "This standard takes no view on whether any such requirement is appropriate. That is not its business."]},
+    {h:"The index", table:true},
+    {h:"9 cannot be self-declared", p:[
+      "Every level from 0 to 8 has a human who knows the truth. At 9 there is nobody to ask — a person filling in a declaration <em>is</em> human involvement.",
+      "9 is therefore declared by the deploying system or platform, not by an author. Where no human author exists to declare, the declaration can only come from whoever deployed the system."]},
+    {h:"Whole numbers only", p:[
+      "The index takes whole numbers. There is no <code>[AI 5/6]</code>, no half, no range.",
+      "Where the level is genuinely uncertain, the rule is the one that applies everywhere else: <strong>when in doubt, go higher.</strong>"]},
+    {h:"Choosing your index", p:[
+      "<strong>You choose your own number.</strong> Nothing computes it for you, and no tool’s answer overrides yours. A declaration is a statement a person makes and stands behind — a number produced by a form is one its declarer can disown.",
+      "One question does most of the work: <strong>who produced the prose that is actually in the finished text?</strong> Answer that, then narrow within the band.",
+      "<strong>When in doubt, go higher.</strong> Self-declaration has a known bias and it runs one way — people underestimate how much artificial intelligence touched their work, because assistance is easy to forget and authorship is not. Declaring low is the only failure mode this standard has."]},
+    {h:"Spelling and grammar are not artificial intelligence involvement", p:[
+      "Spellcheckers, grammar checkers and style checkers <strong>do not count at any level.</strong> An author who uses them declares 0 and is telling the truth.",
+      "This is not a concession. They have been part of writing since long before generative artificial intelligence, they correct what the author already wrote, and they put no words in anyone’s mouth. A standard under which every writer alive is a 1 would be describing nothing.",
+      "Two questions cover the whole scale. <strong>Did the tool have to understand the work?</strong> No, 0 — yes, at least 1. A spellchecker would behave identically on a shopping list; a tool that catches a timeline contradiction in chapter nine has read your work. <strong>Did it write any of the words that survived?</strong> If yes, at least 4."]},
+    {h:"To the declarer’s knowledge", p:[
+      "A declaration covers what the declarer knows. An author who knows their editor used artificial intelligence to restructure a chapter must declare it; an author who cannot know is not lying by declaring 0. Standards that demand omniscience get ignored."]},
+    {h:"Prefer not to say", p:[
+      "Anyone who has deliberately chosen not to state a level may print <strong>X</strong>. It is a statement, not a gap, and it requires a positive act — nobody is ever assigned one.",
+      "<strong>The Authorship Index keeps no register of works.</strong> No database of who declared what, and therefore no database of who didn’t. An index capable of producing a list of undeclared books would become exactly the weapon it exists to disarm. An unmarked book is simply unmarked."]},
+    {h:"Who is responsible for the mark", p:[
+      "Whoever publishes the work. For a self-published author that is the author; where an organisation publishes the work it is that organisation — and the author’s name is on the cover regardless, which is why marking a work without asking its author gambles with somebody else’s reputation.",
+      "An author who disagrees with a mark on their own work can say so publicly, in their own words. There is no register to appeal to and no arbitrator to petition."]},
+    {h:"Disagreement", p:[
+      "The Authorship Index hosts no opinion about any mark, because it holds no records to attach opinion to. Readers who doubt a mark do what readers have always done: talk about it, wherever that kind of work is already discussed.",
+      "The standard operates no dispute queue, no arbitration, no agreement score and no moderation, and it never will. This standard exists partly because authors were one-starred for using artificial intelligence. It must never become the mechanism."]},
+    {h:"Editions and versions", p:[
+      "Every edition carries its own mark. A translation is a new work for these purposes — a human-written original put through machine translation produces an artificial intelligence-drafted edition, whatever the original was.",
+      "A work whose parts have different origins — an anthology, a journal issue, a report written in sections — is several works bound together. Each part may carry its own mark, and a mark on the whole takes the highest.",
+      "A mark is fixed at the moment of printing, because print is fixed at the moment of printing. There is nothing to correct and nowhere to correct it."]},
+    {h:"Notation and addresses", p:[
+      "<code>[AI 4]</code> — everywhere. Printed on a cover, typed in a byline, entered in a metadata field, written in an email. There is no second form and no separate machine-readable variant, because the mark types on any keyboard and survives plain text. Prefer not to say is <code>[AI X]</code>.",
+      "<strong>Eleven addresses, and that is all.</strong> <code>authorshipindex.org/0</code> through <code>/9</code>, plus <code>/x</code>. Every mark ever printed resolves to one of eleven pages, and those pages are the whole of this standard’s infrastructure. No accounts, no registration, no database, no lookup of any kind.",
+      "This is what the standard is: <strong>a vocabulary, not a registry.</strong> Nobody registers their use of the word <em>kilogram</em>. The term is defined, the definition is public, and usage is free and unaudited.",
+      "If a register is ever genuinely wanted it can be added later without invalidating a single mark already in print. That is the test every future change must pass.",
+      "<strong>The logo is not a declaration.</strong> The standard’s own logo is <code>[AI n]</code> with the <em>n</em> in italic — the typographic convention for a variable. It shows the shape of the notation rather than any work’s value. A declaration is never italic, so the site’s branding can never be mistaken for a claim about something."]},
+    {h:"What the site knows about you", p:[
+      "<strong>These pages set no cookies, store nothing in your browser, and contact no other server.</strong> No analytics, no scripts from elsewhere, no fonts, no images, no tracking pixels, no embedded anything. Each page is a single file that arrives complete. There is nothing to accept and nothing to refuse, which is why you are not asked.",
+      "<strong>Nothing is counted.</strong> If that ever changes, this section will say so before it does.",
+      "What no page can promise: a request has to come from somewhere, so whoever hosts these pages receives the address it came from, as every web server does. That is how the internet works and no page can opt out of it on your behalf. The standard itself keeps none of it and has no register to attach it to.",
+      "The honest statement is <em>this page collects nothing</em>, not <em>nobody sees anything</em>. A standard about accurate declarations should not overstate its own.",
+      "A reader looking up what a number means should not pay for the answer with their identity."]},
+    {h:"Versioning", p:[
+      "Standard versions are years — <strong>2026</strong> — not 1.0 or 2.0, which would collide with level numbers.",
+      "<strong>Every earlier wording remains readable in the standard’s public revision history</strong>, where each change is dated and attributed. That archive is deliberately not held on these pages: a record its own author can quietly amend is not a record. Anyone declaring under a given version can see exactly what it said at the time.",
+      "What may change: exemptions, boundary guidance, the helper, governance. <strong>What may never change: the ten levels, their numbers and their meanings.</strong> No change may invalidate a mark already in print — a database can be migrated, a hundred thousand printed covers cannot."]},
+    {h:"What the Authorship Index does not measure", p:[
+      "Quality, merit, or craft. Commercial or literary value. Whether the use of artificial intelligence was ethical. Compliance with any platform’s terms. The declarer’s integrity.",
+      "It measures one thing: where the words came from."]},
+    {h:"Limits", p:[
+      "The Authorship Index is only as reliable as the honesty of those who declare it. It cannot force a declaration, verify one independently, or reach inside a closed system to establish provenance.",
+      "At 0 through 8 there is always a human who knows the truth. At 9 there may be nobody to ask. Society has assumed good-faith self-declaration before — ratings agencies before 2008, food labelling before the adulteration scandals, carbon reporting before greenwashing became a profession. The assumption held until it didn’t.",
+      "<strong>What a mark in the text can and cannot show.</strong> Statutory regimes have begun requiring machine-readable marking of generated content, and providers have begun embedding such marks in text as it is written. Those marks prove <em>processing</em>, not <em>authorship</em> — they can show a machine was involved, never how much of the finished work is its, whether a person rewrote it, or whose idea it was. A 5 and an 8 may both carry traces, and no detector can tell them apart. The index measures exactly what a mark in the text cannot.",
+      "This standard does not depend on any of it. Marking is uneven between providers, can be removed deliberately, and does not survive being rewritten — which is what happens at the levels where it would matter most. A declaration remains a person’s word, and that is the only thing the index has ever rested on.",
+      "There is an inversion already visible in this: an autonomous system that honestly declares 9 is being more transparent than a human who publishes at 7 and declares 1. At that point the machine is the more honest party.",
+      "The Authorship Index shines a light. It cannot make anyone stand in it. The standard exists because transparency is worth pursuing even where it cannot be enforced — not because every bad actor will comply, but because every good actor now has a language, and every absence of that language now means something."]},
+    {h:"Governance", p:[
+      "These pages are published at authorshipindex.org. Four commitments bind the standard regardless of who operates them.",
+      "<strong>One.</strong> The licence to use the mark and the index is free, permanent and non-discriminatory. <strong>Two.</strong> The eleven pages are readable by anyone, at no cost, without an account. <strong>Three.</strong> No platform is privileged — no retailer, discovery tool or discussion venue is favoured as a route for declaring, resolving or disputing a mark. <strong>Four.</strong> The ten levels are never renumbered.",
+      "There is deliberately very little to govern. The standard owns eleven pages, a mark and a definition, and holds nothing about anybody’s work. Most of the ways a body like this goes wrong require a database first."]}
+  ];
+
+  var DOCS = {
+    glossary: {
+      title:'Glossary',
+      lede:'The prose on this site varies for readability. The standard’s normative sections do not — there, each of these words means exactly this and nothing else.',
+      blocks:[
+        {terms:[
+          ['AI','The non-human party. Any system that produces text without a person writing it — whatever it is called, and however it works. Today that is artificial intelligence: large language models and their kin. Used broadly, so that the definition outlives both the technology and its name.'],
+          ['Human','A person. Not an organisation, not a legal person, not a system. The index measures what human beings contributed.'],
+          ['The author','The human whose work it is, and whose name is on it.'],
+          ['The declarer','Whoever states the number. Usually the author; sometimes a publisher or an organisation. The two are often not the same, and only the author is a human by definition.'],
+          ['The work','The whole thing being declared — a book, a report, a script, an edition.'],
+          ['The words, the prose','The sentences a reader actually reads. Levels 4 to 8 turn on who produced these. Levels 1 to 3 turn on other things.'],
+          ['Substance','Facts, continuity, argument, meaning. As opposed to mechanics — spelling, grammar, punctuation — which sit outside the index entirely.'],
+          ['Declare','To state a number. Never rate, score or grade: those are the verbs of judgement, and this standard makes none.'],
+          ['The mark','The token [AI 4], typed or printed.'],
+          ['The index','This standard, and the scale it defines. A single value is a number or a level — never a rating.'],
+          ['AI, the letters','Neither <em>artificial intelligence</em> nor <em>the Authorship Index</em> is abbreviated in prose. The letters appear in one place only: the mark. There they name the Authorship Index and its level, and they also read as artificial intelligence — which is what the non-human writer is in 2026. That is deliberate rather than a collision.']
+        ]},
+        {h:'Why this page exists', p:[
+          'A standard that uses two words for one thing invites two readings of it. The distinction between <strong>the author</strong> and <strong>the declarer</strong> decides who carries responsibility when a publisher marks a book. The distinction between <strong>the work</strong> and <strong>the words</strong> decides the whole middle of the scale.',
+          'The exclusions matter as much as the definitions. <strong>Rate</strong>, <strong>score</strong> and <strong>grade</strong> are barred because they carry evaluation, and a standard that judges nothing cannot use the verbs of judgement without contradicting itself in its own grammar.'
+        ]}
+      ]
+    },
+
+    history: {
+      title:'How it was worked out',
+      lede:'This standard was written by a person and a machine, each correcting the other. Both were wrong more than once, and the record below sets out which was wrong about what. Standards rarely show their working; the discarded versions explain the current one better than the current one can.',
+      blocks:[
+        {h:'“Why does the scale reverse direction?”', p:[
+          'The first draft ran L0 to L7. The second extended it to L10. The third replaced the integers with dot notation: 0, then 1.0–1.4 for human-led work, then 2.4–2.0 for machine-led work.',
+          'That third version broke the one thing an index cannot break. Inside the 1.x band a higher number meant more machine; inside 2.x a higher number meant more <em>human</em>. The scale reversed halfway along, so nobody could compare 1.4 with 2.1 without a lookup table — and the document contradicted itself in two places without noticing.',
+          'The answer was already on a napkin. The originator’s first sketch of the back cover showed a single digit in a box. Every more elaborate scheme was tested against that sketch, and the digit won every time.'
+        ]},
+        {h:'“Is the 01 a version, or the index?”', p:[
+          'The code was originally a GS1 Digital Link: <code>/01/</code> followed by the thirteen digits of the ISBN, so that one square on the cover carried both the book’s identity and its record. <code>01</code> is the GS1 identifier for a product number, and it would have been <code>01</code> on every book ever printed.',
+          'The question that settled it was simple: if the person who invented the standard reads <code>01</code> as the index, so will everyone. The URL now leads with the number, which is what a reader actually wants.'
+        ]},
+        {h:'“The code tells me what a 4 means. It doesn’t need to know which book this is.”', p:[
+          'This one reframed the whole system. If the code’s job is to explain the digit rather than look up the work, then it needs no ISBN, no record, and <strong>no registration at all</strong>.',
+          'That is what made adoption free. Any author anywhere prints the mark and the code works, with no account, no database entry and nobody’s permission. Everything that followed — the deleted register, the eleven static pages, the refusal to hold records — follows from that one observation.'
+        ]},
+        {h:'“Shouldn’t the index be self-selected?”', p:[
+          'The drafting recommendation was a computed one: five questions about conception, structure, drafting, revision and verification, with the number derived from the answers. It removed the boundary arguments no amount of prose can settle, and it was wrong.',
+          'A number produced by a form is a number its declarer can disown — <em>the tool said 4</em> — and a standard resting entirely on honesty cannot afford a gap between the claim and the person making it. The grid was demoted to an optional helper that suggests and never assigns.',
+          'It then failed on its own author. Applied to this website the grid returns 7; the honest answer is 6. The mechanism gets the standard’s own site wrong, which settles the argument better than any reasoning could.'
+        ]},
+        {h:'“Spellcheckers and grammar checkers do not count.”', p:[
+          'Stated flatly, and correct. They have been part of writing since long before generative systems, they correct what the author already wrote, and they put no words in anyone’s mouth. A standard under which every writer alive is a 1 would describe nothing.',
+          'Holding that line exposed a defect one level up. Level 1 read <em>“reviewed the finished writing”</em> — which is also what a grammar checker does. Level 1 is now explicitly about <strong>substance</strong>: facts, continuity, whether the argument holds. Mechanics never reach it.'
+        ]},
+        {h:'“If it finds ten timeline errors and I fix them all myself, does that count?”', p:[
+          'The hardest question asked of this standard, and the one that produced its sharpest test.',
+          'It counts — it is a 1. Nothing the machine produced is in the finished work, but the author did not find those ten errors. Without it the book ships with ten errors in it, and the integrity of the finished work is partly owed to something that was not a person.',
+          'Reconciling that with the spellcheck exemption required a second test, which now carries as much weight as the first: <strong>did the tool have to understand your work to do its job?</strong> A spellchecker would behave identically on a shopping list. Something that catches a contradiction in chapter nine has read your book.'
+        ]},
+        {h:'“Does STET suggest a human reviewed it?”', p:[
+          'A shortlist of names had reached <em>STET</em> — the proofreader’s mark meaning <em>let it stand</em>. Elegant, publishing-native, proposed with some confidence, and ruled out immediately.',
+          '<em>Let it stand</em> is an instruction a human editor gives. At 8 the human only pressed publish; at 9 there is no human at all. The mark would have asserted something the number explicitly denies.',
+          'That question became a permanent screening rule: <strong>a name must be neutral across all eleven values.</strong> It ruled out three candidates at once, and revealed a pattern — the warmest, most bookish names are the least neutral, because their warmth comes from evoking human hands.'
+        ]},
+        {h:'Where the machine was too cautious', p:[
+          'On trademarks, the drafting advice was gloomy: two research institutes hold the obvious names, the field is crowded, prepare for the answer to be <em>change it</em>.',
+          'The reply was one word — <em>Polo</em>. Ralph Lauren, Volkswagen and a mint coexist because trademark classes exist precisely to let unrelated goods share a name. The caution was overdone, and was withdrawn.',
+          'Both names did eventually go, but for a different and better reason: a mark containing those letters is weak as well as contested, and describing the thing beats claiming a name for it.'
+        ]},
+        {h:'Where the machine got the copy wrong', p:[
+          'The mark page read <em>“free, permanent, and nobody needs to know you did.”</em> It was meant to say there is no registration. Read plainly it says something else entirely — that using the mark is something you might want to keep quiet.',
+          'On a transparency standard that is the one connotation the page cannot afford. It had spread to three places before it was caught. The rule now is <strong>no permission needed, not no witness needed</strong>.',
+          'The same instinct had produced an earlier fault: routing readers who doubted a declaration straight to that book’s review form. An index that delivers a hostile reader to their target would have become the very thing it exists to prevent.'
+        ]},
+        {h:'“The helper is technical. I guessed.”', p:[
+          'The five questions were answered against a four-state vocabulary — <em>none, assisted, co-created, generated</em>. Those are the standard’s own analytical terms, and asking a declarer to translate their experience into them was asking them to read the standard first.',
+          'If the person who invented the index has to guess, the tool is broken. It was rebuilt as two questions in plain first-person language, the second branching on the first, with every option describing something you either did or did not do.',
+          'The lesson was general: a sound analytical model and a good interview are not the same artifact, and one had been shipped as the other.'
+        ]},
+        {h:'“Does any of this actually matter?”', p:[
+          'Asked directly, halfway through, and it deserved a straight answer rather than encouragement.',
+          'The honest one had three parts. The index makes honest declarers <em>visible</em> while dishonest ones stay invisible, so early adopters carry a cost before the network protects anyone. Every previous authenticity panic — photography, synthesisers, sampling, digital images — normalised without ever producing a disclosure standard. And a trade body that calls the practice unethical is not asking <em>how much</em>, so a finer measurement will not move it.',
+          'The case for continuing held. The vocabulary works today, with no infrastructure at all, and someone will define this taxonomy whether or not it is someone who actually uses the tools. The conclusion both sides reached: the language is the valuable half, and the printed badge is a much longer bet.'
+        ]},
+        {h:'Two names did not survive', p:[
+          'The standard was <strong>AI²</strong> for two drafts. <em>AI2</em> is a registered trademark of an organisation in the same field.',
+          'The obvious fallback was <strong>AIAI</strong>, matching the original domain. That name is also long established, by a research institute — and a research institute sits in the same trademark class as publishing, which made it the closer collision of the two.',
+          'Two names, two prior holders. Not bad luck: every permutation of <em>AI-something</em> is contested, and a mark containing those letters is both harder to clear and weaker once cleared. So the standard stopped claiming a name and started describing itself.'
+        ]},
+        {h:'“[AI] {AI} &lt;AI&gt; /AI/”', p:[
+          'Four options, offered without comment. Square brackets are the editor’s notation for material that did not come from the author — <em>[sic]</em>, <em>[emphasis mine]</em> — which makes them the exact notation for a standard measuring how much of a text did not come from its author.',
+          'The follow-up corrected the drafting again. The proposal had been <code>[AI] 4</code>, with the number outside. But the convention encloses the whole interpolation: you write <em>[emphasis mine]</em>, never <em>[emphasis] mine</em>. <code>[AI 4]</code> uses the convention properly, and makes the mark one unsplittable token.',
+          'It also deleted a section. Earlier drafts needed two notations, a brandmark for display and an ASCII form for metadata. <code>[AI 4]</code> types on any keyboard, so there is one form now — and most use of this standard needs no artwork at all.'
+        ]},
+        {h:'“0 is human, 9 is non-human. The intelligence could be anything.”', p:[
+          'The last and deepest of them. The standard had been defining its levels in terms of artificial intelligence — a term of art with a shelf life. Nobody says <em>cybernetics</em> now.',
+          'The axis is not artificial intelligence. It is <strong>human share</strong>. Whatever writes prose in twenty years, under whatever name, the question <em>how much of this did a person write?</em> still parses.',
+          'That is what makes the permanence promise real rather than aspirational. The level descriptions may be refreshed as the language changes; the human share each number represents may not. A 4 declared in 2026 is still a 4 in 2046, because 4 never meant a technology.'
+        ]},
+        {h:'This page has its own history', p:[
+          'The first version of it described the changes as though the standard had evolved by itself, crediting nobody. The second overcorrected into a list of the originator’s good questions, which was flattering and equally untrue.',
+          'This is the third. It is the only one that mentions the drafting being wrong, which is the part that makes the rest believable.'
+        ]},
+        {h:'“Is there ever a case for [AI 5/6]?”', p:[
+          'Ruled out, and the reasoning turned out to be less obvious than expected. Seven of the nine boundaries ask whether something <em>happened</em> rather than how much — so a range across them is not a finer measurement but an unanswered question. If artificial intelligence offered judgement on a work, that is a 2, and the 1-ness does not dilute it.',
+          'Only two boundaries run by degree: 4/5 and 5/6, both inside the drafting band, which is the one variable on the scale that is genuinely continuous. A work can honestly be sixty per cent rewritten. That is what a rounding rule is for, and every practical index rounds — a shared scale is worth something only while everyone uses the same buckets.',
+          'The deciding reason belonged to the reader. A number describes what a reader will encounter, and a reader encounters the whole work. If the first half is a 5 and the second a 6, somebody reading the second half is reading a 6, and a range would conceal precisely what the number exists to disclose.'
+        ]},
+        {h:'Who wrote it', p:[
+          'The Authorship Index was originated by <strong>an author</strong> — one person who wrote a book with artificial intelligence and found there was no precise way to say so, only one phrase covering everything from a spellcheck to a machine writing the lot.',
+          'Not a company, not a platform, not an institution. That is the whole of it, recorded here and nowhere else: not in the colophon, not on the pages that define the index, and not in the governance commitments. A standard should not depend on who wrote it, and one carrying its author’s name at the foot of every page would be asking to.',
+          'The licence binds whoever operates these pages. The text may be copied and mirrored by anyone. If the index outlives the person who started it, it will have worked.'
+        ]},
+        {h:'Why 6?', p:[
+          'The idea was the author’s. So was every editorial decision — including at least five that reversed the drafting outright: no register, self-selection over computation, the number inside the brackets, human share as the axis, and the whole trademark posture.',
+          'The prose is the machine’s. The author did not rewrite it sentence by sentence, which is what a <strong>5</strong> would require. What the author did was conceive the work, direct it, reject a great deal of it, and decide what stood.',
+          'That is precisely what <strong>6</strong> describes: <em>a machine wrote it, the author shaped it.</em> Not the most flattering number available, and arrived at by the standard’s own rule — <em>when in doubt, go higher</em>.',
+          'A standard whose own site declared a comfortable number would be worth nothing. This is what it actually is.'
+        ]}
+      ]
+    },
+
+    rulings: {
+      title:'Rulings',
+      lede:'Where specific tools and practices are placed on the scale. Versioned separately from the standard, so a ruling can change without reissuing it.',
+      blocks:[
+        {h:'Nothing here yet', p:[
+          'This register is empty, and saying so is more useful than filling it with guesses. Rulings will be published as real questions arrive.'
+        ]},
+        {h:'Why it is separate from the standard', p:[
+          'Writing tools acquire and lose generative features every few months. A standard that names products is out of date the day it publishes, and reissuing a standard to reclassify one piece of software would be absurd.',
+          'So the standard carries the <em>principle</em> — did the tool have to understand your work, and did it write any words that survived — and this page carries the product-level answers. The principle is stable. The answers are not.'
+        ]},
+        {h:'What a ruling will look like', p:[
+          'A named tool or practice, the number it lands on, and the reasoning in one or two sentences — tied back to the two tests, never to a private judgement about the product.',
+          'Where a tool has changed behaviour, the previous ruling stays visible with its date. A declaration made in good faith under an old ruling was made in good faith.'
+        ]},
+        {h:'Until then', p:[
+          'The two questions in the standard settle most cases without a ruling. Did the tool have to understand your work to do its job? If yes, you are at least a 1. Did it write any of the words that survived? If yes, at least a 4.'
+        ]}
+      ]
+    },
+
+    contact: {
+      title:'Contact',
+      lede:'This standard holds no records, so there is nothing to look up, correct or delete. Most questions are answered by the standard itself.',
+      blocks:[
+        {h:'Getting in touch', p:[
+          'For questions about the standard, corrections to these pages, or a proposed ruling: <span id="cx-mail">—</span>',
+          'Publicly, the standard is discussed at <strong>@authorshipindex</strong>. That is where it is talked about; this is where it is administered.',
+          'Replies come from a person and may take some time.'
+        ]},
+        {h:'Matters requiring no enquiry', p:[
+          '<strong>Permission to use the mark.</strong> You have it, permanently and without asking. See the licence.',
+          '<strong>To register a work.</strong> There is no register. Print the mark and it works.',
+          '<strong>To correct a declaration.</strong> Nothing is stored here to correct. A mark is fixed at the moment of printing; declare the next edition differently.',
+          '<strong>To remove your data.</strong> There is none.'
+        ]},
+        {h:'Disputes about a specific work', p:[
+          'This standard hosts no opinion about any declaration and operates no dispute process. Readers who doubt a mark do what readers have always done: discuss it, wherever that kind of work is already discussed. Writing here will not change a number on somebody else’s cover.'
+        ]}
+      ]
+    },
+
+    licence: {
+      title:'Licence and privacy',
+      lede:'The mark is free to use, permanently, by anyone. That is a commitment rather than an invitation, and it is stated here so a publisher’s lawyer has something to point at.',
+      blocks:[
+        {h:'The licence', p:[
+          'Any person or organisation may use the Authorship Index, the mark <code>[AI n]</code>, and the artwork on this site, for any work, at no cost, without registration, without notification, and without seeking permission.',
+          'This permission is <strong>permanent and cannot be withdrawn</strong>, from anyone, for any reason. There is no approved-user list, and therefore no list anyone can be removed from.',
+          'It is <strong>non-discriminatory</strong>. No platform, publisher, retailer, author or competitor may be excluded. A standard that could exclude anyone would not be a standard.'
+        ]},
+        {h:'The one condition', p:[
+          'Declare honestly, and do not alter what the numbers mean. Using the mark to say something other than what this standard defines is not use of the mark — it is imitation of it.',
+          'Nothing enforces that but the reader. This standard has no compliance mechanism and wants none.'
+        ]},
+        {h:'Privacy', p:[
+          '<strong>These pages set no cookies, store nothing in your browser, and contact no other server.</strong> No analytics, no scripts from elsewhere, no fonts, no images, no tracking pixels, no embedded anything. Each page is a single file that arrives complete. There is nothing to accept and nothing to refuse, which is why you are not asked.',
+          '<strong>Nothing is counted.</strong> If that ever changes, this page will say so before it does.',
+          'What no page can promise: a request has to come from somewhere, so whoever hosts these pages receives the address it came from, as every web server does. That is how the internet works and no page can opt out of it on your behalf. The standard keeps none of it and has no register to attach it to.',
+          'The honest statement is <em>this page collects nothing</em>, not <em>nobody sees anything</em>. A standard about accurate declarations should not overstate its own. A reader looking up what a number means should not pay for the answer with their identity — that is the intent, and the above is the limit of what can be guaranteed.'
+        ]},
+        {h:'No warranty, and no legal effect', p:[
+          'This standard is published as it is. It confers no certification, verifies nothing, and guarantees nothing about any work that carries the mark. A number is a claim its declarer made, and the responsibility for its truth rests with them.',
+          '<strong>It has no official status in any jurisdiction.</strong> Where a law requires a disclosure about artificial intelligence, this index does not discharge that obligation and is no substitute for it. Anyone subject to such a requirement should take their own advice on it.'
+        ]},
+        {h:'These pages', p:[
+          'The text of the standard and this website may be copied, quoted, translated and mirrored freely. If authorshipindex.org ever goes dark, the standard should survive it.'
+        ]}
+      ]
+    }
+  };
+
+  /* ------------------------------ helpers ------------------------------ */
+  function slug(o){ return String(o.n).toLowerCase(); }
+  function byId(id){ return document.getElementById(id); }
+  function el(tag, cls, text){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function buildScale(target, currentIndex){
+    target.innerHTML = '';
+    LEVELS.forEach(function(o, j){
+      var li = el('li');
+      if (j === currentIndex) li.className = 'here';
+      var a = el('a'); a.href = '#/' + slug(o);
+      // The token, not the bare digit — it is what a reader will actually meet.
+      var num = el('span','lnum', '[AI ' + o.n + ']');
+      var nm  = el('span','lname', o.name);
+      var go  = el('span','lgo');
+      go.setAttribute('aria-hidden','true');
+      a.appendChild(num); a.appendChild(nm); a.appendChild(go);
+      li.appendChild(a); target.appendChild(li);
+    });
+  }
+
+  /* ------------------------------ SVG mark ------------------------------ */
+  // Units are tenths of a millimetre. Stroke widths chosen to survive offset print.
+  function svgOpen(w,h){
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+w+' '+h+'" '+
+           'width="'+(w/10)+'mm" height="'+(h/10)+'mm" role="img" '+
+           'aria-label="Authorship Index mark">';
+  }
+  function txt(x,y,size,weight,content,anchor,fill){
+    return '<text x="'+x+'" y="'+y+'" font-family="Verdana, Tahoma, DejaVu Sans, sans-serif" '+
+           'font-size="'+size+'" font-weight="'+weight+'" text-anchor="'+(anchor||'middle')+'" '+
+           'fill="'+(fill||'#000')+'">'+content+'</text>';
+  }
+  // The token reversed out of a solid field. The field is a background, not a
+  // second container - the brackets still do the enclosing.
+  function tokenBox(x, y, w, h, d, invert){
+    var bg = invert ? '#fff' : '#000';
+    var fg = invert ? '#000' : '#fff';
+    var size = h * 0.52;
+    var s = '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+bg+'"/>';
+    s += '<text x="'+(x + w/2)+'" y="'+(y + h/2 + size*0.355)+
+         '" font-family="Verdana, Tahoma, DejaVu Sans, sans-serif" font-size="'+size+
+         '" font-weight="800" text-anchor="middle" fill="'+fg+'">[AI&#160;'+d+']</text>';
+    return s;
+  }
+
+  // Real codes, generated once with segno and structurally verified.
+  // 29x29, version 3, error correction Q. Each encodes its own address.
+  var QR = {
+    '0':['11111110011111100010101111111','10000010010101010001001000001','10111010110100111101101011101','10111010000001000010101011101','10111010111001010110001011101','10000010101101100101001000001','11111110101010101010101111111','00000000011001000110100000000','01001010101100101111110110100','10000000011110000100011111111','01111110111110000100010000001','11001101001101010101010001011','00000110010001010101000101001','01001100110101001010001010111','01101010000110001100110010001','11100000001011111100011101001','11110111100101101011000000001','10100000010100100110001111001','00100010001110110010100101001','00000001101011111111100001001','11101011010000100100111111011','00000000101101111001100010101','11111110001001010101101010001','10000010001110001101100011011','10111010110001000011111110001','10111010011100101010000100010','10111010000101001001110000111','10000010111010000100100101011','11111110000011011100101011010'],
+    '1':['11111110010011100010101111111','10000010010011001001001000001','10111010110110110101101011101','10111010000101010010101011101','10111010101001010110001011101','10000010110100000101001000001','11111110101010101010101111111','00000000000000000110100000000','01001010101101100111110110100','10000101110100000100011111111','01101110011100010100010000001','11001100001011001101010001011','00100110010101000101000101001','11000100100100001010001010111','10100010001110101100110010001','10100100011010011110011101001','01111011000101001011000000001','11000100111000100110001111001','00100011101100110010100101001','00000001001001111111100001001','11101011010100100100111111011','00000000101100111001100010101','11111110000001010101101010001','10000010010110101101100011011','10111010100011000011111110001','10111010010110101010000100010','10111010000001001001110000111','10000010111110000100100101011','11111110000011011100101011010'],
+    '2':['11111110101111010110101111111','10000010110000100000101000001','10111010011110100011101011101','10111010010011100100001011101','10111010011001100111101011101','10000010010100100100101000001','11111110101010101010101111111','00000000010111111000100000000','01000011100111110110010000011','10011000111101010101010110110','11000011110010011010011110000','01110000110101000011001111000','00011010001001011001011001010','10101101000101101011101011011','00101010001001000110111100000','10010000101101001010101011111','00001110001110111010110001111','10010100111101100111101110101','11000010001011010001000110101','10011100110001100001111111010','10011011100101010101111110101','00000000110100110000100011100','11111110110110011011101010000','10000010011001110011100011000','10111010010101111111111110010','10111010011001101011100101110','10111010001101000111111110110','10000010101110110010010011101','11111110010010101101011010100'],
+    '3':['11111110100011010110101111111','10000010110110111000101000001','10111010011100101011101011101','10111010010111110100001011101','10111010001001100111101011101','10000010001101000100101000001','11111110101010101010101111111','00000000001110111000100000000','01000011100110111110010000011','10011101010111010101010110110','11010011010000001010011110000','01110001110011011011001111000','00111010001101001001011001010','00100101010100101011101011011','11100010000001100110111100000','11010100111100101000101011111','10000010101110011010110001111','11110000010001100111101110101','11000011101001010001000110101','10011100010011100001111111010','10011011100001010101111110101','00000000110101110000100011100','11111110111110011011101010000','10000010000001010011100011000','10111010000111111111111110010','10111010010011101011100101110','10111010001001000111111110110','10000010101010110010010011101','11111110010010101101011010100'],
+    '4':['11111110101111000110101111111','10000010110000110000101000001','10111010011000111011101011101','10111010010111110100001011101','10111010011001100111101011101','10000010000101000100101000001','11111110101010101010101111111','00000000000111111000100000000','01000011101111110110010000011','11101001111001111101010110110','11000011010010001010011110000','01100001110101001011001111000','00011011001001011001011001010','10100101010100101011101011011','00101010001000100000111100000','11010100111101101010101011111','00001010100111111010110001111','10000001111011100111101110101','11100010101001010001000110101','10011100010011100001111111010','10011010100001010101111110101','00000000100100110000100011100','11111110111110111011101010000','10000010011001110011100011000','10111010001100011111111110010','10111010010111001011100101110','10111010001001000111111110110','10000010101000110010010011101','11111110010110101101011010100'],
+    '5':['11111110011111011010101111111','10000010010111001001001000001','10111010110100111101101011101','10111010000101010010101011101','10111010111000010110001011101','10000010111101000101001000001','11111110101010101010101111111','00000000000000100110100000000','01001010111111001111110110100','10100101011010110100011111111','01011111111110010100010000001','11111100101101001101010001011','00100111010001010101000101001','01001100100100001010001010111','01101110001110001110110010001','00100100011010111110011101001','11110111110110101011000000001','10000100110110000110001111001','00000010101000110010100101001','00000000101111111111100001001','11101011010100100100111111011','00000000101100111001100010101','11111110011000110101101010001','10000010011111001101100011011','10111010100010000011111110001','10111010011100101010000100010','10111010000011001001110000111','10000010111010000100100101011','11111110000111011100101011010'],
+    '6':['11111110011111110010101111111','10000010010101000001001000001','10111010110010100101101011101','10111010000101010010101011101','10111010111001010110001011101','10000010111100000101001000001','11111110101010101010101111111','00000000001001000110100000000','01001010100100101111110110100','11110001011010101100011111111','01111110011110010100010000001','11011100001101011101010001011','00000111010001010101000101001','01000100100100001010001010111','01101010000111101010110010001','10100100011011011100011101001','11110011001100101011000000001','10110101010010100110001111001','00000010101100110010100101001','00000001001001111111100001001','11101010010100100100111111011','00000000111101111001100010101','11111110000001110101101010001','10000010001110001101100011011','10111010101000100011111110001','10111010010010001010000100010','10111010000001001001110000111','10000010111100000100100101011','11111110000111011100101011010'],
+    '7':['11111110101111101110101111111','10000010110010111000101000001','10111010011110100011101011101','10111010010111110100001011101','10111010011000100111101011101','10000010000100000100101000001','11111110101010101010101111111','00000000001110011000100000000','01000011110100010110010000011','10111101111001100101010110110','11100010110010001010011110000','01000001010101011011001111000','00111011001001011001011001010','10101101010100101011101011011','00101110000001000100111100000','01010100111100001000101011111','00001110011101111010110001111','10110000011111000111101110101','11100010101101010001000110101','10011101110101100001111111010','10011011100001010101111110101','00000000110101110000100011100','11111110100111111011101010000','10000010001000110011100011000','10111010000110111111111110010','10111010011001101011100101110','10111010001011000111111110110','10000010101110110010010011101','11111110010110101101011010100'],
+    '8':['11111110011001111010101111111','10000010010111000001001000001','10111010110100111101101011101','10111010000101010010101011101','10111010101001010110001011101','10000010101100000101001000001','11111110101010101010101111111','00000000000001100110100000000','01001010111111000111110110100','10010100110010110100011111111','01101110111100011100010000001','11111100001011010101010001011','00100111010101010101000101001','11000100110100001110001010111','00101110000111001100110010001','01100100001010111100011101001','01110111111100001011000000001','11100101010010100110001111001','00110010101000110010100101001','00000001001001111111100001001','11101010010100100100111111011','00000000111100111001100010101','11111110010000110101101010001','10000010001110101101100011011','10111010100011100011111110001','10111010011110101010000100010','10111010000111001001110000111','10000010111100000100100101011','11111110000011011100101011010'],
+    '9':['11111110010101111010101111111','10000010010001011001001000001','10111010110110110101101011101','10111010000001000010101011101','10111010111001010110001011101','10000010110101100101001000001','11111110101010101010101111111','00000000011000100110100000000','01001010111110001111110110100','10010001011000110100011111111','01111110011110001100010000001','11111101001101001101010001011','00000111010001000101000101001','01001100100101001110001010111','11100110001111101100110010001','00100000011011011110011101001','11111011011100101011000000001','10000001111110100110001111001','00110011001010110010100101001','00000001101011111111100001001','11101010010000100100111111011','00000000111101111001100010101','11111110011000110101101010001','10000010010110001101100011011','10111010110001100011111110001','10111010010100101010000100010','10111010000011001001110000111','10000010111000000100100101011','11111110000011011100101011010'],
+    'x':['11111110010101100010101111111','10000010010001011001001000001','10111010110000111101101011101','10111010000001010010101011101','10111010111000010110001011101','10000010101101000101001000001','11111110101010101010101111111','00000000010000100110100000000','01001010101111100101110110100','10100101110010001100011111111','01011111011000010100010000001','11111100001001011101010001011','00000110010101000101000101001','11001100110101001110001010111','00101110001110101100110010001','00100000010010011100011101001','00100011101111101011000000001','10110001011010000110001111001','00100011101100110010100101001','00000000101001111111100001001','11001011010100100100111111011','00000000111100111001100010101','11111110010001110101101010001','10000010010110001101100011011','10111010111010000011111110001','10111010010100001010000100010','10111010000011001001110000111','10000010111010000100100101011','11111110000011011100101011010']
+  };
+
+  // Draw a real code. Quiet zone is four modules on every side, per the spec —
+  // scanners need it and it is the most common reason a printed code fails.
+  function qrCode(x, y, size, level){
+    var rows = QR[String(level).toLowerCase()];
+    if (!rows) return '';
+    var n = rows.length, quiet = 4, total = n + quiet * 2, m = size / total, out = '<g>';
+    out += '<rect x="'+x+'" y="'+y+'" width="'+size+'" height="'+size+'" fill="#fff"/>';
+    for (var r = 0; r < n; r++){
+      for (var c = 0; c < n; c++){
+        if (rows[r].charAt(c) === '1'){
+          out += '<rect x="'+(x + (c + quiet) * m).toFixed(2)+
+                 '" y="'+(y + (r + quiet) * m).toFixed(2)+
+                 '" width="'+(m * 1.02).toFixed(2)+
+                 '" height="'+(m * 1.02).toFixed(2)+'" fill="#000"/>';
+        }
+      }
+    }
+    return out + '</g>';
+  }
+
+  // The address a reader can type. Without it a small mark is a dead end:
+  // brackets are stripped by search engines, so [AI 6] cannot even be searched for.
+  function addr(d){ return 'authorshipindex.org/' + String(d).toLowerCase(); }
+
+  function levelName(d){
+    var k = String(d).toUpperCase();
+    for (var i = 0; i < LEVELS.length; i++){
+      if (String(LEVELS[i].n).toUpperCase() === k) return LEVELS[i].name;
+    }
+    return '';
+  }
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // Line breaking for a known, short set of captions. Estimated from character
+  // count, which is close enough for eleven strings we control.
+  function wrapText(s, fs, w){
+    var max = Math.max(8, Math.floor(w / (fs * 0.53)));
+    var words = String(s).split(' '), lines = [], cur = '';
+    for (var i = 0; i < words.length; i++){
+      var next = cur ? cur + ' ' + words[i] : words[i];
+      if (next.length > max && cur){ lines.push(cur); cur = words[i]; }
+      else { cur = next; }
+    }
+    if (cur) lines.push(cur);
+    return lines;
+  }
+
+  // The caption sits to the RIGHT of the block, vertically centred against it.
+  function caption(x, cy, w, d, url, fill){
+    var fs = 22, lh = 30, afs = 19, gap = 9;
+    var lines = wrapText(levelName(d), fs, w);
+    var total = lines.length * lh + (url ? gap + afs : 0);
+    var y = cy - total / 2 + fs * 0.82;
+    var s = '';
+    for (var i = 0; i < lines.length; i++){
+      s += '<text x="'+x+'" y="'+(y + i*lh).toFixed(1)+
+           '" font-family="Helvetica, Arial, sans-serif" font-size="'+fs+
+           '" fill="'+fill+'">'+esc(lines[i])+'</text>';
+    }
+    if (url){
+      s += '<text x="'+x+'" y="'+(y + lines.length*lh + gap).toFixed(1)+
+           '" font-family="Helvetica, Arial, sans-serif" font-size="'+afs+
+           '" fill="'+fill+'" opacity="0.72">'+addr(d)+'</text>';
+    }
+    return s;
+  }
+  function captionHeight(d, url, w){
+    var lines = wrapText(levelName(d), 22, w);
+    return lines.length * 30 + (url ? 9 + 19 : 0);
+  }
+
+  var MARKS = {
+    full: function(d, cap){
+      var bw = 400, bh = 180, qrs = 180, gapx = 14;
+      var W = 594, tw = 520;
+      var capH = cap ? captionHeight(d, true, tw) : 0;
+      var H = cap ? bh + 26 + capH : bh + 34;
+      var s = svgOpen(W,H);
+      s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff"/>';
+      s += tokenBox(0, 0, bw, bh, d);
+      s += qrCode(bw + gapx, 0, qrs, d);
+      if (cap) s += caption(0, bh + 26 + capH/2, tw, d, true, '#000');
+      else     s += txt(bw/2, H-6, 24, 400, addr(d));
+      return s + '</svg>';
+    },
+    inline: function(d, cap){
+      var bw = 280, bh = 126, gapx = 34, tw = 520;
+      var W = cap ? bw + gapx + tw : bw, H = bh;
+      var s = svgOpen(W,H);
+      s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff"/>';
+      s += tokenBox(0, 0, bw, bh, d);
+      if (cap) s += caption(bw + gapx, bh/2, tw, d, true, '#000');
+      return s + '</svg>';
+    },
+    reversed: function(d, cap){
+      var bw = 280, bh = 126, gapx = 34, tw = 520;
+      var W = cap ? bw + gapx + tw : bw, H = bh;
+      var s = svgOpen(W,H);
+      s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#000"/>';
+      s += tokenBox(0, 0, bw, bh, d, true);
+      if (cap) s += caption(bw + gapx, bh/2, tw, d, true, '#fff');
+      return s + '</svg>';
+    },
+    spine: function(d){
+      var W = 96, H = 232;
+      var s = svgOpen(W,H);
+      s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#000"/>';
+      s += '<g transform="rotate(-90 48 116)">' + tokenBox(-68, 68, 232, 96, d) + '</g>';
+      return s + '</svg>';
+    },
+    minimum: function(d){
+      var W = 180, H = 81;
+      var s = svgOpen(W,H);
+      s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff"/>';
+      s += tokenBox(0, 0, W, H, d);
+      return s + '</svg>';
+    }
+  };
+
+  var VARIANTS = [
+    {k:'full',     name:'A · Full',      size:'59 × 21 mm',   sizeCap:'59 × 27 mm',
+     d:'Token block and code. For the back cover, beside the barcode — the code resolves it, so the caption is optional here.'},
+    {k:'inline',   name:'B · Inline',    size:'28 × 12.6 mm', sizeCap:'83 × 12.6 mm',
+     d:'Token with the caption beside it. For title pages, copyright pages, colophons — anywhere with a text column and no code.'},
+    {k:'reversed', name:'C · Reversed',  size:'28 × 12.6 mm', sizeCap:'83 × 12.6 mm',
+     d:'The same, for dark grounds. The field drops out rather than filling in. Still one ink.'},
+    {k:'spine',    name:'D · Spine',     size:'9.6 × 23 mm',
+     d:'Rotated, for spines over 12 mm. No caption and none needed — a reader at the shelf is holding the book.'},
+    {k:'minimum',  name:'E · Minimum',   size:'18 × 8.1 mm',
+     d:'The floor, for where nothing else fits. Below this the digit stops reading at arm’s length.'}
+  ];
+
+  /* ------------------------------ doc pages ------------------------------ */
+  // Assembled at run time so the address is not sitting in the source for a
+  // scraper to lift. The address can be changed if it is ever swamped; unlike
+  // the domain, nothing printed depends on it.
+  function fillContact(){
+    var slot = byId('cx-mail');
+    if (!slot) return;
+    var box = ['hello', String.fromCharCode(64), 'authorshipindex', '.', 'org'].join('');
+    var a = document.createElement('a');
+    a.className = 'action';
+    a.href = 'mail' + 'to:' + box;
+    a.textContent = box;
+    slot.textContent = '';
+    slot.appendChild(a);
+  }
+
+  function renderDoc(key){
+    var D = DOCS[key];
+    byId('doc-title').textContent = D.title;
+    byId('doc-lede').textContent = D.lede;
+    document.title = D.title + ' · The Authorship Index';
+    var wrap = byId('doc-body');
+    wrap.innerHTML = '';
+    D.blocks.forEach(function(b){
+      if (b.terms){
+        var dl = document.createElement('dl');
+        dl.className = 'terms';
+        b.terms.forEach(function(pair){
+          var row = document.createElement('div');
+          var dt = el('dt', null, pair[0]);
+          var dd = el('dd', null, pair[1]);
+          row.appendChild(dt); row.appendChild(dd);
+          dl.appendChild(row);
+        });
+        wrap.appendChild(dl);
+        return;
+      }
+      // Headings take markup too, so entities behave the same as in paragraphs.
+      if (b.h){ var h = el('h3'); h.innerHTML = b.h; wrap.appendChild(h); }
+      (b.p || []).forEach(function(t){
+        var p = el('p'); p.innerHTML = t; wrap.appendChild(p);
+      });
+    });
+    if (key === 'contact') fillContact();
+  }
+
+  /* ------------------------------ views ------------------------------ */
+  var VIEWS = ['home','level','mark','helper','standard','doc'];
+  function show(name){
+    VIEWS.forEach(function(v){ byId('v-'+v).hidden = (v !== name); });
+    var navName = (name === 'level') ? 'home' : name;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-nav]'), function(a){
+      if (a.getAttribute('data-nav') === navName) a.setAttribute('aria-current','page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+
+  function renderLevel(i){
+    var L = LEVELS[i];
+    byId('numeral').textContent = '[AI ' + L.n + ']';
+    byId('plainname').textContent = L.name;
+    document.title = (L.n === 'X' ? 'What an X Means' : 'What a ' + L.n + ' Means') + ' · The Authorship Index';
+    var m = byId('meaning'); m.innerHTML = '';
+    L.p.forEach(function(t){ m.appendChild(el('p','prose',t)); });
+
+    // The spoken answer, and an introduction that fits the level. At 0 there is
+    // nothing to concede; at 9 there is nobody to do the conceding.
+    byId('say-line').textContent = '“' + L.say + '”';
+    byId('say-intro').textContent =
+      L.n === 0 ? 'If someone asks whether you used artificial intelligence, this is the answer — and it needs no elaboration.' :
+      L.n === 9 ? 'Nobody can say this of their own work. It is what an honest system says about itself.' :
+                  'If someone asks whether you used artificial intelligence, this is the whole answer. It concedes nothing, because there is nothing to concede.';
+
+    // Carry this level through to the mark, so the artwork arrives set to it.
+    var lm = byId('level-tomark');
+    if (L.n === 9){ lm.hidden = true; }
+    else {
+      lm.hidden = false;
+      lm.href = '#/mark/' + slug(L);
+      lm.textContent = 'Get the ' + L.n + ' mark →';
+    }
+
+    buildScale(byId('level-scale'), i);
+    show('level');
+  }
+
+  /* ------------------------------ mark ------------------------------ */
+  var markChoice = 4;
+  // On by default: on paper a bare token is a dead end, because nobody knows
+  // what a 4 means yet and will not for years.
+  var markCap = true;
+
+  // Clipboard access is blocked in some embedded contexts. Fall back to the
+  // old selection trick, and if that fails too, show the source to copy by hand.
+  function legacyCopy(text){
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly','');
+      ta.style.cssText = 'position:absolute;left:-9999px;top:0';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  function showSource(card, src){
+    if (card.querySelector('.svgsrc')) return;
+    var ta = document.createElement('textarea');
+    ta.className = 'svgsrc';
+    ta.value = src;
+    ta.setAttribute('readonly','');
+    ta.setAttribute('aria-label','SVG source');
+    card.appendChild(ta);
+    ta.focus(); ta.select();
+  }
+
+  function renderMark(){
+    var L = LEVELS[markChoice], d = String(L.n);
+    byId('mark-board').innerHTML = MARKS.full(d);
+    byId('mark-chosen').textContent = 'the Authorship Index ' + d + ' — ' + L.name + '.';
+
+    Array.prototype.forEach.call(byId('mark-picker').children, function(b, j){
+      b.setAttribute('aria-pressed', j === markChoice ? 'true' : 'false');
+    });
+
+    var wrap = byId('mark-variants'); wrap.innerHTML = '';
+    VARIANTS.forEach(function(v){
+      var card = el('div','variant');
+      var head = el('div','vhead');
+      head.appendChild(el('span','vname', v.name));
+      head.appendChild(el('span','vsize', (markCap && v.sizeCap) ? v.sizeCap : v.size));
+      card.appendChild(head);
+      var art = el('div','vart');
+      art.innerHTML = MARKS[v.k](d, markCap);
+      card.appendChild(art);
+      card.appendChild(el('p', null, v.d));
+      var acts = el('div','acts');
+
+      var dl = el('button','copy primary','Download SVG');
+      dl.type = 'button';
+      dl.addEventListener('click', function(){
+        var src = '<?xml version="1.0" encoding="UTF-8"?>\n' + MARKS[v.k](d, markCap);
+        var name = 'authorship-index-' + String(d).toLowerCase() + '-' + v.k + '.svg';
+        try {
+          var blob = new Blob([src], {type:'image/svg+xml'});
+          var url  = URL.createObjectURL(blob);
+          var a    = document.createElement('a');
+          a.href = url; a.download = name;
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+          dl.textContent = 'Downloaded';
+        } catch (e) {
+          dl.textContent = 'Blocked here — use Copy';
+        }
+        setTimeout(function(){ dl.textContent = 'Download SVG'; }, 2200);
+      });
+      acts.appendChild(dl);
+
+      var btn = el('button','copy','Copy SVG');
+      btn.type = 'button';
+      btn.addEventListener('click', function(){
+        var src = MARKS[v.k](d, markCap);
+        function done(ok){
+          btn.textContent = ok ? 'Copied' : 'Select the text below and copy';
+          if (!ok) showSource(card, src);
+          setTimeout(function(){ btn.textContent = 'Copy SVG'; }, 2200);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(src).then(function(){ done(true); },
+                                                  function(){ done(legacyCopy(src)); });
+        } else {
+          done(legacyCopy(src));
+        }
+      });
+      acts.appendChild(btn);
+
+      // Always available. Downloads and clipboard can both be withheld by an
+      // embedding context; selecting text cannot.
+      var src = el('button','copy quiet','Show source');
+      src.type = 'button';
+      src.addEventListener('click', function(){
+        var box = card.querySelector('.svgsrc');
+        if (box){ box.remove(); src.textContent = 'Show source'; return; }
+        showSource(card, MARKS[v.k](d, markCap));
+        src.textContent = 'Hide source';
+      });
+      acts.appendChild(src);
+
+      card.appendChild(acts);
+      wrap.appendChild(card);
+    });
+  }
+
+  function buildPicker(){
+    var p = byId('mark-picker');
+    LEVELS.forEach(function(o, j){
+      var b = el('button', null, String(o.n));
+      b.type = 'button';
+      b.setAttribute('aria-label', o.n === 'X' ? 'Prefer not to say' : 'Index ' + o.n);
+      b.addEventListener('click', function(){
+        markChoice = j;
+        renderMark();
+        // Keep the address bar honest without firing hashchange (which scrolls).
+        if (window.history && history.replaceState){
+          try { history.replaceState(null, '', '#/mark/' + slug(LEVELS[j])); } catch (e) {}
+        }
+      });
+      p.appendChild(b);
+    });
+  }
+
+  /* ------------------------------ helper ------------------------------ */
+  var hState = {q1:null, q2:null};
+
+  function followUp(){
+    if (hState.q1 === null) return null;
+    var o = HELP_Q1.opts[hState.q1];
+    if (o.level !== undefined) return null;
+    return o.go === 'none' ? HELP_NONE : HELP_AI;
+  }
+
+  function helperLevel(){
+    if (hState.q1 === null) return null;
+    var o = HELP_Q1.opts[hState.q1];
+    if (o.level !== undefined) return o.level;
+    var q2 = followUp();
+    if (hState.q2 === null) return null;
+    return q2.opts[hState.q2].level;
+  }
+
+  function questionBlock(Q, name, chosen, onPick){
+    var fs = el('fieldset','q');
+    fs.appendChild(el('legend', null, Q.q));
+    fs.appendChild(el('p','qhint', Q.hint));
+    if (Q.note) fs.appendChild(el('p','qnote', Q.note));
+    var opts = el('div','opts');
+    Q.opts.forEach(function(o, i){
+      var lab = el('label');
+      var input = document.createElement('input');
+      input.type = 'radio'; input.name = name; input.value = String(i);
+      if (chosen === i) input.checked = true;
+      input.addEventListener('change', function(){ onPick(i); });
+      var ot = el('div','ot');
+      ot.appendChild(el('span', null, o.t));
+      lab.appendChild(input); lab.appendChild(ot);
+      opts.appendChild(lab);
+    });
+    fs.appendChild(opts);
+    return fs;
+  }
+
+  function renderHelper(){
+    var wrap = byId('helper-questions');
+    wrap.innerHTML = '';
+    wrap.appendChild(questionBlock(HELP_Q1, 'hq1', hState.q1, function(i){
+      hState.q1 = i; hState.q2 = null; renderHelper();
+    }));
+    var q2 = followUp();
+    if (q2){
+      wrap.appendChild(questionBlock(q2, 'hq2', hState.q2, function(i){
+        hState.q2 = i; renderHelper();
+      }));
+    }
+
+    var res = byId('helper-result');
+    var n = helperLevel();
+    if (n === null){ res.hidden = true; return; }
+    res.hidden = false;
+    var L = LEVELS[n];
+    byId('helper-num').textContent = String(n);
+    byId('helper-name').textContent = L.name;
+    byId('helper-note').textContent = L.say;
+    var toMark = byId('helper-tomark');
+    toMark.textContent = 'Take ' + n + ' to the mark →';
+    toMark.href = '#/mark/' + slug(L);
+  }
+
+  /* ------------------------------ standard ------------------------------ */
+  function buildStandard(){
+    var wrap = byId('standard-body');
+
+    // A standard is a document, not a lookup table — so it folds into its own
+    // contents list, and one control opens the lot for reading straight through.
+    var bar = el('div','openall');
+    var btn = el('button','copy quiet','Open every section');
+    btn.type = 'button';
+    bar.appendChild(btn);
+    wrap.appendChild(bar);
+
+    STANDARD.forEach(function(sec, i){
+      var box = document.createElement('details');
+      box.className = 'more sect';
+      // The definition and the scale itself stay open; the rest is on request.
+      if (i === 0 || sec.table) box.open = true;
+      var sum = document.createElement('summary');
+      sum.innerHTML = sec.h;
+      box.appendChild(sum);
+
+      if (sec.table){
+        var tw = el('div','tablewrap');
+        var t = document.createElement('table');
+        t.innerHTML = '<thead><tr><th>Index</th><th>Meaning</th></tr></thead>';
+        var tb = document.createElement('tbody');
+        LEVELS.forEach(function(o){
+          var tr = document.createElement('tr');
+          var td1 = document.createElement('td'); td1.textContent = '[AI ' + o.n + ']';
+          var td2 = document.createElement('td'); td2.textContent = o.name;
+          tr.appendChild(td1); tr.appendChild(td2); tb.appendChild(tr);
+        });
+        t.appendChild(tb); tw.appendChild(t); box.appendChild(tw);
+        box.appendChild(el('p', null, 'The index is monotonic — a higher number always means a smaller human share of the finished words. That is the standard’s core promise and nothing may break it. The ten levels are permanent and will never be renumbered.'));
+      } else {
+        sec.p.forEach(function(t){
+          var p = el('p'); p.innerHTML = t; box.appendChild(p);
+        });
+      }
+      wrap.appendChild(box);
+    });
+
+    btn.addEventListener('click', function(){
+      var boxes = wrap.querySelectorAll('details');
+      var opening = btn.getAttribute('data-open') !== 'yes';
+      Array.prototype.forEach.call(boxes, function(b){ b.open = opening; });
+      btn.setAttribute('data-open', opening ? 'yes' : 'no');
+      btn.textContent = opening ? 'Close every section' : 'Open every section';
+    });
+  }
+
+  /* ------------------------------ routing ------------------------------ */
+  function route(){
+    var h = (location.hash || '#/').replace(/^#\/?/, '').toLowerCase();
+    if (h === '' ) { buildScale(byId('home-scale'), -1); document.title = 'the Authorship Index'; show('home'); return; }
+    if (h === 'mark' || h.indexOf('mark/') === 0){
+      var want = h.slice(5);                       // '' for a bare /mark
+      if (want){
+        for (var k = 0; k < LEVELS.length; k++){
+          if (slug(LEVELS[k]) === want){ markChoice = k; break; }
+        }
+      }
+      document.title = 'Artwork · The Authorship Index'; renderMark(); show('mark'); return;
+    }
+    if (h === 'helper')   { document.title = 'Which Number? · The Authorship Index'; renderHelper(); show('helper'); return; }
+    if (h === 'standard') { document.title = 'The Standard in Brief · The Authorship Index'; show('standard'); return; }
+    if (DOCS[h])          { renderDoc(h); show('doc'); return; }
+    for (var i = 0; i < LEVELS.length; i++){
+      if (slug(LEVELS[i]) === h){ renderLevel(i); return; }
+    }
+    buildScale(byId('home-scale'), -1); show('home');
+  }
+
+  buildPicker();
+  renderHelper();
+  buildStandard();
+  byId('mark-url').addEventListener('change', function(){
+    markCap = this.checked;
+    renderMark();
+  });
+  byId('helper-restart').addEventListener('click', function(){
+    hState.q1 = null; hState.q2 = null; renderHelper(); window.scrollTo(0,0);
+  });
+  window.addEventListener('hashchange', function(){ route(); window.scrollTo(0,0); });
+  route();
+})();
+</script>
+</body>
+</html>

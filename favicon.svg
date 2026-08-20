@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<style>
+.g{fill:#15171A}
+.m{fill:#F4F4F3}
+@media (prefers-color-scheme:dark){
+.g{fill:#E8E9E7}
+.m{fill:#101215}
+}
+</style>
+<rect class="g" width="100" height="100" rx="10"/>
+<path class="m" d="M8,78L21,78L36,22L29,22Z"/>
+<path class="m" d="M45,78L58,78L37,22L30,22Z"/>
+<path class="m" d="M20,58L46,58L46,67L20,67Z"/>
+<path class="m" d="M72,22L84,22L84,78L72,78Z"/>
+<path class="m" d="M64,22L92,22L92,31L64,31Z"/>
+<path class="m" d="M64,69L92,69L92,78L64,78Z"/>
+</svg>

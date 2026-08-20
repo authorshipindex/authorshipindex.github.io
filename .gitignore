@@ -1,0 +1,12 @@
+# This repository is the published website and nothing else.
+#
+# The standard itself, its earlier drafts, the generators that build these
+# pages and the author's working notes live in a separate folder that has no
+# remote and nothing to push to. They are not ignored here so much as absent:
+# this list is a second lock on a door that is already bricked up.
+docs/
+tools/
+qr-matrices.json
+README.md
+Screenshot*.png
+AIndex.png
