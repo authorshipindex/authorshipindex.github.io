@@ -1,0 +1,142 @@
+{
+  "standard": "The Authorship Index",
+  "version": "2026",
+  "url": "https://authorshipindex.org/",
+  "notation": "[AI n]",
+  "question": "How much of that text did a person actually write?",
+  "axis": "The human share of the words as published. 0 is no artificial intelligence at all; 9 is no person at all.",
+  "monotonic": true,
+  "self_declared": true,
+  "measures": "where the words came from",
+  "does_not_measure": [
+    "quality, merit or craft",
+    "commercial or literary value",
+    "whether the use of artificial intelligence was ethical",
+    "compliance with any platform terms",
+    "the declarer's integrity"
+  ],
+  "levels": [
+    {
+      "index": "0",
+      "mark": "[AI 0]",
+      "url": "https://authorshipindex.org/0",
+      "name": "Entirely human",
+      "answer": "No. No artificial intelligence at any stage of this — not planning it, not writing it, not checking it.",
+      "meaning": [
+        "Nobody used an artificial intelligence tool on this work — not to plan it, not to write it, not to check it. The author wrote it, and every error in it is theirs.",
+        "Spellcheckers and grammar checkers don’t count towards the index and never have. Checking your spelling is not authorship."
+      ]
+    },
+    {
+      "index": "1",
+      "mark": "[AI 1]",
+      "url": "https://authorshipindex.org/1",
+      "name": "Checked by artificial intelligence",
+      "answer": "Yes, I did. 1. I wrote every word, then had artificial intelligence check the facts and the continuity.",
+      "meaning": [
+        "Every word here is the author’s. Before publishing, they asked an artificial intelligence to check the substance — the facts, the continuity, whether the argument holds — and then fixed what it found themselves.",
+        "Nothing the artificial intelligence produced is in the text. An author declaring 1 is telling you they were thorough."
+      ]
+    },
+    {
+      "index": "2",
+      "mark": "[AI 2]",
+      "url": "https://authorshipindex.org/2",
+      "name": "Discussed with artificial intelligence",
+      "answer": "Yes, I did. 2. I talked it through with artificial intelligence while I worked. Every word is mine.",
+      "meaning": [
+        "The author wrote every word. Somewhere along the way they talked the work through with an artificial intelligence — testing an idea, working out a problem, asking whether a chapter landed — and that conversation shaped what stayed and what went.",
+        "No artificial intelligence writing is in the text. The thinking had a second party in the room."
+      ]
+    },
+    {
+      "index": "3",
+      "mark": "[AI 3]",
+      "url": "https://authorshipindex.org/3",
+      "name": "Planned by artificial intelligence",
+      "answer": "Yes, I did. 3. Artificial intelligence helped me plan the shape of it. I wrote all of it myself.",
+      "meaning": [
+        "The prose is entirely the author’s. The shape of it isn’t. An artificial intelligence produced the outline, the structure, or in some cases the original idea, and the author then wrote the whole thing themselves.",
+        "Every sentence you read was written by a person."
+      ]
+    },
+    {
+      "index": "4",
+      "mark": "[AI 4]",
+      "url": "https://authorshipindex.org/4",
+      "name": "Part-written by artificial intelligence",
+      "answer": "Yes, I did. 4. Some artificial intelligence phrasing is in there. The substance and the voice are mine.",
+      "meaning": [
+        "The author wrote this. In places they asked an artificial intelligence for a phrase, a sentence, or a way through a difficult paragraph — and some of that wording is still on the page.",
+        "The substance, the argument and the voice are the author’s. This is probably the most common honest declaration in writing today."
+      ]
+    },
+    {
+      "index": "5",
+      "mark": "[AI 5]",
+      "url": "https://authorshipindex.org/5",
+      "name": "Drafted by artificial intelligence, rewritten by the author",
+      "answer": "Yes, I did. 5. Artificial intelligence drafted it and I rewrote it. What you are reading is in my words.",
+      "meaning": [
+        "An artificial intelligence produced the first draft. The author then rewrote it — reworking the phrasing, the rhythm and the voice until the sentences were theirs.",
+        "What you are reading passed through a human hand line by line. The words started somewhere else and arrived here changed."
+      ]
+    },
+    {
+      "index": "6",
+      "mark": "[AI 6]",
+      "url": "https://authorshipindex.org/6",
+      "name": "Written by artificial intelligence, shaped by the author",
+      "answer": "Yes, I did. 6. Artificial intelligence wrote the prose. The story, the decisions and the editing are mine.",
+      "meaning": [
+        "The idea was the author’s, and so was the editorial work — what to keep, what to cut, where it ends. But the sentences are largely the artificial intelligence’s.",
+        "The author directed a machine writer rather than writing it themselves. The judgement is human; the prose is not."
+      ]
+    },
+    {
+      "index": "7",
+      "mark": "[AI 7]",
+      "url": "https://authorshipindex.org/7",
+      "name": "Written by artificial intelligence to a human brief",
+      "answer": "Yes, I did. 7. I briefed it, artificial intelligence wrote it, and I read and approved the result.",
+      "meaning": [
+        "A person wrote the brief — what this should be, who it is for, how it should sound. An artificial intelligence wrote and revised everything from there.",
+        "A human read the result and approved it before it was published. Their contribution was the instruction and the sign-off."
+      ]
+    },
+    {
+      "index": "8",
+      "mark": "[AI 8]",
+      "url": "https://authorshipindex.org/8",
+      "name": "Written by artificial intelligence, published by a human",
+      "answer": "Yes, I did. 8. Artificial intelligence wrote it. I decided it was worth publishing and put my name on it.",
+      "meaning": [
+        "The idea, the structure and every word came from an artificial intelligence. A person’s contribution was the decision to publish it.",
+        "That decision is real — somebody chose to put this into the world and their name is on it — but they did not write it and did not think of it."
+      ]
+    },
+    {
+      "index": "9",
+      "mark": "[AI 9]",
+      "url": "https://authorshipindex.org/9",
+      "name": "Autonomous — no human involved",
+      "answer": "No person wrote this, and no person is claiming to have.",
+      "meaning": [
+        "No person conceived this, wrote it, read it, or approved it. An artificial intelligence system produced and published it on its own.",
+        "The only human involvement was building or deploying the system that did it, possibly long before this existed. A 9 cannot be declared by an author, because a person filling in a declaration is a person being involved."
+      ]
+    },
+    {
+      "index": "X",
+      "mark": "[AI X]",
+      "url": "https://authorshipindex.org/x",
+      "name": "Prefer not to say",
+      "answer": "I’d prefer not to say.",
+      "meaning": [
+        "Forms have offered this option for as long as there have been forms. Left-handed, right-handed, prefer not to say. It has never needed a reason and it does not need one here.",
+        "X means whoever published this considered the question and chose not to answer it. It has to be marked deliberately — nobody is ever assigned an X, and it is never what you get for saying nothing at all.",
+        "The standard takes no view on it, and holds no record of who has chosen it."
+      ]
+    }
+  ]
+}

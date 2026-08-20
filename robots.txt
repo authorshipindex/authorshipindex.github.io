@@ -1,0 +1,5 @@
+# The eleven addresses exist to be read, by anyone and anything.
+User-agent: *
+Allow: /
+
+Sitemap: https://authorshipindex.org/sitemap.xml
