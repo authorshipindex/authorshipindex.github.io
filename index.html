@@ -336,12 +336,15 @@
 <div class="page">
 
   <!-- ============================ HOME ============================ -->
-  <main id="v-home" hidden>
+  <!-- Not hidden. This file is served at / and nowhere else, so the view it
+     opens on is the one it should render with no script at all. show() hides
+     it the moment anything routes away. -->
+<main id="v-home">
     <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
       <h1 class="big">The Authorship Index</h1>
       <p class="question"><span class="qlabel">The question</span>How much of that text did a person actually write?</p>
       <p class="lede">One digit answers it — on a novel, a corporate report, a screenplay, a policy paper, anything written for an audience. Zero means no artificial intelligence at all. Nine means no person at all. Everything real sits somewhere between.</p>
-      <p class="notice"><code>[Authorship Index 6]</code> written as <code>[AI 6]</code> for short. The letters are the Authorship Index, the digit is the level. Six keystrokes: no artwork, no font, no image file.</p>
+      <p class="notice"><code>[AI 6]</code> — short for <em>Authorship Index, level 6</em>. That is what the letters stand for, and the digit is the level. The mark is only ever written the short way: six keystrokes, no artwork, no font, no image file.</p>
       <p class="notice"><strong>Why brackets? They're the editor's mark for material that didn't come from the author.</strong></p>
     </header>
 
