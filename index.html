@@ -1233,19 +1233,22 @@
     return '<text x="'+x+'" y="'+baseline+'" font-family="Verdana, Tahoma, DejaVu Sans, sans-serif" '+
            'font-size="'+size+'" font-weight="700" fill="'+fill+'">[AI&#160;'+d+']</text>';
   }
-  // Verdana Bold advance widths, in ems: [ .393  A .774  I .421  space .342
-  // digit .711  ] .393. Close enough to lay a caption beside, and never
-  // relied on for anything that has to align exactly.
-  function plainTokenWidth(size){ return size * 3.05; }
+  // Verdana Bold advance widths, in ems: [ .454  A .775  I .421  space .342
+  // digit .711  ] .454 - about 3.16 in total. The stack falls back to Tahoma,
+  // DejaVu or the system sans, whose metrics differ by a few per cent either
+  // way, so the box is drawn wider than any of them need. A closing bracket
+  // sliding off the edge is a worse fault than a little air after it.
+  function plainTokenWidth(size){ return size * 3.45; }
 
   // One drawing for both grounds. Nothing about it changes but the two inks.
   function typed(d, cap, ground, ink){
-    var ts = 58, gap = 26, tw = 470, H = 110;
-    var tokw = plainTokenWidth(ts);
+    var ts = 58, gap = 46, tw = 470, H = 110;
+    var pad = ts * 0.08;                       // left bearing, so [ is not clipped
+    var tokw = pad + plainTokenWidth(ts);
     var W = cap ? tokw + gap + tw : tokw;
     var s = svgOpen(W,H);
     s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="'+ground+'"/>';
-    s += plainToken(0, H/2 + ts*0.355, ts, d, ink);
+    s += plainToken(pad, H/2 + ts*0.355, ts, d, ink);
     if (cap) s += caption(tokw + gap, H/2, tw, d, addr(d), ink);
     return s + '</svg>';
   }
