@@ -5,9 +5,16 @@
   "url": "https://authorshipindex.org/",
   "notation": "[AI n]",
   "question": "How much of that text did a person actually write?",
-  "axis": "The human share of the words as published. 0 is no artificial intelligence at all; 9 is no person at all.",
-  "monotonic": true,
+  "ordered": true,
+  "hinge": {
+    "at": "4",
+    "test": "Did the tool write any words that survive in the text?",
+    "below": "0 to 3. No machine-written words survive. Every word is the human's, and the number says what kind of involvement there was: checking, discussing, planning.",
+    "at_and_above": "4 to 9. Some or all of the prose is the machine’s, and the number says how much. Here a higher number always means a smaller human share of the words."
+  },
+  "combining": "Where more than one level applies, take the highest. The number is the deepest involvement, not a total.",
   "self_declared": true,
+  "verified": false,
   "measures": "where the words came from",
   "does_not_measure": [
     "quality, merit or craft",
