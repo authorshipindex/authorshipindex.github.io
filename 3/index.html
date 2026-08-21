@@ -14,59 +14,339 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/json" href="/scale.json" title="The scale, machine-readable">
 <style>
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-:root{
-  --ground:#F4F4F3; --surface:#FFFFFF;
-  --ink:#15171A; --ink-2:#585D64; --ink-3:#868C94;
-  --rule:#DDDDDA; --accent:#0A6E8F;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
-  --numeral:Verdana,Tahoma,"DejaVu Sans",sans-serif;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --ground:#101215; --surface:#181B1F; --ink:#E8E9E7; --ink-2:#9DA3AA;
-    --ink-3:#6D747C; --rule:#282C31; --accent:#4FB4D8;
+  :root{
+    --ground:#F4F4F3; --surface:#FFFFFF;
+    --ink:#15171A; --ink-2:#585D64; --ink-3:#868C94;
+    --rule:#DDDDDA; --rule-2:#EAEAE7;
+    --accent:#0A6E8F; --accent-wash:rgba(10,110,143,.085);
+    --board:#FFFFFF; --board-ink:#101215; --board-rule:#B4B4AF;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:Georgia,"Iowan Old Style","Palatino Linotype","Times New Roman",serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
   }
-}
-:root[data-theme="dark"]{
-  --ground:#101215; --surface:#181B1F; --ink:#E8E9E7; --ink-2:#9DA3AA;
-  --ink-3:#6D747C; --rule:#282C31; --accent:#4FB4D8;
-}
-body{margin:0;background:var(--ground);color:var(--ink);
-  font-family:var(--sans);font-size:17px;line-height:1.6;
-  -webkit-font-smoothing:antialiased}
-.page{max-width:34rem;margin:0 auto;padding:1.5rem 1.25rem 4rem;
-  display:flex;flex-direction:column;gap:1.5rem}
-.crumb{font-family:var(--mono);font-size:.6875rem;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--ink-3);text-decoration:none}
-.crumb:hover{color:var(--accent)}
-.head{display:flex;flex-direction:column;gap:.75rem}
-.tok{font-family:var(--numeral);font-weight:700;font-size:1.75rem;
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#101215; --surface:#181B1F; --ink:#E8E9E7; --ink-2:#9DA3AA; --ink-3:#6D747C;
+      --rule:#282C31; --rule-2:#1E2226; --accent:#4FB4D8; --accent-wash:rgba(79,180,216,.11);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#101215; --surface:#181B1F; --ink:#E8E9E7; --ink-2:#9DA3AA; --ink-3:#6D747C;
+    --rule:#282C31; --rule-2:#1E2226; --accent:#4FB4D8; --accent-wash:rgba(79,180,216,.11);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .page{max-width:38rem;margin:0 auto;padding:0 1.25rem 4.5rem}
+
+  /* ---------- nav ---------- */
+  nav{border-bottom:1px solid var(--rule);background:var(--ground);
+    position:sticky;top:0;z-index:10}
+  .nav-in{max-width:38rem;margin:0 auto;padding:.7rem 1.25rem;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:.6rem 1rem;flex-wrap:wrap}
+  /* Mark and name always travel together, so the token teaches itself. */
+  .brand{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--ink)}
+  /* The italic n marks a placeholder — a real declaration is never italic. */
+  .wordmark{display:inline-block;background:var(--ink);color:var(--ground);
+    font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;
+    font-size:.9375rem;font-weight:800;letter-spacing:-.01em;
+    padding:.3rem .55rem .34rem;border-radius:2px;line-height:1}
+  .wordmark i{font-style:italic;padding-right:.04em}
+  .bname{font-size:.9375rem;font-weight:700;letter-spacing:-.014em;white-space:nowrap}
+  .nav-links{display:flex;gap:.9rem}
+  .nav-links a{font-size:.8125rem;color:var(--ink-2);text-decoration:none;
+    padding:.45rem 0;font-weight:600}
+  .nav-links a[aria-current="page"]{color:var(--accent);box-shadow:inset 0 -2px 0 var(--accent)}
+
+  /* ---------- shared type ---------- */
+  h1.big{font-size:clamp(1.875rem,8vw,2.75rem);line-height:1.08;letter-spacing:-.028em;
+    font-weight:800;margin:0;text-wrap:balance}
+  .lede{font-family:var(--serif);font-size:clamp(1.125rem,3.6vw,1.3125rem);line-height:1.55;
+    color:var(--ink-2);margin:1.1rem 0 0}
+  /* The name identifies; the question explains. Both belong above the fold. */
+  .question{font-family:var(--serif);font-size:clamp(1.375rem,4.6vw,1.875rem);line-height:1.3;
+    letter-spacing:-.012em;color:var(--ink);margin:1.1rem 0 0;text-wrap:balance}
+  .qlabel{display:block;font-family:var(--mono);font-size:.6875rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+  section{padding:2rem 0;border-bottom:1px solid var(--rule)}
+  section:last-of-type{border-bottom:0}
+  h2.eyebrow{font-family:var(--mono);font-size:.6875rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-3);font-weight:400;margin:0 0 .9rem}
+  h3{font-size:1.0625rem;font-weight:700;margin:0 0 .5rem;letter-spacing:-.008em}
+  .prose{font-family:var(--serif);font-size:1.125rem;line-height:1.62;margin:0}
+  .prose + .prose{margin-top:1rem}
+  p.body{margin:0;font-size:1rem;color:var(--ink-2)}
+  p.body + p.body{margin-top:.85rem}
+  .aside{font-family:var(--serif);font-size:1.0625rem;line-height:1.6;margin:1.25rem 0 0;
+    padding:1rem 1.15rem;background:var(--accent-wash);border-left:2px solid var(--accent);
+    border-radius:0 3px 3px 0}
+  code{font-family:var(--mono);font-size:.8125em;background:var(--accent-wash);
+    padding:.15em .4em;border-radius:2px;word-break:break-all}
+  a.action{color:var(--accent);text-decoration:none;font-weight:700;font-size:.9375rem;
+    display:inline-block;padding:.4rem 0;border-bottom:1px solid currentColor;align-self:flex-start}
+  a.action:hover{border-bottom-width:2px}
+  .stack{display:flex;flex-direction:column;gap:1.5rem}
+  .fblock{display:flex;flex-direction:column;gap:.4rem;align-items:flex-start}
+  ul.nots{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.55rem}
+  ul.nots li{font-size:1rem;color:var(--ink-2);padding-left:1.4rem;position:relative}
+  ul.nots li::before{content:"—";position:absolute;left:0;color:var(--ink-3)}
+
+  /* ---------- level hero ---------- */
+  header.hero{padding:2.5rem 0 1.75rem;border-bottom:1px solid var(--rule)}
+  .brandline{font-family:var(--mono);font-size:.6875rem;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-3);margin:0 0 1.25rem}
+  .brandline b{color:var(--ink-2);font-weight:400}
+  /* The whole token, set uniformly — the mark has no internal hierarchy and
+     neither should this. Sized so the token spans the measure, not the digit. */
+  .numeral{font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;
+    font-size:clamp(2.25rem,21vw,6rem);line-height:.95;font-weight:700;
+    letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin:0;display:block;white-space:nowrap}
+  .plainname{font-size:clamp(1.5rem,7vw,2.125rem);line-height:1.12;font-weight:700;
+    letter-spacing:-.02em;margin:1.25rem 0 0;text-wrap:balance}
+
+  /* ---------- scale list ---------- */
+  .scale{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule-2)}
+  .scale li{border-bottom:1px solid var(--rule-2)}
+  .scale a{display:grid;grid-template-columns:max-content 1fr auto;gap:.55rem;align-items:baseline;
+    padding:.8rem .5rem .8rem .25rem;text-decoration:none;color:inherit;min-height:2.75rem}
+  .scale a:hover .lname{text-decoration:underline}
+  /* Affordance only — a CSS chevron so it stays crisp at any size and needs no font. */
+  .scale .lgo{width:.44rem;height:.44rem;align-self:center;margin-right:.3rem;
+    border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);
+    transform:rotate(-45deg);transition:transform .12s ease, border-color .12s ease}
+  .scale a:hover .lgo{border-color:var(--accent);transform:rotate(-45deg) translate(2px,2px)}
+  .scale li.here .lgo{border-color:var(--accent)}
+  .scale .lnum{font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;
+    font-size:.9375rem;font-weight:700;line-height:1.35;letter-spacing:-.01em;
+    font-variant-numeric:tabular-nums;color:var(--ink-3);white-space:nowrap}
+  .scale .lname{font-size:1rem;color:var(--ink-2);line-height:1.35}
+  .scale li.here{background:var(--accent-wash);box-shadow:inset 3px 0 0 var(--accent)}
+  .scale li.here .lnum{color:var(--accent)}
+  .scale li.here .lname{color:var(--ink);font-weight:700}
+
+  /* ---------- number picker ---------- */
+  .picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(3rem,1fr));gap:.4rem}
+  .picker button{font-family:var(--sans);font-size:1.25rem;font-weight:800;
+    min-height:3.25rem;background:var(--surface);color:var(--ink);
+    border:1px solid var(--rule);border-radius:3px;cursor:pointer;font-variant-numeric:tabular-nums}
+  .picker button:hover{border-color:var(--accent)}
+  .picker button[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+  :root[data-theme="dark"] .picker button[aria-pressed="true"],
+  .picker button[aria-pressed="true"]{color:#fff}
+
+  /* ---------- artwork board ---------- */
+  .board{background:var(--board);border:1px solid var(--rule);border-radius:3px;
+    padding:1.75rem 1rem;display:flex;align-items:center;justify-content:center;overflow-x:auto}
+  .board svg{display:block;height:auto;max-width:100%}
+  .variants{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+    border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+  .variant{background:var(--surface);padding:1.15rem 1.15rem 1.25rem;
+    display:flex;flex-direction:column;gap:.85rem}
+  .variant .vhead{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+  .variant .vname{font-size:.9375rem;font-weight:700}
+  .variant .vsize{font-family:var(--mono);font-size:.6875rem;color:var(--ink-3);letter-spacing:.05em;
+    white-space:nowrap}
+  .variant .vart{background:var(--board);border-radius:2px;padding:1.1rem .75rem;
+    display:flex;align-items:center;justify-content:center;min-height:5.5rem;overflow-x:auto}
+  .variant p{margin:0;font-size:.875rem;color:var(--ink-2)}
+  /* Reference lists fold away; arguments never do. Native details, so it works
+     with no script and answers to the keyboard. */
+  .more{margin:1.1rem 0 0;border-top:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2)}
+  .more + .more{margin-top:0;border-top:0}
+  .more > summary{cursor:pointer;list-style:none;padding:.85rem .25rem;
+    display:flex;align-items:center;gap:.6rem;
+    font-size:.9375rem;font-weight:600;color:var(--ink-2)}
+  .more > summary::-webkit-details-marker{display:none}
+  .more > summary::before{content:"";flex:0 0 auto;width:.44rem;height:.44rem;
+    border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);
+    transform:rotate(-45deg);margin-left:.15rem;
+    transition:transform .15s ease, border-color .15s ease}
+  .more[open] > summary::before{transform:rotate(45deg)}
+  .more > summary:hover{color:var(--ink)}
+  .more > summary:hover::before{border-color:var(--accent)}
+  .more[open] > summary{color:var(--ink)}
+  .more > *:last-child{padding-bottom:1.4rem}
+  /* Section-level fold: the section title is itself the control. */
+  .more.sect{border:0;margin:0}
+  .more.sect > summary{padding:.2rem .25rem .85rem;font-size:1.0625rem;font-weight:700;
+    color:var(--ink);letter-spacing:-.008em}
+  .more.sect > summary::before{border-color:var(--ink-3);margin-right:.1rem}
+  .more.sect > summary:hover::before{border-color:var(--accent)}
+  .more.sect > *:last-child{padding-bottom:0}
+  .doc .more.sect{border-bottom:1px solid var(--rule-2)}
+  .doc .more.sect > summary{padding:.9rem .25rem}
+  .doc .more.sect[open] > summary{padding-bottom:.5rem}
+  .doc .more.sect > *:last-child{padding-bottom:1.1rem}
+  .openall{display:flex;justify-content:flex-end;margin:0 0 .5rem}
+
+  .urltoggle{display:flex;gap:.7rem;align-items:flex-start;margin:0 0 1rem;
+    padding:.85rem 1rem;background:var(--surface);border:1px solid var(--rule);
+    border-radius:3px;cursor:pointer}
+  .urltoggle input{margin:.25rem 0 0;accent-color:var(--accent);flex:0 0 auto}
+  .urltoggle span{font-size:.875rem;color:var(--ink-2);line-height:1.5}
+  .urltoggle strong{color:var(--ink)}
+
+  .acts{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+  .copy{font-family:var(--sans);font-size:.8125rem;font-weight:700;color:var(--accent);
+    background:transparent;border:1px solid var(--accent);border-radius:3px;
+    padding:.5rem .8rem;cursor:pointer;min-height:2.5rem}
+  .copy:hover{background:var(--accent-wash)}
+  .copy.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .copy.primary:hover{filter:brightness(1.08)}
+  .copy.quiet{color:var(--ink-2);border-color:var(--rule)}
+  .copy.quiet:hover{background:transparent;border-color:var(--ink-3);color:var(--ink)}
+  .svgsrc{width:100%;min-height:7rem;margin-top:.5rem;font-family:var(--mono);
+    font-size:.6875rem;line-height:1.5;padding:.6rem .7rem;border:1px solid var(--rule);
+    border-radius:3px;background:var(--ground);color:var(--ink-2);resize:vertical}
+
+  /* ---------- helper ---------- */
+  .q{padding:1.25rem 0;border-bottom:1px solid var(--rule-2)}
+  .q legend{font-size:1.0625rem;font-weight:700;padding:0;margin:0 0 .2rem;line-height:1.3}
+  .q .qhint{font-family:var(--mono);font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-3);margin:0 0 .75rem}
+  fieldset{border:0;margin:0;padding:0}
+  .opts{display:flex;flex-direction:column;gap:.3rem}
+  .opts label{display:flex;align-items:flex-start;gap:.65rem;padding:.6rem .7rem;
+    border:1px solid var(--rule);border-radius:3px;cursor:pointer;background:var(--surface);
+    font-size:.9375rem;min-height:2.75rem}
+  .opts label:hover{border-color:var(--accent)}
+  .opts input{margin:.28rem 0 0;accent-color:var(--accent);flex:0 0 auto}
+  .opts .ot{display:flex;flex-direction:column;gap:.05rem}
+  .opts .ot b{font-weight:700}
+  .opts .ot span{font-size:.9375rem;color:var(--ink);line-height:1.45}
+  .opts label:has(input:checked){border-color:var(--accent);background:var(--accent-wash)}
+  .q .qnote{font-size:.8125rem;color:var(--ink-2);margin:0 0 .75rem;font-style:italic}
+  .helper-acts{display:flex;flex-wrap:wrap;gap:.85rem;align-items:center;margin-top:1.25rem}
+  .result{background:var(--surface);border:1px solid var(--rule);border-radius:4px;
+    padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:.75rem;align-items:flex-start}
+  .result .rnum{font-size:4.5rem;line-height:.82;font-weight:800;letter-spacing:-.05em;color:var(--accent)}
+  .result .rname{font-size:1.25rem;font-weight:700;line-height:1.2}
+  .result p{margin:0;font-size:.9375rem;color:var(--ink-2)}
+
+  /* ---------- standard doc ---------- */
+  .doc h3{margin-top:1.75rem}
+  .doc h3:first-child{margin-top:0}
+  .doc p{margin:0 0 .85rem;font-size:1rem;color:var(--ink-2)}
+  .doc p strong{color:var(--ink)}
+  .tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;margin:0 0 1rem}
+  table{border-collapse:collapse;width:100%;min-width:22rem;background:var(--surface)}
+  th,td{text-align:left;padding:.6rem .8rem;border-bottom:1px solid var(--rule-2);
+    font-size:.875rem;vertical-align:top}
+  th{font-family:var(--mono);font-size:.625rem;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--ink-3);font-weight:400;background:var(--ground)}
+  tr:last-child td{border-bottom:0}
+  td:first-child{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  blockquote.say{margin:1.15rem 0 1.15rem;padding:1.15rem 1.25rem;
+    background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+    border-radius:0 3px 3px 0;font-family:var(--serif);font-size:1.1875rem;line-height:1.5;
+    color:var(--ink)}
+
+  /* ---------- definition list ---------- */
+  .terms{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+    border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:0 0 1.25rem}
+  .terms div{background:var(--surface);padding:.9rem 1.1rem;display:flex;flex-direction:column;gap:.2rem}
+  .terms dt{font-weight:700;font-size:.9375rem;margin:0}
+  .terms dd{margin:0;font-size:.9375rem;color:var(--ink-2);line-height:1.5}
+
+  /* Show the I problem rather than describing it. */
+  .ifade{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+    border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin:1.1rem 0}
+  .ifade > div{background:var(--board);padding:.85rem 1rem;display:flex;
+    align-items:baseline;gap:1rem;flex-wrap:wrap}
+  .isample{font-size:1.75rem;font-weight:700;color:var(--board-ink);letter-spacing:.01em}
+  .isample.serif{font-family:Georgia,"Times New Roman",serif}
+  .isample.crossbar{font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif}
+  .isample.bare{font-family:Helvetica,Arial,"Liberation Sans",sans-serif}
+  .ilbl{font-family:var(--mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase}
+  .ilbl.ok{color:var(--accent)}
+  .ilbl.no{color:#9A3412}
+
+  .footlinks{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem;margin-top:3rem;
+    padding-top:1.35rem;border-top:1px solid var(--rule)}
+  .footlinks a{font-size:.8125rem;font-weight:600;color:var(--ink-2);text-decoration:none;padding:.3rem 0}
+  .footlinks a:hover{color:var(--accent)}
+
+  /* The site declares itself in the form it recommends for anything digital:
+     the token and its caption, linked. No artwork — that is for print. */
+  .selfdecl{display:flex;flex-direction:column;gap:.6rem;
+    border-top:1px solid var(--rule);padding-top:1.5rem;margin-top:2.5rem}
+  .sd-decl{display:inline-flex;align-items:baseline;gap:.55rem;flex-wrap:wrap;
+    text-decoration:none;align-self:flex-start}
+  .sd-tok{font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;font-size:.9375rem;
+    font-weight:700;color:var(--ink);white-space:nowrap;
+    border-bottom:2px solid var(--accent);padding-bottom:1px}
+  .sd-cap{font-size:.9375rem;color:var(--ink-2);line-height:1.4}
+  .sd-decl:hover .sd-tok{color:var(--accent)}
+  .sd-decl:hover .sd-cap{color:var(--ink)}
+  .sd-note{margin:0;font-size:.8125rem;color:var(--ink-3);line-height:1.55;max-width:60ch}
+
+  .colophon{font-family:var(--mono);font-size:.6875rem;line-height:1.9;color:var(--ink-3);
+    letter-spacing:.03em;border-top:1px solid var(--rule);padding-top:1.25rem;margin-top:1.5rem}
+  /* nbsp before each pipe keeps it attached when the line wraps on a phone */
+  .colophon .sep{opacity:.45;padding:0 .12rem}
+  .notice{font-family:var(--mono);font-size:.6875rem;line-height:1.6;color:var(--ink-3);
+    letter-spacing:.04em;margin:1rem 0 0}
+  [hidden]{display:none !important}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* generated pages */
+.gp{display:flex;flex-direction:column;gap:1.5rem;padding-top:1.75rem}
+.gp .tok{font-family:var(--numeral);font-weight:700;font-size:1.75rem;
   line-height:1;color:var(--ink);white-space:nowrap;align-self:flex-start;
   border-bottom:3px solid var(--accent);padding-bottom:.3rem}
-h1{margin:0;font-size:1.5rem;line-height:1.25;font-weight:600;
+.gp h1{margin:0;font-size:1.5rem;line-height:1.25;font-weight:600;
   letter-spacing:-.01em;text-wrap:balance}
-.say{margin:0;padding:1rem 1.15rem;background:var(--surface);
+.gp .say{margin:0;padding:1rem 1.15rem;background:var(--surface);
   border-left:3px solid var(--accent);border-radius:0 4px 4px 0;
   font-size:1.0625rem;line-height:1.55;color:var(--ink)}
-.say b{display:block;font-size:.6875rem;font-family:var(--mono);
+.gp .say b{display:block;font-size:.6875rem;font-family:var(--mono);
   font-weight:400;letter-spacing:.06em;text-transform:uppercase;
   color:var(--ink-3);margin-bottom:.4rem}
-.detail{display:flex;flex-direction:column;gap:.9rem}
-.detail p{margin:0;color:var(--ink-2)}
-.detail code{font-family:var(--mono);font-size:.9em;color:var(--ink)}
-.more{margin:0;padding-top:1.25rem;border-top:1px solid var(--rule)}
-.more a{color:var(--accent);text-decoration:none;font-weight:600}
-.more a:hover{text-decoration:underline}
-.note{margin:0;font-size:.8125rem;line-height:1.55;color:var(--ink-3)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.gp .detail{display:flex;flex-direction:column;gap:.9rem}
+.gp .detail p{margin:0;color:var(--ink-2)}
+.gp .lede{margin:0;font-size:1.0625rem;color:var(--ink);line-height:1.55}
+.gp .doc h2{margin:2.5rem 0 .35rem;font-size:1.0625rem;font-weight:650;
+  letter-spacing:-.01em;line-height:1.3}
+.gp .doc h2:first-child{margin-top:0}
+.gp .doc p{margin:.7rem 0 0;color:var(--ink-2)}
+.gp .doc dl{margin:0;display:flex;flex-direction:column;gap:1rem}
+.gp .doc dt{font-weight:650;color:var(--ink)}
+.gp .doc dd{margin:.15rem 0 0;color:var(--ink-2)}
+.gp .more{margin:0;padding-top:1.25rem;border-top:1px solid var(--rule);
+  line-height:2}
+.gp .more a{color:var(--accent);text-decoration:none;font-weight:600}
+.gp .more a:hover{text-decoration:underline}
+.gp .note{margin:0;font-size:.8125rem;line-height:1.55;color:var(--ink-3)}
+.gp .levels{display:flex;flex-wrap:wrap;gap:.4rem .85rem;
+  padding-top:1.1rem;border-top:1px solid var(--rule)}
+.gp .levels a{color:var(--accent);text-decoration:none;white-space:nowrap;
+  font-family:var(--numeral);font-size:.8125rem}
+.gp .levels a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<main class="page">
-  <a class="crumb" href="/">The Authorship Index</a>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="/">
+      <span class="wordmark">[AI&#8201;<i>n</i>]</span>
+      <span class="bname">The Authorship Index</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" data-nav="home">Home</a>
+      <a href="/mark" data-nav="mark">Artwork</a>
+      <a href="/helper" data-nav="helper">Not sure?</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <main class="gp">
   <div class="head">
     <div class="tok">[AI&nbsp;3]</div>
     <h1>Planned by artificial intelligence</h1>
@@ -81,6 +361,27 @@ h1{margin:0;font-size:1.5rem;line-height:1.25;font-weight:600;
   <p class="note">You reached this page by scanning a mark or typing its address.
   It is one of eleven fixed pages. Nothing about the work you were holding is
   recorded here, and nothing about you is either.</p>
-</main>
+  </main>
+
+  <nav class="footlinks" aria-label="More pages">
+    <a href="/standard">The standard in brief</a>
+    <a href="/glossary">Glossary</a>
+    <a href="/history">History</a>
+    <a href="/rulings">Tools</a>
+    <a href="/contact">Contact</a>
+    <a href="/licence">Licence</a>
+  </nav>
+
+  <div class="selfdecl">
+    <a class="sd-decl" href="/6">
+      <span class="sd-tok">[AI&nbsp;6]</span>
+      <span class="sd-cap">Written by artificial intelligence, shaped by the author</span>
+    </a>
+    <p class="sd-note">The idea, the decisions and the editing are the author's. The sentences are largely the machine's. A standard that would not declare itself would not be worth much.</p>
+  </div>
+
+  <p class="colophon">The Authorship Index&nbsp;<span class="sep">|</span> Standard version 2026&nbsp;<span class="sep">|</span> authorshipindex.org<span class="sep">|</span> <a href="/scale.json" style="color:inherit">the scale, as JSON</a></p>
+</div>
+
 </body>
 </html>
