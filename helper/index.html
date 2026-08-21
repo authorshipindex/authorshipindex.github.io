@@ -289,6 +289,22 @@
   .colophon .sep{opacity:.45;padding:0 .12rem}
   .notice{font-family:var(--mono);font-size:.6875rem;line-height:1.6;color:var(--ink-3);
     letter-spacing:.04em;margin:1rem 0 0}
+  /* The mark as it is actually made: from a keyboard. */
+  .keys{display:flex;gap:.4rem;flex-wrap:wrap;margin:1.25rem 0 .6rem}
+  .key{display:inline-flex;align-items:center;justify-content:center;
+    min-width:2.4rem;height:2.4rem;padding:0 .55rem;
+    font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;
+    font-size:1rem;font-weight:700;color:var(--ink);background:var(--surface);
+    border:1px solid var(--rule);border-bottom-width:3px;border-radius:5px}
+  .key-sp{min-width:4.6rem;font-family:var(--mono);font-size:.6875rem;
+    font-weight:400;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3)}
+  .typed-eg{margin:.7rem 0 0;padding:0;list-style:none;
+    display:flex;flex-direction:column;gap:.7rem}
+  .typed-eg li{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem .7rem}
+  .typed-eg code{font-family:var(--mono);font-size:.8125rem;color:var(--ink);
+    background:var(--accent-wash);padding:.2rem .4rem;border-radius:3px;
+    word-break:break-all}
+  .typed-eg span{font-size:.875rem;color:var(--ink-3)}
   [hidden]{display:none !important}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -512,7 +528,26 @@
     </section>
 
     <section>
-      <h2 class="eyebrow">2 · The artwork</h2>
+      <h2 class="eyebrow">2 · Write it</h2>
+      <p class="body">The mark is text. In a footer, a byline, an email, a metadata field, a document header — you type it and you are finished. No file, no font, no image, and nothing to take from this page.</p>
+
+      <div class="keys" aria-hidden="true">
+        <span class="key">[</span><span class="key">A</span><span class="key">I</span><span class="key key-sp">space</span><span class="key" id="key-digit">4</span><span class="key">]</span>
+      </div>
+      <p class="notice">Six keystrokes: two square brackets, a capital A, a capital I, one space, your number.</p>
+
+      <p class="body" style="margin-top:1.5rem">Written out, in the places it usually goes:</p>
+      <ul class="typed-eg">
+        <li><code id="eg-bare">[AI 4]</code><span>on its own, where the scale is already known</span></li>
+        <li><code id="eg-addr">[AI 4] authorshipindex.org/4</code><span>with the address, where it may not be</span></li>
+        <li><code id="eg-link">&lt;a href="https://authorshipindex.org/4"&gt;[AI 4]&lt;/a&gt;</code><span>as a link, on a web page</span></li>
+      </ul>
+
+      <p class="aside">Artwork earns its place in one situation: something printed, where the mark has to hold a size beside a barcode, or where a reader needs a code to scan. Everywhere else the typed mark <em>is</em> the mark, and it will outlive any file on this page.</p>
+    </section>
+
+    <section>
+      <h2 class="eyebrow">3 · The artwork, if you need it</h2>
       <div class="variants">
         <div class="variant">
           <div class="vhead">
@@ -526,7 +561,7 @@
     </section>
 
     <section>
-      <h2 class="eyebrow">3 · Variants</h2>
+      <h2 class="eyebrow">4 · Variants</h2>
       <label class="urltoggle">
         <input type="checkbox" id="mark-url" checked>
         <span><strong>Include the caption</strong> — the level in plain English, with the address beneath it. On paper a bare token is a dead end: nobody knows what a 4 means yet, and search engines strip the brackets, so it cannot even be looked up. Turn it off only where space genuinely will not take it.</span>
@@ -1168,10 +1203,10 @@
   }
 
   // The caption sits to the RIGHT of the block, vertically centred against it.
-  function caption(x, cy, w, d, url, fill){
+  function caption(x, cy, w, d, urlText, fill){
     var fs = 22, lh = 30, afs = 19, gap = 9;
     var lines = wrapText(levelName(d), fs, w);
-    var total = lines.length * lh + (url ? gap + afs : 0);
+    var total = lines.length * lh + (urlText ? gap + afs : 0);
     var y = cy - total / 2 + fs * 0.82;
     var s = '';
     for (var i = 0; i < lines.length; i++){
@@ -1179,10 +1214,10 @@
            '" font-family="Helvetica, Arial, sans-serif" font-size="'+fs+
            '" fill="'+fill+'">'+esc(lines[i])+'</text>';
     }
-    if (url){
+    if (urlText){
       s += '<text x="'+x+'" y="'+(y + lines.length*lh + gap).toFixed(1)+
            '" font-family="Helvetica, Arial, sans-serif" font-size="'+afs+
-           '" fill="'+fill+'" opacity="0.72">'+addr(d)+'</text>';
+           '" fill="'+fill+'" opacity="0.72">'+urlText+'</text>';
     }
     return s;
   }
@@ -1191,18 +1226,40 @@
     return lines.length * 30 + (url ? 9 + 19 : 0);
   }
 
+  // The mark with no field and no box: the characters themselves, which is
+  // what the standard actually asks for. Verdana leads the stack because its
+  // capital I is crossbarred, and [AI 4] must never read as [A1 4].
+  function plainToken(x, baseline, size, d, fill){
+    return '<text x="'+x+'" y="'+baseline+'" font-family="Verdana, Tahoma, DejaVu Sans, sans-serif" '+
+           'font-size="'+size+'" font-weight="700" fill="'+fill+'">[AI&#160;'+d+']</text>';
+  }
+  // Verdana Bold advance widths, in ems: [ .393  A .774  I .421  space .342
+  // digit .711  ] .393. Close enough to lay a caption beside, and never
+  // relied on for anything that has to align exactly.
+  function plainTokenWidth(size){ return size * 3.05; }
+
+  // One drawing for both grounds. Nothing about it changes but the two inks.
+  function typed(d, cap, ground, ink){
+    var ts = 58, gap = 26, tw = 470, H = 110;
+    var tokw = plainTokenWidth(ts);
+    var W = cap ? tokw + gap + tw : tokw;
+    var s = svgOpen(W,H);
+    s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="'+ground+'"/>';
+    s += plainToken(0, H/2 + ts*0.355, ts, d, ink);
+    if (cap) s += caption(tokw + gap, H/2, tw, d, addr(d), ink);
+    return s + '</svg>';
+  }
+
   var MARKS = {
     full: function(d, cap){
-      var bw = 400, bh = 180, qrs = 180, gapx = 14;
-      var W = 594, tw = 520;
-      var capH = cap ? captionHeight(d, true, tw) : 0;
-      var H = cap ? bh + 26 + capH : bh + 34;
+      var bw = 240, bh = 110, gapx = 12, gap = 26, tw = 430;
+      var W = cap ? bw + gapx + bh + gap + tw : bw + gapx + bh, H = bh;
       var s = svgOpen(W,H);
       s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff"/>';
       s += tokenBox(0, 0, bw, bh, d);
-      s += qrCode(bw + gapx, 0, qrs, d);
-      if (cap) s += caption(0, bh + 26 + capH/2, tw, d, true, '#000');
-      else     s += txt(bw/2, H-6, 24, 400, addr(d));
+      s += qrCode(bw + gapx, 0, bh, d);
+      if (cap) s += caption(bw + gapx + bh + gap, bh/2, tw, d,
+                            'authorshipindex.org', '#000');
       return s + '</svg>';
     },
     inline: function(d, cap){
@@ -1211,18 +1268,11 @@
       var s = svgOpen(W,H);
       s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff"/>';
       s += tokenBox(0, 0, bw, bh, d);
-      if (cap) s += caption(bw + gapx, bh/2, tw, d, true, '#000');
+      if (cap) s += caption(bw + gapx, bh/2, tw, d, addr(d), '#000');
       return s + '</svg>';
     },
-    reversed: function(d, cap){
-      var bw = 280, bh = 126, gapx = 34, tw = 520;
-      var W = cap ? bw + gapx + tw : bw, H = bh;
-      var s = svgOpen(W,H);
-      s += '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#000"/>';
-      s += tokenBox(0, 0, bw, bh, d, true);
-      if (cap) s += caption(bw + gapx, bh/2, tw, d, true, '#fff');
-      return s + '</svg>';
-    },
+    plain: function(d, cap){ return typed(d, cap, '#fff', '#000'); },
+    plainRev: function(d, cap){ return typed(d, cap, '#000', '#fff'); },
     spine: function(d){
       var W = 96, H = 232;
       var s = svgOpen(W,H);
@@ -1240,16 +1290,18 @@
   };
 
   var VARIANTS = [
-    {k:'full',     name:'A · Full',      size:'59 × 21 mm',   sizeCap:'59 × 27 mm',
-     d:'Token block and code. For the outside of a printed thing — a back cover beside the barcode, the rear panel of a brochure or a case. The code resolves it, so the caption is optional here.'},
-    {k:'inline',   name:'B · Inline',    size:'28 × 12.6 mm', sizeCap:'83 × 12.6 mm',
-     d:'Token with the caption beside it. For title pages, copyright pages, colophons — anywhere with a text column and no code.'},
-    {k:'reversed', name:'C · Reversed',  size:'28 × 12.6 mm', sizeCap:'83 × 12.6 mm',
-     d:'The same, for dark grounds. The field drops out rather than filling in. Still one ink.'},
-    {k:'spine',    name:'D · Spine',     size:'9.6 × 23 mm',
-     d:'Rotated, for spines over 12 mm — books, bound reports, boxed sets. No caption and none needed: anyone reading a spine is holding the work.'},
-    {k:'minimum',  name:'E · Minimum',   size:'18 × 8.1 mm',
-     d:'The floor, for where nothing else fits. Below this the digit stops reading at arm’s length.'}
+    {k:'full',     name:'A \u00b7 Full',   size:'36 \u00d7 11 mm', sizeCap:'82 \u00d7 11 mm',
+     d:'Token, code and caption on one line. The code already carries the number, so the address under the caption is the bare domain. For the outside of a printed thing.'},
+    {k:'inline',   name:'B \u00b7 Inline', size:'28 \u00d7 12.6 mm', sizeCap:'83 \u00d7 12.6 mm',
+     d:'Token with the caption beside it. For title pages, copyright pages, colophons \u2014 anywhere with a text column and no code.'},
+    {k:'plain',    name:'C \u00b7 Typed',  size:'18 \u00d7 11 mm', sizeCap:'67 \u00d7 11 mm',
+     d:'No field and no box \u2014 the mark as you would type it, with the address that resolves it. This is the standard as written, and you do not need this file to reproduce it.'},
+    {k:'plainRev', name:'D \u00b7 Typed, reversed', size:'18 \u00d7 11 mm', sizeCap:'67 \u00d7 11 mm',
+     d:'The same two inks the other way round, for dark covers and dark pages.'},
+    {k:'spine',    name:'E \u00b7 Spine',  size:'9.6 \u00d7 23 mm',
+     d:'Rotated, for spines over 12 mm \u2014 books, bound reports, boxed sets. No caption and none needed: anyone reading a spine is holding the work.'},
+    {k:'minimum',  name:'F \u00b7 Minimum', size:'18 \u00d7 8.1 mm',
+     d:'The floor, for where nothing else fits. Below this the digit stops reading at arm\u2019s length.'}
   ];
 
   /* ------------------------------ doc pages ------------------------------ */
@@ -1375,6 +1427,14 @@
     var L = LEVELS[markChoice], d = String(L.n);
     byId('mark-board').innerHTML = MARKS.full(d);
     byId('mark-chosen').textContent = 'the Authorship Index ' + d + ' — ' + L.name + '.';
+
+    // The typed examples are the point of the section above them, so they
+    // follow the picker like everything else on this page.
+    byId('key-digit').textContent = d;
+    byId('eg-bare').textContent = '[AI ' + d + ']';
+    byId('eg-addr').textContent = '[AI ' + d + '] ' + addr(d);
+    byId('eg-link').textContent =
+      '<a href="https://' + addr(d) + '">[AI ' + d + ']</a>';
 
     Array.prototype.forEach.call(byId('mark-picker').children, function(b, j){
       b.setAttribute('aria-pressed', j === markChoice ? 'true' : 'false');
