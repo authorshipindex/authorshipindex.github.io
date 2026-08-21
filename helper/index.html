@@ -120,8 +120,8 @@
   .scale li.here .lgo{border-color:var(--accent)}
   .scale .lnum{font-family:Verdana,Tahoma,"DejaVu Sans",sans-serif;
     font-size:.9375rem;font-weight:700;line-height:1.35;letter-spacing:-.01em;
-    font-variant-numeric:tabular-nums;color:var(--ink-3);white-space:nowrap}
-  .scale .lname{font-size:1rem;color:var(--ink-2);line-height:1.35}
+    font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+  .scale .lname{font-size:1rem;color:var(--ink);line-height:1.35}
   .scale li.here{background:var(--accent-wash);box-shadow:inset 3px 0 0 var(--accent)}
   .scale li.here .lnum{color:var(--accent)}
   .scale li.here .lname{color:var(--ink);font-weight:700}
@@ -706,7 +706,7 @@
   <!-- ============================ STANDARD ============================ -->
   <main id="v-standard" hidden>
     <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
-      <h1 class="big">The standard in brief</h1>
+      <h1 class="big">The standard</h1>
       <p class="lede">The Authorship Index, version 2026. This page sets out the standard in the order it is written: what the index is, how to choose a number, and what may never change about it.</p>
     </header>
     <section class="doc" id="standard-body"></section>
@@ -722,7 +722,7 @@
   </main>
 
   <nav class="footlinks" aria-label="More pages">
-    <a href="/standard">The standard in brief</a>
+    <a href="/standard">The standard</a>
     <a href="/glossary">Glossary</a>
     <a href="/history">History</a>
     <a href="/rulings">Tools</a>
@@ -1684,7 +1684,7 @@
       document.title = 'Artwork · The Authorship Index'; renderMark(); show('mark'); return;
     }
     if (h === 'helper')   { document.title = 'Which Number? · The Authorship Index'; renderHelper(); show('helper'); return; }
-    if (h === 'standard') { document.title = 'The Standard in Brief · The Authorship Index'; show('standard'); return; }
+    if (h === 'standard') { document.title = 'The Standard · The Authorship Index'; show('standard'); return; }
     if (DOCS[h])          { renderDoc(h); show('doc'); return; }
     for (var i = 0; i < LEVELS.length; i++){
       if (slug(LEVELS[i]) === h){ renderLevel(i); return; }
