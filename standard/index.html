@@ -305,6 +305,14 @@
     background:var(--accent-wash);padding:.2rem .4rem;border-radius:3px;
     word-break:break-all}
   .typed-eg span{font-size:.875rem;color:var(--ink-3)}
+  /* The date the text last changed, which is not the version. The version is
+     what a declaration is made under and holds for a year; this moves when
+     someone decides a sentence was wrong. It appears here and in the JSON,
+     and deliberately not in the colophon: the eleven level pages are read by
+     people holding something already printed, and a date beside a permanent
+     meaning invites a doubt the standard exists to remove. */
+  .revised{font-family:var(--mono);font-size:.6875rem;letter-spacing:.04em;
+    color:var(--ink-3);margin:.9rem 0 0}
   [hidden]{display:none !important}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -336,6 +344,7 @@
     <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
       <h1 class="big">The standard</h1>
       <p class="lede">The Authorship Index, version 2026. This page sets out the standard in the order it is written: what the index is, how to choose a number, and what may never change about it.</p>
+      <p class="revised">Revised <time datetime="2026-08-21">21 August 2026</time></p>
     </header>
     <section class="doc">
       <h3>What the Authorship Index is</h3>

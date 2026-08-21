@@ -1,6 +1,7 @@
 {
   "standard": "The Authorship Index",
   "version": "2026",
+  "revised": "2026-08-21",
   "url": "https://authorshipindex.org/",
   "notation": "[AI n]",
   "question": "How much of that text did a person actually write?",
