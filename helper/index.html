@@ -315,6 +315,20 @@
   [hidden]{display:none !important}
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.ns{margin-top:1.5rem}
+.ns-lede{margin:0 0 1.5rem;color:var(--ink-2)}
+.ns-q{margin:0 0 1.75rem}
+.ns-q h3{margin:0 0 .6rem;font-size:1rem;font-weight:650;line-height:1.35}
+.ns-note{margin:0 0 .6rem;font-size:.875rem;color:var(--ink-3)}
+.ns-opts{margin:0;padding:0;list-style:none;display:flex;
+  flex-direction:column;gap:.5rem}
+.ns-opts li{display:flex;justify-content:space-between;align-items:baseline;
+  gap:1rem;padding:.6rem .75rem;background:var(--surface);
+  border-left:2px solid var(--rule);border-radius:0 3px 3px 0;
+  font-size:.9375rem;color:var(--ink-2)}
+.ns-go{font-family:var(--numeral);font-size:.875rem;color:var(--accent);
+  white-space:nowrap}
 </style>
 <!--ld-->
 <script type="application/ld+json">
@@ -329,6 +343,7 @@
   "version": "2026",
   "dateModified": "2026-08-21",
   "inLanguage": "en",
+  "license": "https://authorshipindex.org/licence",
   "hasDefinedTerm": [
     {
       "@type": "DefinedTerm",
@@ -456,7 +471,42 @@
   <!-- Not hidden. This file is served at / and nowhere else, so the view it
      opens on is the one it should render with no script at all. show() hides
      it the moment anything routes away. -->
-<main id="v-home" hidden><ul id="home-scale"></ul></main>
+<main id="v-home" hidden><ul id="home-scale"></ul><noscript>
+  <div class="ns">
+    <p class="ns-lede">The questions are normally asked one at a time. Without
+    scripts, here they are together, with the number each answer gives.</p>
+    <section class="ns-q">
+      <h3>1. Who wrote the sentences that ended up in the finished work?</h3>
+      <ul class="ns-opts">
+        <li>I wrote every one of them myself.<span class="ns-go">the second question</span></li>
+        <li>I wrote it. Here and there I used artificial intelligence for a phrase or a sentence I was stuck on.<span class="ns-go"><strong>4</strong></span></li>
+        <li>Artificial intelligence wrote a draft, and I rewrote it in my own words.<span class="ns-go"><strong>5</strong></span></li>
+        <li>Artificial intelligence wrote it, and what it wrote is broadly what&#x27;s on the page.<span class="ns-go">the second question</span></li>
+      </ul>
+    </section>
+    <section class="ns-q">
+      <h3>2. So artificial intelligence wrote none of it. What did it do?</h3>
+      <p class="ns-note">If more than one applies, pick the biggest thing it did.</p>
+      <ul class="ns-opts">
+        <li>Nothing at all. It was never involved.<span class="ns-go"><strong>0</strong></span></li>
+        <li>Checked it — the facts, the continuity, whether the argument held up.<span class="ns-go"><strong>1</strong></span></li>
+        <li>Talked it through with me while I was working on it.<span class="ns-go"><strong>2</strong></span></li>
+        <li>Came up with the plan, the structure, or the idea itself.<span class="ns-go"><strong>3</strong></span></li>
+      </ul>
+    </section>
+    <section class="ns-q">
+      <h3>2. So artificial intelligence wrote the words. How much of the rest was yours?</h3>
+      <ul class="ns-opts">
+        <li>My idea, and I did the editing, cutting and shaping myself.<span class="ns-go"><strong>6</strong></span></li>
+        <li>My idea and my brief. Artificial intelligence wrote and revised it, and I approved the result.<span class="ns-go"><strong>7</strong></span></li>
+        <li>The idea came from artificial intelligence too. I decided it was worth publishing.<span class="ns-go"><strong>8</strong></span></li>
+      </ul>
+    </section>
+    <p class="ns-note">Where more than one answer applies, take the highest.
+    The number is the deepest involvement, not a total.</p>
+  </div>
+</noscript>
+  </main>
 
   <!-- ============================ LEVEL ============================ -->
   <main id="v-level" hidden><span id="numeral"></span><span id="plainname"></span><div id="meaning"></div><p id="say-intro"></p><blockquote id="say-line"></blockquote><a id="level-tomark" href="/mark"></a><ul id="level-scale"></ul></main>
