@@ -340,7 +340,7 @@
     </header>
     <section class="doc">
       <h3>Getting in touch</h3>
-      <p>For questions about the standard, corrections to these pages, or a proposed ruling: <span id="cx-mail">—</span></p>
+      <p>For questions about the standard, corrections to these pages, or a proposed ruling: <span id="cx-mail">hello at authorshipindex dot org</span></p>
       <p>Publicly, the standard is discussed at <strong>@authorshipindex</strong>. That is where it is talked about; this is where it is administered.</p>
       <p>Replies come from a person and may take some time.</p>
       <h3>Matters requiring no enquiry</h3>
@@ -367,6 +367,19 @@
         <li><a href="/x"><span class="lnum">[AI X]</span><span class="lname">Prefer not to say</span><span class="lgo" aria-hidden="true"></span></a></li>
       </ul>
     </section>
+<script>
+(function(){
+  var slot = document.getElementById('cx-mail');
+  if (!slot) return;
+  var box = ['hello', String.fromCharCode(64), 'authorshipindex', '.', 'org'].join('');
+  var a = document.createElement('a');
+  a.className = 'action';
+  a.href = 'mail' + 'to:' + box;
+  a.textContent = box;
+  slot.textContent = '';
+  slot.appendChild(a);
+})();
+</script>
   </main>
 
   <nav class="footlinks" aria-label="More pages">
