@@ -294,39 +294,10 @@
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-/* generated pages */
-.gp{display:flex;flex-direction:column;gap:1.5rem;padding-top:1.75rem}
-.gp .tok{font-family:var(--numeral);font-weight:700;font-size:1.75rem;
-  line-height:1;color:var(--ink);white-space:nowrap;align-self:flex-start;
-  border-bottom:3px solid var(--accent);padding-bottom:.3rem}
-.gp h1{margin:0;font-size:1.5rem;line-height:1.25;font-weight:600;
-  letter-spacing:-.01em;text-wrap:balance}
-.gp .say{margin:0;padding:1rem 1.15rem;background:var(--surface);
-  border-left:3px solid var(--accent);border-radius:0 4px 4px 0;
-  font-size:1.0625rem;line-height:1.55;color:var(--ink)}
-.gp .say b{display:block;font-size:.6875rem;font-family:var(--mono);
-  font-weight:400;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--ink-3);margin-bottom:.4rem}
-.gp .detail{display:flex;flex-direction:column;gap:.9rem}
-.gp .detail p{margin:0;color:var(--ink-2)}
-.gp .lede{margin:0;font-size:1.0625rem;color:var(--ink);line-height:1.55}
-.gp .doc h2{margin:2.5rem 0 .35rem;font-size:1.0625rem;font-weight:650;
-  letter-spacing:-.01em;line-height:1.3}
-.gp .doc h2:first-child{margin-top:0}
-.gp .doc p{margin:.7rem 0 0;color:var(--ink-2)}
-.gp .doc dl{margin:0;display:flex;flex-direction:column;gap:1rem}
-.gp .doc dt{font-weight:650;color:var(--ink)}
-.gp .doc dd{margin:.15rem 0 0;color:var(--ink-2)}
-.gp .more{margin:0;padding-top:1.25rem;border-top:1px solid var(--rule);
-  line-height:2}
-.gp .more a{color:var(--accent);text-decoration:none;font-weight:600}
-.gp .more a:hover{text-decoration:underline}
-.gp .note{margin:0;font-size:.8125rem;line-height:1.55;color:var(--ink-3)}
-.gp .levels{display:flex;flex-wrap:wrap;gap:.4rem .85rem;
-  padding-top:1.1rem;border-top:1px solid var(--rule)}
-.gp .levels a{color:var(--accent);text-decoration:none;white-space:nowrap;
-  font-family:var(--numeral);font-size:.8125rem}
-.gp .levels a:hover{text-decoration:underline}
+.notfound{display:flex;flex-wrap:wrap;gap:.5rem .9rem;margin:1.25rem 0 0}
+.notfound a{color:var(--accent);text-decoration:none;white-space:nowrap;
+  font-family:var(--numeral);font-size:.875rem}
+.notfound a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -346,81 +317,98 @@
 </nav>
 
 <div class="page">
-  <main class="gp">
-  <h1>How it was worked out</h1>
-  <p class="lede">This standard was written by a person and a machine, each correcting the other. Both were wrong more than once, and the record below sets out which was wrong about what. Standards rarely show their working; the discarded versions explain the current one better than the current one can.</p>
-  <div class="doc">
-<h2>“Why does the scale reverse direction?”</h2>
-<p>The first draft ran L0 to L7. The second extended it to L10. The third replaced the integers with dot notation: 0, then 1.0–1.4 for human-led work, then 2.4–2.0 for machine-led work.</p>
-<p>That third version broke the one thing an index cannot break. Inside the 1.x band a higher number meant more machine; inside 2.x a higher number meant more <em>human</em>. The scale reversed halfway along, so nobody could compare 1.4 with 2.1 without a lookup table — and the document contradicted itself in two places without noticing.</p>
-<p>The answer was already on a napkin. The originator’s first sketch of the back cover showed a single digit in a box. Every more elaborate scheme was tested against that sketch, and the digit won every time.</p>
-<h2>“Is the 01 a version, or the index?”</h2>
-<p>The code was originally a GS1 Digital Link: <code>/01/</code> followed by the thirteen digits of the ISBN, so that one square on the cover carried both the book’s identity and its record. <code>01</code> is the GS1 identifier for a product number, and it would have been <code>01</code> on every book ever printed.</p>
-<p>The question that settled it was simple: if the person who invented the standard reads <code>01</code> as the index, so will everyone. The URL now leads with the number, which is what a reader actually wants.</p>
-<h2>“The code tells me what a 4 means. It doesn’t need to know which book this is.”</h2>
-<p>This one reframed the whole system. If the code’s job is to explain the digit rather than look up the work, then it needs no ISBN, no record, and <strong>no registration at all</strong>.</p>
-<p>That is what made adoption free. Any author anywhere prints the mark and the code works, with no account, no database entry and nobody’s permission. Everything that followed — the deleted register, the eleven static pages, the refusal to hold records — follows from that one observation.</p>
-<h2>“Shouldn’t the index be self-selected?”</h2>
-<p>The drafting recommendation was a computed one: five questions about conception, structure, drafting, revision and verification, with the number derived from the answers. It removed the boundary arguments no amount of prose can settle, and it was wrong.</p>
-<p>A number produced by a form is a number its declarer can disown — <em>the tool said 4</em> — and a standard resting entirely on honesty cannot afford a gap between the claim and the person making it. The grid was demoted to an optional helper that suggests and never assigns.</p>
-<p>It then failed on its own author. Applied to this website the grid returns 7; the honest answer is 6. The mechanism gets the standard’s own site wrong, which settles the argument better than any reasoning could.</p>
-<h2>“Spellcheckers and grammar checkers do not count.”</h2>
-<p>Stated flatly, and correct. They have been part of writing since long before generative systems, they correct what the author already wrote, and they put no words in anyone’s mouth. A standard under which every writer alive is a 1 would describe nothing.</p>
-<p>Holding that line exposed a defect one level up. Level 1 read <em>“reviewed the finished writing”</em> — which is also what a grammar checker does. Level 1 is now explicitly about <strong>substance</strong>: facts, continuity, whether the argument holds. Mechanics never reach it.</p>
-<h2>“If it finds ten timeline errors and I fix them all myself, does that count?”</h2>
-<p>The hardest question asked of this standard, and the one that produced its sharpest test.</p>
-<p>It counts — it is a 1. Nothing the machine produced is in the finished work, but the author did not find those ten errors. Without it the book ships with ten errors in it, and the integrity of the finished work is partly owed to something that was not a person.</p>
-<p>Reconciling that with the spellcheck exemption required a second test, which now carries as much weight as the first: <strong>did the tool have to understand your work to do its job?</strong> A spellchecker would behave identically on a shopping list. Something that catches a contradiction in chapter nine has read your book.</p>
-<h2>“Does STET suggest a human reviewed it?”</h2>
-<p>A shortlist of names had reached <em>STET</em> — the proofreader’s mark meaning <em>let it stand</em>. Elegant, publishing-native, proposed with some confidence, and ruled out immediately.</p>
-<p><em>Let it stand</em> is an instruction a human editor gives. At 8 the human only pressed publish; at 9 there is no human at all. The mark would have asserted something the number explicitly denies.</p>
-<p>That question became a permanent screening rule: <strong>a name must be neutral across all eleven values.</strong> It ruled out three candidates at once, and revealed a pattern — the warmest, most bookish names are the least neutral, because their warmth comes from evoking human hands.</p>
-<h2>Where the machine was too cautious</h2>
-<p>On trademarks, the drafting advice was gloomy: two research institutes hold the obvious names, the field is crowded, prepare for the answer to be <em>change it</em>.</p>
-<p>The reply was one word — <em>Polo</em>. Ralph Lauren, Volkswagen and a mint coexist because trademark classes exist precisely to let unrelated goods share a name. The caution was overdone, and was withdrawn.</p>
-<p>Both names did eventually go, but for a different and better reason: a mark containing those letters is weak as well as contested, and describing the thing beats claiming a name for it.</p>
-<h2>Where the machine got the copy wrong</h2>
-<p>The mark page read <em>“free, permanent, and nobody needs to know you did.”</em> It was meant to say there is no registration. Read plainly it says something else entirely — that using the mark is something you might want to keep quiet.</p>
-<p>On a transparency standard that is the one connotation the page cannot afford. It had spread to three places before it was caught. The rule now is <strong>no permission needed, not no witness needed</strong>.</p>
-<p>The same instinct had produced an earlier fault: routing readers who doubted a declaration straight to that book’s review form. An index that delivers a hostile reader to their target would have become the very thing it exists to prevent.</p>
-<h2>“The helper is technical. I guessed.”</h2>
-<p>The five questions were answered against a four-state vocabulary — <em>none, assisted, co-created, generated</em>. Those are the standard’s own analytical terms, and asking a declarer to translate their experience into them was asking them to read the standard first.</p>
-<p>If the person who invented the index has to guess, the tool is broken. It was rebuilt as two questions in plain first-person language, the second branching on the first, with every option describing something you either did or did not do.</p>
-<p>The lesson was general: a sound analytical model and a good interview are not the same artifact, and one had been shipped as the other.</p>
-<h2>“Does any of this actually matter?”</h2>
-<p>Asked directly, halfway through, and it deserved a straight answer rather than encouragement.</p>
-<p>The honest one had three parts. The index makes honest declarers <em>visible</em> while dishonest ones stay invisible, so early adopters carry a cost before the network protects anyone. Every previous authenticity panic — photography, synthesisers, sampling, digital images — normalised without ever producing a disclosure standard. And a trade body that calls the practice unethical is not asking <em>how much</em>, so a finer measurement will not move it.</p>
-<p>The case for continuing held. The vocabulary works today, with no infrastructure at all, and someone will define this taxonomy whether or not it is someone who actually uses the tools. The conclusion both sides reached: the language is the valuable half, and the printed badge is a much longer bet.</p>
-<h2>Two names did not survive</h2>
-<p>The standard was <strong>AI²</strong> for two drafts. <em>AI2</em> is a registered trademark of an organisation in the same field.</p>
-<p>The obvious fallback was <strong>AIAI</strong>, matching the original domain. That name is also long established, by a research institute — and a research institute sits in the same trademark class as publishing, which made it the closer collision of the two.</p>
-<p>Two names, two prior holders. Not bad luck: every permutation of <em>AI-something</em> is contested, and a mark containing those letters is both harder to clear and weaker once cleared. So the standard stopped claiming a name and started describing itself.</p>
-<h2>“[AI] {AI} &lt;AI&gt; /AI/”</h2>
-<p>Four options, offered without comment. Square brackets are the editor’s notation for material that did not come from the author — <em>[sic]</em>, <em>[emphasis mine]</em> — which makes them the exact notation for a standard measuring how much of a text did not come from its author.</p>
-<p>The follow-up corrected the drafting again. The proposal had been <code>[AI] 4</code>, with the number outside. But the convention encloses the whole interpolation: you write <em>[emphasis mine]</em>, never <em>[emphasis] mine</em>. <code>[AI 4]</code> uses the convention properly, and makes the mark one unsplittable token.</p>
-<p>It also deleted a section. Earlier drafts needed two notations, a brandmark for display and an ASCII form for metadata. <code>[AI 4]</code> types on any keyboard, so there is one form now — and most use of this standard needs no artwork at all.</p>
-<h2>“0 is human, 9 is non-human. The intelligence could be anything.”</h2>
-<p>The last and deepest of them. The standard had been defining its levels in terms of artificial intelligence — a term of art with a shelf life. Nobody says <em>cybernetics</em> now.</p>
-<p>The axis is not artificial intelligence. It is <strong>human share</strong>. Whatever writes prose in twenty years, under whatever name, the question <em>how much of this did a person write?</em> still parses.</p>
-<p>That is what makes the permanence promise real rather than aspirational. The level descriptions may be refreshed as the language changes; the human share each number represents may not. A 4 declared in 2026 is still a 4 in 2046, because 4 never meant a technology.</p>
-<h2>This page has its own history</h2>
-<p>The first version of it described the changes as though the standard had evolved by itself, crediting nobody. The second overcorrected into a list of the originator’s good questions, which was flattering and equally untrue.</p>
-<p>This is the third. It is the only one that mentions the drafting being wrong, which is the part that makes the rest believable.</p>
-<h2>“Is there ever a case for [AI 5/6]?”</h2>
-<p>Ruled out, and the reasoning turned out to be less obvious than expected. Seven of the nine boundaries ask whether something <em>happened</em> rather than how much — so a range across them is not a finer measurement but an unanswered question. If artificial intelligence offered judgement on a work, that is a 2, and the 1-ness does not dilute it.</p>
-<p>Only two boundaries run by degree: 4/5 and 5/6, both inside the drafting band, which is the one variable on the scale that is genuinely continuous. A work can honestly be sixty per cent rewritten. That is what a rounding rule is for, and every practical index rounds — a shared scale is worth something only while everyone uses the same buckets.</p>
-<p>The deciding reason belonged to the reader. A number describes what a reader will encounter, and a reader encounters the whole work. If the first half is a 5 and the second a 6, somebody reading the second half is reading a 6, and a range would conceal precisely what the number exists to disclose.</p>
-<h2>Who wrote it</h2>
-<p>The Authorship Index was originated by <strong>an author</strong> — one person who wrote a book with artificial intelligence and found there was no precise way to say so, only one phrase covering everything from a spellcheck to a machine writing the lot.</p>
-<p>Not a company, not a platform, not an institution. That is the whole of it, recorded here and nowhere else: not in the colophon, not on the pages that define the index, and not in the governance commitments. A standard should not depend on who wrote it, and one carrying its author’s name at the foot of every page would be asking to.</p>
-<p>The licence binds whoever operates these pages. The text may be copied and mirrored by anyone. If the index outlives the person who started it, it will have worked.</p>
-<h2>Why 6?</h2>
-<p>The idea was the author’s. So was every editorial decision — including at least five that reversed the drafting outright: no register, self-selection over computation, the number inside the brackets, human share as the axis, and the whole trademark posture.</p>
-<p>The prose is the machine’s. The author did not rewrite it sentence by sentence, which is what a <strong>5</strong> would require. What the author did was conceive the work, direct it, reject a great deal of it, and decide what stood.</p>
-<p>That is precisely what <strong>6</strong> describes: <em>a machine wrote it, the author shaped it.</em> Not the most flattering number available, and arrived at by the standard’s own rule — <em>when in doubt, go higher</em>.</p>
-<p>A standard whose own site declared a comfortable number would be worth nothing. This is what it actually is.</p>
-  </div>
-  <div class="levels"><a href="/0">[AI&nbsp;0]</a><a href="/1">[AI&nbsp;1]</a><a href="/2">[AI&nbsp;2]</a><a href="/3">[AI&nbsp;3]</a><a href="/4">[AI&nbsp;4]</a><a href="/5">[AI&nbsp;5]</a><a href="/6">[AI&nbsp;6]</a><a href="/7">[AI&nbsp;7]</a><a href="/8">[AI&nbsp;8]</a><a href="/9">[AI&nbsp;9]</a><a href="/x">[AI&nbsp;X]</a></div>
+  <main>
+    <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
+      <h1 class="big">How it was worked out</h1>
+      <p class="lede">This standard was written by a person and a machine, each correcting the other. Both were wrong more than once, and the record below sets out which was wrong about what. Standards rarely show their working; the discarded versions explain the current one better than the current one can.</p>
+    </header>
+    <section class="doc">
+      <h3>“Why does the scale reverse direction?”</h3>
+      <p>The first draft ran L0 to L7. The second extended it to L10. The third replaced the integers with dot notation: 0, then 1.0–1.4 for human-led work, then 2.4–2.0 for machine-led work.</p>
+      <p>That third version broke the one thing an index cannot break. Inside the 1.x band a higher number meant more machine; inside 2.x a higher number meant more <em>human</em>. The scale reversed halfway along, so nobody could compare 1.4 with 2.1 without a lookup table — and the document contradicted itself in two places without noticing.</p>
+      <p>The answer was already on a napkin. The originator’s first sketch of the back cover showed a single digit in a box. Every more elaborate scheme was tested against that sketch, and the digit won every time.</p>
+      <h3>“Is the 01 a version, or the index?”</h3>
+      <p>The code was originally a GS1 Digital Link: <code>/01/</code> followed by the thirteen digits of the ISBN, so that one square on the cover carried both the book’s identity and its record. <code>01</code> is the GS1 identifier for a product number, and it would have been <code>01</code> on every book ever printed.</p>
+      <p>The question that settled it was simple: if the person who invented the standard reads <code>01</code> as the index, so will everyone. The URL now leads with the number, which is what a reader actually wants.</p>
+      <h3>“The code tells me what a 4 means. It doesn’t need to know which book this is.”</h3>
+      <p>This one reframed the whole system. If the code’s job is to explain the digit rather than look up the work, then it needs no ISBN, no record, and <strong>no registration at all</strong>.</p>
+      <p>That is what made adoption free. Any author anywhere prints the mark and the code works, with no account, no database entry and nobody’s permission. Everything that followed — the deleted register, the eleven static pages, the refusal to hold records — follows from that one observation.</p>
+      <h3>“Shouldn’t the index be self-selected?”</h3>
+      <p>The drafting recommendation was a computed one: five questions about conception, structure, drafting, revision and verification, with the number derived from the answers. It removed the boundary arguments no amount of prose can settle, and it was wrong.</p>
+      <p>A number produced by a form is a number its declarer can disown — <em>the tool said 4</em> — and a standard resting entirely on honesty cannot afford a gap between the claim and the person making it. The grid was demoted to an optional helper that suggests and never assigns.</p>
+      <p>It then failed on its own author. Applied to this website the grid returns 7; the honest answer is 6. The mechanism gets the standard’s own site wrong, which settles the argument better than any reasoning could.</p>
+      <h3>“Spellcheckers and grammar checkers do not count.”</h3>
+      <p>Stated flatly, and correct. They have been part of writing since long before generative systems, they correct what the author already wrote, and they put no words in anyone’s mouth. A standard under which every writer alive is a 1 would describe nothing.</p>
+      <p>Holding that line exposed a defect one level up. Level 1 read <em>“reviewed the finished writing”</em> — which is also what a grammar checker does. Level 1 is now explicitly about <strong>substance</strong>: facts, continuity, whether the argument holds. Mechanics never reach it.</p>
+      <h3>“If it finds ten timeline errors and I fix them all myself, does that count?”</h3>
+      <p>The hardest question asked of this standard, and the one that produced its sharpest test.</p>
+      <p>It counts — it is a 1. Nothing the machine produced is in the finished work, but the author did not find those ten errors. Without it the book ships with ten errors in it, and the integrity of the finished work is partly owed to something that was not a person.</p>
+      <p>Reconciling that with the spellcheck exemption required a second test, which now carries as much weight as the first: <strong>did the tool have to understand your work to do its job?</strong> A spellchecker would behave identically on a shopping list. Something that catches a contradiction in chapter nine has read your book.</p>
+      <h3>“Does STET suggest a human reviewed it?”</h3>
+      <p>A shortlist of names had reached <em>STET</em> — the proofreader’s mark meaning <em>let it stand</em>. Elegant, publishing-native, proposed with some confidence, and ruled out immediately.</p>
+      <p><em>Let it stand</em> is an instruction a human editor gives. At 8 the human only pressed publish; at 9 there is no human at all. The mark would have asserted something the number explicitly denies.</p>
+      <p>That question became a permanent screening rule: <strong>a name must be neutral across all eleven values.</strong> It ruled out three candidates at once, and revealed a pattern — the warmest, most bookish names are the least neutral, because their warmth comes from evoking human hands.</p>
+      <h3>Where the machine was too cautious</h3>
+      <p>On trademarks, the drafting advice was gloomy: two research institutes hold the obvious names, the field is crowded, prepare for the answer to be <em>change it</em>.</p>
+      <p>The reply was one word — <em>Polo</em>. Ralph Lauren, Volkswagen and a mint coexist because trademark classes exist precisely to let unrelated goods share a name. The caution was overdone, and was withdrawn.</p>
+      <p>Both names did eventually go, but for a different and better reason: a mark containing those letters is weak as well as contested, and describing the thing beats claiming a name for it.</p>
+      <h3>Where the machine got the copy wrong</h3>
+      <p>The mark page read <em>“free, permanent, and nobody needs to know you did.”</em> It was meant to say there is no registration. Read plainly it says something else entirely — that using the mark is something you might want to keep quiet.</p>
+      <p>On a transparency standard that is the one connotation the page cannot afford. It had spread to three places before it was caught. The rule now is <strong>no permission needed, not no witness needed</strong>.</p>
+      <p>The same instinct had produced an earlier fault: routing readers who doubted a declaration straight to that book’s review form. An index that delivers a hostile reader to their target would have become the very thing it exists to prevent.</p>
+      <h3>“The helper is technical. I guessed.”</h3>
+      <p>The five questions were answered against a four-state vocabulary — <em>none, assisted, co-created, generated</em>. Those are the standard’s own analytical terms, and asking a declarer to translate their experience into them was asking them to read the standard first.</p>
+      <p>If the person who invented the index has to guess, the tool is broken. It was rebuilt as two questions in plain first-person language, the second branching on the first, with every option describing something you either did or did not do.</p>
+      <p>The lesson was general: a sound analytical model and a good interview are not the same artifact, and one had been shipped as the other.</p>
+      <h3>“Does any of this actually matter?”</h3>
+      <p>Asked directly, halfway through, and it deserved a straight answer rather than encouragement.</p>
+      <p>The honest one had three parts. The index makes honest declarers <em>visible</em> while dishonest ones stay invisible, so early adopters carry a cost before the network protects anyone. Every previous authenticity panic — photography, synthesisers, sampling, digital images — normalised without ever producing a disclosure standard. And a trade body that calls the practice unethical is not asking <em>how much</em>, so a finer measurement will not move it.</p>
+      <p>The case for continuing held. The vocabulary works today, with no infrastructure at all, and someone will define this taxonomy whether or not it is someone who actually uses the tools. The conclusion both sides reached: the language is the valuable half, and the printed badge is a much longer bet.</p>
+      <h3>Two names did not survive</h3>
+      <p>The standard was <strong>AI²</strong> for two drafts. <em>AI2</em> is a registered trademark of an organisation in the same field.</p>
+      <p>The obvious fallback was <strong>AIAI</strong>, matching the original domain. That name is also long established, by a research institute — and a research institute sits in the same trademark class as publishing, which made it the closer collision of the two.</p>
+      <p>Two names, two prior holders. Not bad luck: every permutation of <em>AI-something</em> is contested, and a mark containing those letters is both harder to clear and weaker once cleared. So the standard stopped claiming a name and started describing itself.</p>
+      <h3>“[AI] {AI} &lt;AI&gt; /AI/”</h3>
+      <p>Four options, offered without comment. Square brackets are the editor’s notation for material that did not come from the author — <em>[sic]</em>, <em>[emphasis mine]</em> — which makes them the exact notation for a standard measuring how much of a text did not come from its author.</p>
+      <p>The follow-up corrected the drafting again. The proposal had been <code>[AI] 4</code>, with the number outside. But the convention encloses the whole interpolation: you write <em>[emphasis mine]</em>, never <em>[emphasis] mine</em>. <code>[AI 4]</code> uses the convention properly, and makes the mark one unsplittable token.</p>
+      <p>It also deleted a section. Earlier drafts needed two notations, a brandmark for display and an ASCII form for metadata. <code>[AI 4]</code> types on any keyboard, so there is one form now — and most use of this standard needs no artwork at all.</p>
+      <h3>“0 is human, 9 is non-human. The intelligence could be anything.”</h3>
+      <p>The last and deepest of them. The standard had been defining its levels in terms of artificial intelligence — a term of art with a shelf life. Nobody says <em>cybernetics</em> now.</p>
+      <p>The axis is not artificial intelligence. It is <strong>human share</strong>. Whatever writes prose in twenty years, under whatever name, the question <em>how much of this did a person write?</em> still parses.</p>
+      <p>That is what makes the permanence promise real rather than aspirational. The level descriptions may be refreshed as the language changes; the human share each number represents may not. A 4 declared in 2026 is still a 4 in 2046, because 4 never meant a technology.</p>
+      <h3>This page has its own history</h3>
+      <p>The first version of it described the changes as though the standard had evolved by itself, crediting nobody. The second overcorrected into a list of the originator’s good questions, which was flattering and equally untrue.</p>
+      <p>This is the third. It is the only one that mentions the drafting being wrong, which is the part that makes the rest believable.</p>
+      <h3>“Is there ever a case for [AI 5/6]?”</h3>
+      <p>Ruled out, and the reasoning turned out to be less obvious than expected. Seven of the nine boundaries ask whether something <em>happened</em> rather than how much — so a range across them is not a finer measurement but an unanswered question. If artificial intelligence offered judgement on a work, that is a 2, and the 1-ness does not dilute it.</p>
+      <p>Only two boundaries run by degree: 4/5 and 5/6, both inside the drafting band, which is the one variable on the scale that is genuinely continuous. A work can honestly be sixty per cent rewritten. That is what a rounding rule is for, and every practical index rounds — a shared scale is worth something only while everyone uses the same buckets.</p>
+      <p>The deciding reason belonged to the reader. A number describes what a reader will encounter, and a reader encounters the whole work. If the first half is a 5 and the second a 6, somebody reading the second half is reading a 6, and a range would conceal precisely what the number exists to disclose.</p>
+      <h3>Who wrote it</h3>
+      <p>The Authorship Index was originated by <strong>an author</strong> — one person who wrote a book with artificial intelligence and found there was no precise way to say so, only one phrase covering everything from a spellcheck to a machine writing the lot.</p>
+      <p>Not a company, not a platform, not an institution. That is the whole of it, recorded here and nowhere else: not in the colophon, not on the pages that define the index, and not in the governance commitments. A standard should not depend on who wrote it, and one carrying its author’s name at the foot of every page would be asking to.</p>
+      <p>The licence binds whoever operates these pages. The text may be copied and mirrored by anyone. If the index outlives the person who started it, it will have worked.</p>
+      <h3>Why 6?</h3>
+      <p>The idea was the author’s. So was every editorial decision — including at least five that reversed the drafting outright: no register, self-selection over computation, the number inside the brackets, human share as the axis, and the whole trademark posture.</p>
+      <p>The prose is the machine’s. The author did not rewrite it sentence by sentence, which is what a <strong>5</strong> would require. What the author did was conceive the work, direct it, reject a great deal of it, and decide what stood.</p>
+      <p>That is precisely what <strong>6</strong> describes: <em>a machine wrote it, the author shaped it.</em> Not the most flattering number available, and arrived at by the standard’s own rule — <em>when in doubt, go higher</em>.</p>
+      <p>A standard whose own site declared a comfortable number would be worth nothing. This is what it actually is.</p>
+    </section>
+    <section>
+      <h2 class="eyebrow">The full index</h2>
+      <ul class="scale">
+        <li><a href="/0"><span class="lnum">[AI 0]</span><span class="lname">Entirely human</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/1"><span class="lnum">[AI 1]</span><span class="lname">Checked by artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/2"><span class="lnum">[AI 2]</span><span class="lname">Discussed with artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/3"><span class="lnum">[AI 3]</span><span class="lname">Planned by artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/4"><span class="lnum">[AI 4]</span><span class="lname">Part-written by artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/5"><span class="lnum">[AI 5]</span><span class="lname">Drafted by artificial intelligence, rewritten by the author</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/6"><span class="lnum">[AI 6]</span><span class="lname">Written by artificial intelligence, shaped by the author</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/7"><span class="lnum">[AI 7]</span><span class="lname">Written by artificial intelligence to a human brief</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/8"><span class="lnum">[AI 8]</span><span class="lname">Written by artificial intelligence, published by a human</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/9"><span class="lnum">[AI 9]</span><span class="lname">Autonomous — no human involved</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/x"><span class="lnum">[AI X]</span><span class="lname">Prefer not to say</span><span class="lgo" aria-hidden="true"></span></a></li>
+      </ul>
+    </section>
   </main>
 
   <nav class="footlinks" aria-label="More pages">

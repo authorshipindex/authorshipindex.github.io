@@ -294,39 +294,10 @@
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-/* generated pages */
-.gp{display:flex;flex-direction:column;gap:1.5rem;padding-top:1.75rem}
-.gp .tok{font-family:var(--numeral);font-weight:700;font-size:1.75rem;
-  line-height:1;color:var(--ink);white-space:nowrap;align-self:flex-start;
-  border-bottom:3px solid var(--accent);padding-bottom:.3rem}
-.gp h1{margin:0;font-size:1.5rem;line-height:1.25;font-weight:600;
-  letter-spacing:-.01em;text-wrap:balance}
-.gp .say{margin:0;padding:1rem 1.15rem;background:var(--surface);
-  border-left:3px solid var(--accent);border-radius:0 4px 4px 0;
-  font-size:1.0625rem;line-height:1.55;color:var(--ink)}
-.gp .say b{display:block;font-size:.6875rem;font-family:var(--mono);
-  font-weight:400;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--ink-3);margin-bottom:.4rem}
-.gp .detail{display:flex;flex-direction:column;gap:.9rem}
-.gp .detail p{margin:0;color:var(--ink-2)}
-.gp .lede{margin:0;font-size:1.0625rem;color:var(--ink);line-height:1.55}
-.gp .doc h2{margin:2.5rem 0 .35rem;font-size:1.0625rem;font-weight:650;
-  letter-spacing:-.01em;line-height:1.3}
-.gp .doc h2:first-child{margin-top:0}
-.gp .doc p{margin:.7rem 0 0;color:var(--ink-2)}
-.gp .doc dl{margin:0;display:flex;flex-direction:column;gap:1rem}
-.gp .doc dt{font-weight:650;color:var(--ink)}
-.gp .doc dd{margin:.15rem 0 0;color:var(--ink-2)}
-.gp .more{margin:0;padding-top:1.25rem;border-top:1px solid var(--rule);
-  line-height:2}
-.gp .more a{color:var(--accent);text-decoration:none;font-weight:600}
-.gp .more a:hover{text-decoration:underline}
-.gp .note{margin:0;font-size:.8125rem;line-height:1.55;color:var(--ink-3)}
-.gp .levels{display:flex;flex-wrap:wrap;gap:.4rem .85rem;
-  padding-top:1.1rem;border-top:1px solid var(--rule)}
-.gp .levels a{color:var(--accent);text-decoration:none;white-space:nowrap;
-  font-family:var(--numeral);font-size:.8125rem}
-.gp .levels a:hover{text-decoration:underline}
+.notfound{display:flex;flex-wrap:wrap;gap:.5rem .9rem;margin:1.25rem 0 0}
+.notfound a{color:var(--accent);text-decoration:none;white-space:nowrap;
+  font-family:var(--numeral);font-size:.875rem}
+.notfound a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -346,16 +317,33 @@
 </nav>
 
 <div class="page">
-  <main class="gp">
-  <h1>Glossary</h1>
-  <p class="lede">The prose on this site varies for readability. The standard’s normative sections do not — there, each of these words means exactly this and nothing else.</p>
-  <div class="doc">
-<dl><div><dt>AI</dt><dd>The non-human party. Any system that produces text without a person writing it — whatever it is called, and however it works. Today that is artificial intelligence: large language models and their kin. Used broadly, so that the definition outlives both the technology and its name.</dd></div><div><dt>Human</dt><dd>A person. Not an organisation, not a legal person, not a system. The index measures what human beings contributed.</dd></div><div><dt>The author</dt><dd>The human whose work it is, and whose name is on it.</dd></div><div><dt>The declarer</dt><dd>Whoever states the number. Usually the author; sometimes a publisher or an organisation. The two are often not the same, and only the author is a human by definition.</dd></div><div><dt>The work</dt><dd>The whole thing being declared — a book, a report, a script, an edition.</dd></div><div><dt>The words, the prose</dt><dd>The sentences a reader actually reads. Levels 4 to 8 turn on who produced these. Levels 1 to 3 turn on other things.</dd></div><div><dt>Substance</dt><dd>Facts, continuity, argument, meaning. As opposed to mechanics — spelling, grammar, punctuation — which sit outside the index entirely.</dd></div><div><dt>Declare</dt><dd>To state a number. Never rate, score or grade: those are the verbs of judgement, and this standard makes none.</dd></div><div><dt>The mark</dt><dd>The token [AI 4], typed or printed.</dd></div><div><dt>The index</dt><dd>This standard, and the scale it defines. A single value is a number or a level — never a rating.</dd></div><div><dt>AI, the letters</dt><dd>Neither <em>artificial intelligence</em> nor <em>the Authorship Index</em> is abbreviated in prose. The letters appear in one place only: the mark. There they name the Authorship Index and its level, and they also read as artificial intelligence — which is what the non-human writer is in 2026. That is deliberate rather than a collision.</dd></div></dl>
-<h2>Why this page exists</h2>
-<p>A standard that uses two words for one thing invites two readings of it. The distinction between <strong>the author</strong> and <strong>the declarer</strong> decides who carries responsibility when a publisher marks a book. The distinction between <strong>the work</strong> and <strong>the words</strong> decides the whole middle of the scale.</p>
-<p>The exclusions matter as much as the definitions. <strong>Rate</strong>, <strong>score</strong> and <strong>grade</strong> are barred because they carry evaluation, and a standard that judges nothing cannot use the verbs of judgement without contradicting itself in its own grammar.</p>
-  </div>
-  <div class="levels"><a href="/0">[AI&nbsp;0]</a><a href="/1">[AI&nbsp;1]</a><a href="/2">[AI&nbsp;2]</a><a href="/3">[AI&nbsp;3]</a><a href="/4">[AI&nbsp;4]</a><a href="/5">[AI&nbsp;5]</a><a href="/6">[AI&nbsp;6]</a><a href="/7">[AI&nbsp;7]</a><a href="/8">[AI&nbsp;8]</a><a href="/9">[AI&nbsp;9]</a><a href="/x">[AI&nbsp;X]</a></div>
+  <main>
+    <header class="hero" style="border-bottom:0;padding-bottom:.5rem">
+      <h1 class="big">Glossary</h1>
+      <p class="lede">The prose on this site varies for readability. The standard’s normative sections do not — there, each of these words means exactly this and nothing else.</p>
+    </header>
+    <section class="doc">
+      <dl class="terms"><div><dt>AI</dt><dd>The non-human party. Any system that produces text without a person writing it — whatever it is called, and however it works. Today that is artificial intelligence: large language models and their kin. Used broadly, so that the definition outlives both the technology and its name.</dd></div><div><dt>Human</dt><dd>A person. Not an organisation, not a legal person, not a system. The index measures what human beings contributed.</dd></div><div><dt>The author</dt><dd>The human whose work it is, and whose name is on it.</dd></div><div><dt>The declarer</dt><dd>Whoever states the number. Usually the author; sometimes a publisher or an organisation. The two are often not the same, and only the author is a human by definition.</dd></div><div><dt>The work</dt><dd>The whole thing being declared — a book, a report, a script, an edition.</dd></div><div><dt>The words, the prose</dt><dd>The sentences a reader actually reads. Levels 4 to 8 turn on who produced these. Levels 1 to 3 turn on other things.</dd></div><div><dt>Substance</dt><dd>Facts, continuity, argument, meaning. As opposed to mechanics — spelling, grammar, punctuation — which sit outside the index entirely.</dd></div><div><dt>Declare</dt><dd>To state a number. Never rate, score or grade: those are the verbs of judgement, and this standard makes none.</dd></div><div><dt>The mark</dt><dd>The token [AI 4], typed or printed.</dd></div><div><dt>The index</dt><dd>This standard, and the scale it defines. A single value is a number or a level — never a rating.</dd></div><div><dt>AI, the letters</dt><dd>Neither <em>artificial intelligence</em> nor <em>the Authorship Index</em> is abbreviated in prose. The letters appear in one place only: the mark. There they name the Authorship Index and its level, and they also read as artificial intelligence — which is what the non-human writer is in 2026. That is deliberate rather than a collision.</dd></div></dl>
+      <h3>Why this page exists</h3>
+      <p>A standard that uses two words for one thing invites two readings of it. The distinction between <strong>the author</strong> and <strong>the declarer</strong> decides who carries responsibility when a publisher marks a book. The distinction between <strong>the work</strong> and <strong>the words</strong> decides the whole middle of the scale.</p>
+      <p>The exclusions matter as much as the definitions. <strong>Rate</strong>, <strong>score</strong> and <strong>grade</strong> are barred because they carry evaluation, and a standard that judges nothing cannot use the verbs of judgement without contradicting itself in its own grammar.</p>
+    </section>
+    <section>
+      <h2 class="eyebrow">The full index</h2>
+      <ul class="scale">
+        <li><a href="/0"><span class="lnum">[AI 0]</span><span class="lname">Entirely human</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/1"><span class="lnum">[AI 1]</span><span class="lname">Checked by artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/2"><span class="lnum">[AI 2]</span><span class="lname">Discussed with artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/3"><span class="lnum">[AI 3]</span><span class="lname">Planned by artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/4"><span class="lnum">[AI 4]</span><span class="lname">Part-written by artificial intelligence</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/5"><span class="lnum">[AI 5]</span><span class="lname">Drafted by artificial intelligence, rewritten by the author</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/6"><span class="lnum">[AI 6]</span><span class="lname">Written by artificial intelligence, shaped by the author</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/7"><span class="lnum">[AI 7]</span><span class="lname">Written by artificial intelligence to a human brief</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/8"><span class="lnum">[AI 8]</span><span class="lname">Written by artificial intelligence, published by a human</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/9"><span class="lnum">[AI 9]</span><span class="lname">Autonomous — no human involved</span><span class="lgo" aria-hidden="true"></span></a></li>
+        <li><a href="/x"><span class="lnum">[AI X]</span><span class="lname">Prefer not to say</span><span class="lgo" aria-hidden="true"></span></a></li>
+      </ul>
+    </section>
   </main>
 
   <nav class="footlinks" aria-label="More pages">
