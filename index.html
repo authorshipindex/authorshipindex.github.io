@@ -1615,22 +1615,6 @@
   byId('helper-restart').addEventListener('click', function(){
     hState.q1 = null; hState.q2 = null; renderHelper(); window.scrollTo(0,0);
   });
-  /* Every internal link is a real path, so a fetcher that cannot run scripts
-     can still follow it. For a reader already here, intercept and route in
-     place - the destination is the same content either way. */
-  var INAPP = /^\/([0-9]|x|standard|glossary|rulings|licence|contact|history)$/;
-  document.addEventListener('click', function(e){
-    if (e.defaultPrevented || e.button !== 0 ||
-        e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    var a = e.target && e.target.closest ? e.target.closest('a') : null;
-    if (!a) return;
-    var href = a.getAttribute('href') || '';
-    if (!INAPP.test(href)) return;
-    e.preventDefault();
-    if (location.hash === '#' + href) { route(); window.scrollTo(0,0); }
-    else location.hash = '#' + href;
-  });
-
   window.addEventListener('hashchange', function(){ route(); window.scrollTo(0,0); });
   route();
 })();
